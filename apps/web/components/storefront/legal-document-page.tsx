@@ -28,6 +28,7 @@ export function LegalDocumentPage({ document }: LegalDocumentPageProps) {
               eyebrow="Legal"
               title={document.title}
               description={document.summary}
+              as="h1"
             />
 
             <Card className="mesh-panel">

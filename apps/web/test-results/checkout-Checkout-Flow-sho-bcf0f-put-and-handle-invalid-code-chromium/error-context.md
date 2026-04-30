@@ -6,8 +6,8 @@
 
 # Test info
 
-- Name: checkout.spec.ts >> Checkout Flow >> should render the order form and validate empty submission
-- Location: e2e/checkout.spec.ts:13:7
+- Name: checkout.spec.ts >> Checkout Flow >> should show promo code input and handle invalid code
+- Location: e2e/checkout.spec.ts:68:7
 
 # Error details
 

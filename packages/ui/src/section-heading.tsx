@@ -7,6 +7,7 @@ type SectionHeadingProps = HTMLAttributes<HTMLDivElement> & {
   title: ReactNode;
   description?: ReactNode;
   counter?: number;
+  as?: "h1" | "h2" | "h3";
 };
 
 export function SectionHeading({
@@ -15,6 +16,7 @@ export function SectionHeading({
   title,
   description,
   counter,
+  as: Component = "h2",
   ...props
 }: SectionHeadingProps) {
   return (
@@ -32,9 +34,9 @@ export function SectionHeading({
           </p>
         </div>
       ) : null}
-      <h2 className="font-display text-3xl leading-[1.08] tracking-tight text-[--text-primary] break-words sm:text-4xl lg:text-5xl text-balance">
+      <Component className="font-display text-3xl leading-[1.08] tracking-tight text-[--text-primary] break-words sm:text-4xl lg:text-5xl text-balance">
         {title}
-      </h2>
+      </Component>
       {description ? (
         <p className="text-base leading-relaxed text-[--text-secondary] sm:text-lg sm:leading-8 text-pretty max-w-2xl">
           {description}

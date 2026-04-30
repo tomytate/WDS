@@ -23,7 +23,8 @@ const publicRoutes: Array<{ path: string; name: string }> = [
 
 for (const route of publicRoutes) {
   test(`${route.name} (${route.path}) is WCAG 2.2 AA clean`, async ({ page }) => {
-    await page.goto(route.path, { waitUntil: "networkidle" })
+    await page.goto(route.path, { waitUntil: "domcontentloaded" })
+    await page.waitForLoadState("load")
 
     const results = await new AxeBuilder({ page })
       .withTags([...AXE_TAGS])

@@ -6,8 +6,8 @@
 
 # Test info
 
-- Name: checkout.spec.ts >> Checkout Flow >> should render the order form and validate empty submission
-- Location: e2e/checkout.spec.ts:13:7
+- Name: checkout.spec.ts >> Checkout Flow >> should select a product and advance to step 2
+- Location: e2e/checkout.spec.ts:26:7
 
 # Error details
 
