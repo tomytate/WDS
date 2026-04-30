@@ -55,7 +55,7 @@ export function ReviewStep({
   const form = useFormContext<OrderFormValues>();
   const { formatPrimaryPrice, formatSecondaryPrice, calculateDisplayTotals, showSecondary } = useGeoPricing();
 
-  const { formattedSubtotal, formattedTip, formattedDiscount, formattedTotal } = calculateDisplayTotals(items, safeTipAmount, discountAmount || "0");
+  const { formattedSubtotal, formattedTip, formattedDiscount, formattedTotal } = calculateDisplayTotals(selectedCartItems, safeTipAmount, discountAmount || "0");
   const customerNameValue = form.watch("customerName");
   const customerEmailValue = form.watch("customerEmail");
   const customerPhoneValue = form.watch("customerPhone");

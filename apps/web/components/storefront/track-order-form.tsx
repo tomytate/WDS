@@ -43,6 +43,7 @@ type TrackedOrder = {
   notes: string | null;
   paymentMethod: string;
   tipAmount: string;
+  discountAmount: string;
   product: {
     name: string;
     price: string;
@@ -67,6 +68,7 @@ type TrackedOrder = {
     providerRemains: string | null;
     providerError: string | null;
     providerLastCheckedAt: string | null;
+    product: { slug: string };
   }>;
   products: Array<{
     id: string;
@@ -110,14 +112,14 @@ export function TrackOrderForm({
   const [isPending, startTransition] = useTransition();
   const { formatPrimaryPrice, formatSecondaryPrice, calculateDisplayTotals, showSecondary } = useGeoPricing();
 
+  const selectedOrder =
+    orders.find((order) => order.id === selectedOrderId) ?? orders[0] ?? null;
+
   const orderTotals = selectedOrder ? calculateDisplayTotals(
     selectedOrder.items,
     selectedOrder.tipAmount,
     selectedOrder.discountAmount
   ) : null;
-
-  const selectedOrder =
-    orders.find((order) => order.id === selectedOrderId) ?? orders[0] ?? null;
 
   function submit() {
     setError(null);

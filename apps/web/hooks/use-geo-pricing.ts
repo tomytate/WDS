@@ -121,6 +121,24 @@ export function useGeoPricing() {
   )
 
   /**
+   * Helper to get the correct numeric value for math (e.g. cart totals).
+   * Returns PHP amount if in PH, USDT amount otherwise.
+   */
+  const getPrimaryNumericPrice = useCallback(
+    (dbAmount: string | number, slug?: string): number => {
+      const abs = slug ? getAbsolutePrice(slug) : null;
+      if (isPhp) {
+        if (abs && abs.php !== null) return abs.php;
+        // Fallback for missing absolute price: use exchange rate 
+        return Number(dbAmount) * (rates[currency.code] ?? 1);
+      }
+      if (abs && abs.usdt !== null) return abs.usdt;
+      return Number(dbAmount);
+    },
+    [isPhp, rates, currency]
+  )
+
+  /**
    * Primary price display: PHP for PH users, USDT for international.
    * This is the MAJOR price shown prominently in the UI.
    * Uses absolute hardcoded prices if a valid slug is provided.
@@ -144,24 +162,6 @@ export function useGeoPricing() {
       return formatDbPriceAsUsdt(dbAmount)
     },
     [isPhp, getPrimaryNumericPrice]
-  )
-
-  /**
-   * Helper to get the correct numeric value for math (e.g. cart totals).
-   * Returns PHP amount if in PH, USDT amount otherwise.
-   */
-  const getPrimaryNumericPrice = useCallback(
-    (dbAmount: string | number, slug?: string): number => {
-      const abs = slug ? getAbsolutePrice(slug) : null;
-      if (isPhp) {
-        if (abs && abs.php !== null) return abs.php;
-        // Fallback for missing absolute price: use exchange rate 
-        return Number(dbAmount) * (rates[currency.code] ?? 1);
-      }
-      if (abs && abs.usdt !== null) return abs.usdt;
-      return Number(dbAmount);
-    },
-    [isPhp, rates, currency]
   )
 
   /**
