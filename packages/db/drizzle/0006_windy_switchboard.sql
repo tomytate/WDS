@@ -1,0 +1,10 @@
+ALTER TABLE "order_items" ADD COLUMN "fulfillment_provider" text DEFAULT 'manual' NOT NULL;
+ALTER TABLE "order_items" ADD COLUMN "provider_service_id" text;
+ALTER TABLE "order_items" ADD COLUMN "provider_order_id" text;
+ALTER TABLE "order_items" ADD COLUMN "provider_status" text;
+ALTER TABLE "order_items" ADD COLUMN "provider_charge" text;
+ALTER TABLE "order_items" ADD COLUMN "provider_currency" text;
+ALTER TABLE "order_items" ADD COLUMN "provider_start_count" text;
+ALTER TABLE "order_items" ADD COLUMN "provider_remains" text;
+ALTER TABLE "order_items" ADD COLUMN "provider_error" text;
+ALTER TABLE "order_items" ADD COLUMN "provider_last_checked_at" timestamp;

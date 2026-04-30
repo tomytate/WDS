@@ -1,0 +1,22 @@
+{
+  "name": "@wongdigital/db",
+  "version": "0.0.0",
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/client.ts",
+    "./pricing": "./src/pricing.ts",
+    "./seed": "./src/seed.ts",
+    "./storefront": "./src/storefront.ts",
+    "./types": "./src/types.ts"
+  },
+  "private": true,
+  "scripts": {
+    "db:seed": "bun run ./src/seed.ts",
+    "test": "vitest run"
+  },
+  "type": "module",
+  "dependencies": {
+    "@supabase/ssr": "^0.10.2",
+    "@supabase/supabase-js": "^2.104.0"
+  }
+}

@@ -1,0 +1,61 @@
+.DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules/
+apps/*/node_modules/
+packages/*/node_modules/
+
+# Build output
+.next/
+apps/*/.next/
+.turbo/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Temp files
+.bun-tmp/
+.bun-install/
+repomix-output.xml
+*.log
+dev.out.log
+dev.err.log
+
+# Environment files
+.env
+.env.*
+!.env.example
+apps/*/.env
+apps/*/.env.*
+!apps/*/.env.example
+packages/*/.env
+packages/*/.env.*
+!packages/*/.env.example
+
+# Local/editor artifacts
+.vercel/
+.idea/
+.vscode/
+
+# Local uploaded assets
+apps/web/public/uploads/
+
+# Supabase SQL — contain seeded credentials / dev fixtures; apply via Supabase CLI
+supabase/seed.sql
+supabase/reset.sql
+scripts/supabase-all-in-one.sql
+scripts/supabase-reset.sql
+scripts/supabase-schema.sql
+scripts/supabase-support-chat.sql
+
+# Repomix / codebase dumps
+codebase_dump.txt
+repomix-output.*
+
+# Stray dev helpers that should never be committed
+notreal.html
+v.html
+apps/web/success.html
+reduce-radii.js
+seed_runner.py

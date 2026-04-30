@@ -1,0 +1,1 @@
+ALTER TABLE "orders" ADD COLUMN "tip_amount" numeric(10, 2) DEFAULT '0.00' NOT NULL;
