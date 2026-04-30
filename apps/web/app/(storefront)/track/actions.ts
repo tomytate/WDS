@@ -28,6 +28,7 @@ type LookupPayload = {
     notes: string | null
     paymentMethod: string
     tipAmount: string
+    discountAmount: string
     product: {
       name: string
       price: string
@@ -52,6 +53,9 @@ type LookupPayload = {
       providerRemains: string | null
       providerError: string | null
       providerLastCheckedAt: string | null
+      product: {
+        slug: string
+      }
     }>
     products: Array<{
       id: string
@@ -96,6 +100,7 @@ export async function lookupOrders(
           notes: record.notes,
           paymentMethod: record.paymentMethod,
           tipAmount: record.tipAmount,
+          discountAmount: record.discountAmount,
           product: {
             name: record.product.name,
             price: record.product.price,
@@ -122,6 +127,9 @@ export async function lookupOrders(
             providerLastCheckedAt: item.providerLastCheckedAt
               ? item.providerLastCheckedAt.toISOString()
               : null,
+            product: {
+              slug: item.product.slug,
+            },
           })),
           products: record.products.map((product) => ({
             id: product.id,
