@@ -29,8 +29,8 @@ export async function sendOrderStatusEmail(order: OrderNotificationProps) {
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://wongdigital.shop"
-  let subject = ""
-  let reactTemplate: React.ReactElement | null = null
+  let subject: string
+  let reactTemplate: React.ReactElement
 
   switch (order.status) {
     case "pending":

@@ -197,7 +197,7 @@ function MobileNavPills({ items, pathname }: { items: NavItem[]; pathname: strin
       const activeEl = document.activeElement as HTMLElement | null
       const idx = linkRefs.current.findIndex((r) => r === activeEl)
       if (idx < 0) return
-      let next = -1
+      let next: number
       if (e.key === "ArrowRight") next = Math.min(idx + 1, items.length - 1)
       else if (e.key === "ArrowLeft") next = Math.max(idx - 1, 0)
       else if (e.key === "Home") next = 0

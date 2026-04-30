@@ -372,7 +372,7 @@ export async function saveBundleAction(formData: FormData) {
   const data = parsed.data
   await requireDashboardAdmin(data.returnTo)
 
-  let items: { productId: string; accessPlan: string }[] = []
+  let items: { productId: string; accessPlan: string }[]
   try {
     items = JSON.parse(data.items)
   } catch {

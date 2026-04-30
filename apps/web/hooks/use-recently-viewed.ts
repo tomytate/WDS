@@ -38,7 +38,7 @@ function getServerSnapshot() {
 export function useRecentlyViewed() {
   const storeStr = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 
-  let slugs: string[] = []
+  let slugs: string[]
   try {
     slugs = JSON.parse(storeStr)
     if (!Array.isArray(slugs)) slugs = []

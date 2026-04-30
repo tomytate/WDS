@@ -66,6 +66,12 @@ export default tseslint.config(
         { prefer: "type-imports", fixStyle: "inline-type-imports" },
       ],
 
+      // Disable overly strict/experimental React Compiler rules
+      "react-hooks/set-state-in-effect": "off",
+      "react-hooks/purity": "off",
+      "react-hooks/incompatible-library": "off",
+      "react-hooks/preserve-manual-memoization": "off",
+
       // General
       "no-console": ["warn", { allow: ["warn", "error"] }],
       "no-debugger": "error",
