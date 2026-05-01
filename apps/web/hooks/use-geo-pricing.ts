@@ -125,8 +125,8 @@ export function useGeoPricing() {
    * Returns PHP amount if in PH, USDT amount otherwise.
    */
   const getPrimaryNumericPrice = useCallback(
-    (dbAmount: string | number, slug?: string): number => {
-      const abs = slug ? getAbsolutePrice(slug) : null;
+    (dbAmount: string | number, slug?: string, accessPlan?: string): number => {
+      const abs = slug ? getAbsolutePrice(slug, accessPlan) : null;
       if (isPhp) {
         if (abs && abs.php !== null) return abs.php;
         // Fallback for missing absolute price: use exchange rate 
@@ -144,15 +144,15 @@ export function useGeoPricing() {
    * Uses absolute hardcoded prices if a valid slug is provided.
    */
   const formatPrimaryPrice = useCallback(
-    (dbAmount: string | number, slug?: string) => {
-      const abs = slug ? getAbsolutePrice(slug) : null;
+    (dbAmount: string | number, slug?: string, accessPlan?: string) => {
+      const abs = slug ? getAbsolutePrice(slug, accessPlan) : null;
 
       if (isPhp) {
         if (abs && abs.php !== null) {
           return `₱${new Intl.NumberFormat("en-PH").format(abs.php)}`;
         }
         // For non-absolute products and raw totals, use the numeric helper which handles exchange rates
-        const num = getPrimaryNumericPrice(dbAmount, slug);
+        const num = getPrimaryNumericPrice(dbAmount, slug, accessPlan);
         return `₱${new Intl.NumberFormat("en-PH").format(num)}`;
       }
 
@@ -170,12 +170,12 @@ export function useGeoPricing() {
    */
   const calculateDisplayTotals = useCallback(
     (
-      items: Array<{ unitPrice: string | number; product: { slug: string } }>,
+      items: Array<{ unitPrice: string | number; product: { slug: string }; accessPlan?: string }>,
       tipUsdt: string | number = 0,
       discountUsdt: string | number = 0
     ) => {
       const subtotal = items.reduce(
-        (sum, item) => sum + getPrimaryNumericPrice(item.unitPrice, item.product.slug),
+        (sum, item) => sum + getPrimaryNumericPrice(item.unitPrice, item.product.slug, item.accessPlan),
         0
       );
       const tip = getPrimaryNumericPrice(tipUsdt);
@@ -206,15 +206,11 @@ export function useGeoPricing() {
    * Shown as a smaller "≈ USDT X.XX" line below the primary price.
    */
   const formatSecondaryPrice = useCallback(
-    (dbAmount: string | number, slug?: string): string | null => {
+    (dbAmount: string | number, slug?: string, accessPlan?: string): string | null => {
       if (isPhp) {
-        // No secondary reference for absolute priced items in PH
-        // As per the requirement "if philippines show that price if not show the usdt price ok"
-        // Wait, if it has an absolute PHP price, does it still show USDT? 
-        // We will return null for absolute items so it ONLY shows PHP.
-        const abs = slug ? getAbsolutePrice(slug) : null;
+        const abs = slug ? getAbsolutePrice(slug, accessPlan) : null;
         if (abs && abs.php !== null) {
-          return null; // Don't show USDT ≈ reference
+          return null; // Don't show USDT ≈ reference for absolute-priced items
         }
         return formatDbPriceAsUsdt(dbAmount)
       }

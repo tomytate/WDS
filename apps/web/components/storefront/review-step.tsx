@@ -151,7 +151,7 @@ export function ReviewStep({
                 </div>
               </div>
               <span className="shrink-0 rounded-lg bg-[--accent-tint-soft] px-2.5 py-1.5 text-sm font-semibold text-[--accent]">
-                {formatPrimaryPrice(item.unitPrice, item.product?.slug)}
+                {formatPrimaryPrice(item.unitPrice, item.product?.slug, item.accessPlan)}
               </span>
             </div>
           ))}

@@ -7,6 +7,7 @@ import type { Product } from "@wongdigital/db";
 import { Badge, buttonStyles, Card } from "@wongdigital/ui";
 
 import {
+  getProductDurationConfigs,
   getServiceProductConfig,
   getServiceStartingPrice,
 } from "@wongdigital/db/pricing";
@@ -44,6 +45,8 @@ export function ProductCard({ product, isHero }: ProductCardProps) {
   const { ref, handlers } = useTilt<HTMLDivElement>();
   const { formatPrimaryPrice, formatSecondaryPrice, showSecondary } = useGeoPricing();
   const planDuration = getProductDuration(product.slug);
+  const durationConfigs = getProductDurationConfigs(product.slug);
+  const startsAtPlan = durationConfigs[0]?.plan;
 
   return (
     <Card
@@ -152,12 +155,12 @@ export function ProductCard({ product, isHero }: ProductCardProps) {
                 <p
                   className={`font-display font-bold tracking-tight text-[--accent] mt-0.5 ${isHero ? "text-3xl" : "text-2xl"}`}
                 >
-                  {formatPrimaryPrice(startsAtPrice, product.slug)}
+                  {formatPrimaryPrice(startsAtPrice, product.slug, startsAtPlan)}
                 </p>
                 {/* Secondary reference price */}
                 {showSecondary && (
                   <p className="mt-0.5 text-[11px] font-medium text-[--text-muted]">
-                    ≈ {formatSecondaryPrice(startsAtPrice)}
+                    ≈ {formatSecondaryPrice(startsAtPrice, product.slug, startsAtPlan)}
                   </p>
                 )}
               </div>

@@ -150,9 +150,9 @@ export function CartSummary({
                   </div>
                 </div>
                 <span className="shrink-0 flex flex-col items-end rounded-lg bg-[--accent-tint-soft] px-2.5 py-1 text-right text-sm text-[--accent]">
-                  <span className="font-semibold leading-[1.1]">{formatPrimaryPrice(item.unitPrice, item.product?.slug)}</span>
+                  <span className="font-semibold leading-[1.1]">{formatPrimaryPrice(item.unitPrice, item.product?.slug, item.accessPlan)}</span>
                   {showSecondary && (
-                    <span className="text-[9px] font-medium opacity-70 leading-[1.1] mt-0.5">≈ {formatSecondaryPrice(item.unitPrice)}</span>
+                    <span className="text-[9px] font-medium opacity-70 leading-[1.1] mt-0.5">≈ {formatSecondaryPrice(item.unitPrice, item.product?.slug, item.accessPlan)}</span>
                   )}
                 </span>
               </motion.div>

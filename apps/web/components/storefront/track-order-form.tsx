@@ -540,7 +540,7 @@ export function TrackOrderForm({
                   </div>
                   <div className="shrink-0 text-right">
                     <span className="rounded-lg bg-[--accent-tint-soft] px-2 py-1 text-xs sm:text-sm font-semibold text-[--accent]">
-                      {formatPrimaryPrice(item.unitPrice, item.product?.slug)}
+                      {formatPrimaryPrice(item.unitPrice, item.product?.slug, item.accessPlan)}
                     </span>
                     {item.selectionMode === "service" && item.providerCharge ? (
                       <span className="mt-1 block text-[10px] text-[--text-muted]">

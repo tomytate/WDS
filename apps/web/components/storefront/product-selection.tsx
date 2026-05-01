@@ -917,7 +917,7 @@ export function ProductSelectionStep({
                                                 className={`flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors ${isThisPlanSelected ? "border-[--accent] bg-[--accent] text-[--accent-fg]" : "border-[--border] bg-[--bg-card] hover:border-[--text-muted]"}`}
                                               >
                                                 <span>{config.label}</span>
-                                                <span className={isThisPlanSelected ? "opacity-90" : "text-[--text-secondary]"}>{formatPrimaryPrice(planPrice)}</span>
+                                                <span className={isThisPlanSelected ? "opacity-90" : "text-[--text-secondary]"}>{formatPrimaryPrice(planPrice, product.slug, config.plan)}</span>
                                               </button>
                                             );
                                           })}
@@ -958,7 +958,7 @@ export function ProductSelectionStep({
                                           <p className="mt-1.5 text-xs leading-relaxed text-[--text-secondary]">{getProductSummary(focusedProduct)}</p>
                                           {focusedItem && (
                                             <p className="mt-2 text-[11px] uppercase tracking-[0.18em] text-[--accent] font-semibold">
-                                              Selected · {formatOrderItemMeta(focusedItem)} · {formatPrimaryPrice(focusedItem.unitPrice, focusedItem.product?.slug)}
+                                              Selected · {formatOrderItemMeta(focusedItem)} · {formatPrimaryPrice(focusedItem.unitPrice, focusedItem.product?.slug, focusedItem.accessPlan)}
                                             </p>
                                           )}
                                         </div>
@@ -1058,7 +1058,7 @@ export function ProductSelectionStep({
                   <div className="mt-2 rounded-xl border border-dashed border-[--accent-border] bg-[color-mix(in_srgb,var(--bg-surface)_60%,transparent)] p-1">
                     <ProductDetailBlock
                       eyebrow={selectionMode === "service" ? "Service Setup" : "Included with access plan"}
-                      note={`Selected ${formatOrderItemMeta(selectedItem!)} · ${formatPrimaryPrice(selectedItem!.unitPrice, selectedItem!.product?.slug)}`}
+                      note={`Selected ${formatOrderItemMeta(selectedItem!)} · ${formatPrimaryPrice(selectedItem!.unitPrice, selectedItem!.product?.slug, selectedItem!.accessPlan)}`}
                       product={product}
                     />
                   </div>
