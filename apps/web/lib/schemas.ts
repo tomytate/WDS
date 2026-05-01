@@ -76,7 +76,7 @@ export type TrackByEmailValues = z.infer<typeof trackByEmailSchema>
 export const reviewSchema = z.object({
   orderId: z.string().min(1, "Order ID required"),
   customerName: z.string().min(1, "Name is required"),
-  customerEmail: z.string().email("Valid email is required"),
+  customerEmail: z.email("Valid email is required"),
   rating: z.coerce.number().min(1).max(5),
   content: z.string().max(1000, "Review is too long").optional(),
 })

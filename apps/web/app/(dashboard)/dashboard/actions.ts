@@ -19,7 +19,7 @@ import {
   deleteReview,
   deleteOrderRecord,
 } from "@wongdigital/db/storefront"
-import type { OrderStatus, PromoDiscountType } from "@wongdigital/db"
+import type { OrderStatus, PromoDiscountType, OrderProductLine } from "@wongdigital/db"
 
 import { requireDashboardAdmin } from "@/lib/dashboard-auth"
 import { sendOrderStatusEmail } from "@/lib/email"
@@ -95,7 +95,7 @@ export async function updateOrderStatusAction(formData: FormData) {
     productName: order.items[0]?.product.name ?? order.product.name,
     status: data.status as "pending" | "processing" | "delivered" | "completed" | "cancelled",
     notes: order.notes,
-    items: order.items.map((item: any) => ({
+    items: order.items.map((item: OrderProductLine) => ({
       name: item.product?.name ?? "Product",
       quantity: item.quantity ?? 1,
       price: formatPrice(item.unitPrice ?? "0"),
@@ -495,7 +495,7 @@ export async function updateBulkOrderStatusAction(formData: FormData) {
         productName: order.items[0]?.product.name ?? order.product.name,
         status: statusStr as "pending" | "processing" | "delivered" | "completed" | "cancelled",
         notes: order.notes,
-        items: order.items.map((item: any) => ({
+        items: order.items.map((item: OrderProductLine) => ({
           name: item.product?.name ?? "Product",
           quantity: item.quantity ?? 1,
           price: formatPrice(item.unitPrice ?? "0"),

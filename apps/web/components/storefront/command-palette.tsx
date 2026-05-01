@@ -51,7 +51,7 @@ export function CommandPalette({ products }: CommandPaletteProps) {
         iconUrl: p.iconUrl ?? undefined,
         price: formatPrimaryPrice(p.price, p.slug),
       })),
-    [products],
+    [products, formatPrimaryPrice],
   );
 
   const allItems = useMemo(

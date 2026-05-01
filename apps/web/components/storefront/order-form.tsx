@@ -833,6 +833,8 @@ export function OrderForm({
                   }
                   if (parsed.data.promoCode)
                     formData.append("promoCode", parsed.data.promoCode);
+                  if (parsed.data.bundleId)
+                    formData.append("bundleId", parsed.data.bundleId);
                   if (receiptFile) {
                     formData.append("receiptFile", receiptFile);
                   }

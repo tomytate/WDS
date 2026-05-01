@@ -59,8 +59,17 @@ export function ReviewStep({
   const customerNameValue = form.watch("customerName");
   const customerEmailValue = form.watch("customerEmail");
   const customerPhoneValue = form.watch("customerPhone");
+  const paymentMethodValue = form.watch("paymentMethod");
   const paymentReferenceValue = form.watch("paymentReference");
   const serviceDetailsValue = form.watch("serviceDetails");
+
+  const paymentMethodLabels: Record<string, string> = {
+    qrph: "QRPH",
+    binance: "Binance Pay",
+    alipay: "Alipay",
+    wallet: "Wallet",
+  };
+  const paymentLabel = paymentMethodLabels[paymentMethodValue] ?? "Payment";
 
   const hasAllRequiredInfo =
     selectedCartItems.length > 0 &&
@@ -325,7 +334,7 @@ export function ReviewStep({
           </div>
           <span className="flex items-center gap-1.5 rounded-full bg-[color-mix(in_srgb,var(--color-success)_12%,transparent)] px-2.5 py-1 text-xs font-semibold text-[--color-success]">
             <Sparkles size={10} />
-            QRPH
+            {paymentLabel}
           </span>
         </div>
 

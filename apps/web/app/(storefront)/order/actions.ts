@@ -6,6 +6,7 @@ import { createOrderRecord, processWalletPurchase, findProductsByIds } from "@wo
 import { isGrowthPackage } from "@wongdigital/db/pricing"
 
 import type { ActionResult } from "@/lib/actions"
+import type { OrderProductLine } from "@wongdigital/db"
 import { sendDiscordOrderAlert } from "@/lib/discord"
 import { sendOrderStatusEmail } from "@/lib/email"
 import { formatPrice } from "@/lib/format"
@@ -136,7 +137,7 @@ export async function createOrder(
               customerName: createdOrder.customerName,
               productName: createdOrder.product?.name ?? "Digital Product",
               status: "pending",
-              items: createdOrder.items.map((item: any) => ({
+              items: createdOrder.items.map((item: OrderProductLine) => ({
                 name: item.product?.name ?? "Product",
                 quantity: item.quantity ?? 1,
                 price: formatPrice(item.unitPrice ?? "0"),
@@ -233,7 +234,7 @@ export async function createOrder(
               customerName: createdOrder.customerName,
               productName: createdOrder.product?.name ?? "Digital Product",
               status: "pending",
-              items: createdOrder.items.map((item: any) => ({
+              items: createdOrder.items.map((item: OrderProductLine) => ({
                 name: item.product?.name ?? "Product",
                 quantity: item.quantity ?? 1,
                 price: formatPrice(item.unitPrice ?? "0"),
