@@ -15,6 +15,12 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - **Seed catalog** now ships ~127 USDT-priced products across SaaS subscriptions and social-growth packages. The generated boosting catalog (`packages/db/src/boosting-service-catalog.generated.ts`) is produced by `scripts/generate-boosting-catalog.mjs` and imported into the runtime seeder.
 
 ### Fixed
+- **Absolute Pricing Resolution.** Storefront prices now correctly map `accessPlan` context to absolute prices defined in `ABSOLUTE_PLAN_PRICES`, ensuring consistent base product vs. plan variant logic alignment with the database.
+- **Zod 4 deprecations.** Replaced legacy `z.string().email()` with Zod 4's top-level `z.email()` to fix bundler tree-shaking warnings.
+- **Form submission `bundleId` logic.** Order forms now properly append the active `bundleId` to `FormData`, fixing an issue where bundle contexts were stripped at checkout.
+- **Dynamic checkout UI state.** Review steps now correctly reflect user-selected payment methods rather than hardcoding default states.
+- **Reactivity.** Fixed a missing `useMemo` dependency array parameter in the command palette that resulted in stale exchange-rate prices rendering on initial navigation.
+- **Type safety.** Removed all fallback `any` casts within the `OrderProductLine` formatting utilities in storefront and dashboard actions.
 - Cookie parsing and `x-vercel-ip-country` reads no longer trip type errors against `unstable_cache` / `revalidateTag` during build.
 - Sticky mobile storefront elements render consistently on narrow breakpoints.
 
