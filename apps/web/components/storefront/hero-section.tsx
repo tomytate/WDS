@@ -1,28 +1,33 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Zap } from "lucide-react";
 
 import { buttonStyles } from "@wongdigital/ui";
-import { ProductLogo } from "@/components/product-logo";
 
+/**
+ * Hero marquee brands. All entries are 24×24 official monobrand SVG icons
+ * sourced from each company's brand kit, so they share a single optical line
+ * height and never crop or distort. Canva (wordmark) and Microsoft 365
+ * (favicon) are intentionally excluded — they'd break the rhythm.
+ */
 const featuredBrands = [
-  { name: "ChatGPT Pro", iconUrl: "/logos/chatgpt.png" },
-  { name: "Canva Pro", iconUrl: "/logos/canva.svg" },
-  { name: "Spotify Premium", iconUrl: "/logos/spotify.png" },
-  { name: "Claude AI", iconUrl: "/logos/anthropic.svg" },
-  { name: "Netflix UHD", iconUrl: "/logos/netflix.svg" },
-  { name: "Capcut Pro", iconUrl: "/logos/capcut.svg" },
-  { name: "Grammarly", iconUrl: "/logos/grammarly.png" },
-  { name: "Microsoft 365", iconUrl: "/logos/microsoft365.ico" },
+  { name: "ChatGPT", iconUrl: "/logos/chatgpt.svg" },
+  { name: "Claude", iconUrl: "/logos/claude.svg" },
+  { name: "Gemini", iconUrl: "/logos/gemini.svg" },
+  { name: "Grok", iconUrl: "/logos/grok.svg" },
   { name: "Perplexity", iconUrl: "/logos/perplexity.svg" },
-  { name: "Figma", iconUrl: "/logos/figma.svg" },
-  { name: "ExpressVPN", iconUrl: "/logos/expressvpn.svg" },
+  { name: "Spotify", iconUrl: "/logos/spotify.svg" },
+  { name: "Netflix", iconUrl: "/logos/netflix.svg" },
   { name: "YouTube", iconUrl: "/logos/youtube.svg" },
+  { name: "Figma", iconUrl: "/logos/figma.svg" },
+  { name: "Capcut", iconUrl: "/logos/capcut.svg" },
+  { name: "ExpressVPN", iconUrl: "/logos/expressvpn.svg" },
   { name: "TikTok", iconUrl: "/logos/tiktok.svg" },
   { name: "Instagram", iconUrl: "/logos/instagram.svg" },
   { name: "Facebook", iconUrl: "/logos/facebook.svg" },
-  { name: "Twitter / X", iconUrl: "/logos/x.svg" },
+  { name: "X", iconUrl: "/logos/x.svg" },
   { name: "Telegram", iconUrl: "/logos/telegram.svg" },
 ];
 
@@ -152,33 +157,47 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Brand strip — full-bleed inverted ink block */}
-      <div className="ink-block border-t border-[--border]">
-        <div className="container-shell py-5">
-          <div className="flex items-center gap-6">
-            <span className="hidden md:flex items-center gap-2 shrink-0 font-mono text-[11px] uppercase tracking-[0.16em] text-[--text-on-ink] opacity-70">
-              <span className="h-px w-6 bg-[--accent]" />
-              Catalog
-            </span>
-            <div className="relative flex-1 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-              <div className="flex w-max marquee-track items-center gap-3">
-                {[...featuredBrands, ...featuredBrands, ...featuredBrands].map(
-                  (brand, i) => (
-                    <div
-                      key={`${brand.name}-${i}`}
-                      title={brand.name}
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[--radius-inner] bg-[color-mix(in_srgb,var(--text-on-ink)_8%,transparent)] transition-colors hover:bg-[color-mix(in_srgb,var(--accent)_22%,transparent)]"
-                    >
-                      <ProductLogo
-                        className="shrink-0"
-                        iconUrl={brand.iconUrl}
-                        name={brand.name}
-                        size="sm"
-                      />
-                    </div>
-                  ),
-                )}
-              </div>
+      {/* Brand marquee — quiet, single-line logo wall */}
+      <div className="border-t border-[--border] bg-[--bg-surface]">
+        <div className="container-shell">
+          <div className="flex flex-col gap-5 py-8 lg:flex-row lg:items-center lg:gap-12">
+            <div className="flex shrink-0 items-center gap-2.5">
+              <span
+                className="h-1.5 w-1.5 rounded-sm bg-[--accent]"
+                aria-hidden="true"
+              />
+              <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[--text-muted]">
+                Featuring{" "}
+                <span className="text-[--text-primary] font-semibold">
+                  100+
+                </span>{" "}
+                brands
+              </p>
+            </div>
+            <div
+              className="relative flex-1 overflow-hidden text-[--text-primary] [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]"
+            >
+              <ul
+                className="flex w-max marquee-track items-center"
+                aria-label="Featured brands"
+              >
+                {[...featuredBrands, ...featuredBrands].map((brand, i) => (
+                  <li
+                    key={`${brand.name}-${i}`}
+                    className="group flex h-10 shrink-0 items-center justify-center px-6 sm:px-8"
+                    title={brand.name}
+                  >
+                    <Image
+                      src={brand.iconUrl}
+                      alt={brand.name}
+                      width={32}
+                      height={32}
+                      unoptimized
+                      className="h-7 w-7 object-contain transition-opacity duration-200 opacity-65 group-hover:opacity-100"
+                    />
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
