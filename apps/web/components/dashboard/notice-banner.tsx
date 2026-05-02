@@ -13,13 +13,13 @@ export function NoticeBanner({
 
   const isError = Boolean(error)
   const toneClasses = isError
-    ? "border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_10%,transparent)] text-[--color-danger]"
-    : "border-[--color-success] bg-[color-mix(in_srgb,var(--color-success)_10%,transparent)] text-[--color-success]"
+    ? "border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_10%,transparent)] text-[--color-danger-text]"
+    : "border-[--color-success] bg-[color-mix(in_srgb,var(--color-success)_10%,transparent)] text-[--color-success-text]"
 
   return (
     <div
       aria-live="polite"
-      className={`mb-4 sm:mb-6 flex items-start gap-2.5 sm:gap-3 rounded-2xl sm:rounded-xl border px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm ${toneClasses}`}
+      className={`mb-4 sm:mb-6 flex items-start gap-3 rounded-[--radius-inner] border px-4 py-3 text-sm font-medium ${toneClasses}`}
       role="status"
     >
       {isError ? (

@@ -196,67 +196,48 @@ export function TrackOrderForm({
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Search Card */}
-      <div className="glass-panel relative overflow-hidden rounded-xl sm:rounded-2xl">
-        {/* Decorative glow */}
-        <div
-          className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[--accent-tint-soft] blur-3xl"
-          aria-hidden="true"
-        />
-
-        <div className="relative space-y-4 sm:space-y-6 p-4 sm:p-6 lg:p-8">
+      <div className="relative overflow-hidden rounded-[--radius-card] border border-[--border] bg-[--bg-card]">
+        <div className="relative space-y-5 p-5 sm:p-6 lg:p-8">
           {/* Tab Switcher */}
-          <div className="flex items-center gap-2 rounded-lg sm:rounded-xl border border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_60%,transparent)] p-1 sm:p-1.5 w-fit">
+          <div className="inline-flex items-center gap-1 rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] p-1 w-fit">
             <button
-              className={`flex items-center gap-1.5 sm:gap-2 rounded-[10px] sm:rounded-lg px-3 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 ${
+              className={`flex items-center gap-2 rounded-[calc(var(--radius-inner)-2px)] px-3 py-2 text-sm font-medium transition-colors duration-150 ${
                 tab === "code"
-                  ? "bg-[--accent] text-[--accent-fg] shadow-[0_2px_8px_var(--accent-tint-medium)]"
-                  : "text-[--text-secondary] hover:text-[--text-primary] hover:bg-[color-mix(in_srgb,var(--bg-surface)_80%,transparent)]"
+                  ? "bg-[--text-primary] text-[--bg-base]"
+                  : "text-[--text-secondary] hover:text-[--text-primary]"
               }`}
               onClick={() => setTab("code")}
               type="button"
             >
-              <Hash
-                size={13}
-                className="sm:h-3.5 sm:w-3.5"
-                aria-hidden="true"
-              />
+              <Hash size={13} aria-hidden="true" />
               Order Code
             </button>
             <button
-              className={`flex items-center gap-1.5 sm:gap-2 rounded-[10px] sm:rounded-lg px-3 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 ${
+              className={`flex items-center gap-2 rounded-[calc(var(--radius-inner)-2px)] px-3 py-2 text-sm font-medium transition-colors duration-150 ${
                 tab === "email"
-                  ? "bg-[--accent] text-[--accent-fg] shadow-[0_2px_8px_var(--accent-tint-medium)]"
-                  : "text-[--text-secondary] hover:text-[--text-primary] hover:bg-[color-mix(in_srgb,var(--bg-surface)_80%,transparent)]"
+                  ? "bg-[--text-primary] text-[--bg-base]"
+                  : "text-[--text-secondary] hover:text-[--text-primary]"
               }`}
               onClick={() => setTab("email")}
               type="button"
             >
-              <Mail
-                size={13}
-                className="sm:h-3.5 sm:w-3.5"
-                aria-hidden="true"
-              />
+              <Mail size={13} aria-hidden="true" />
               Email
             </button>
           </div>
 
           {/* Input Section */}
           {tab === "code" ? (
-            <div className="space-y-2 sm:space-y-3">
+            <div className="space-y-2">
               <label
-                className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium text-[--text-primary]"
+                className="block font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-[--text-muted]"
                 htmlFor="orderCode"
               >
-                <Hash
-                  size={12}
-                  className="sm:h-3.5 sm:w-3.5 text-[--text-muted]"
-                  aria-hidden="true"
-                />
                 Order Code
               </label>
               <Input
                 id="orderCode"
-                className="h-11 sm:h-12 text-sm sm:text-base font-mono"
+                className="font-mono"
                 onChange={(event: ChangeEvent<HTMLInputElement>) =>
                   setCodeValue(
                     event.target.value.replace(/\s+/g, "").toUpperCase(),
@@ -265,26 +246,20 @@ export function TrackOrderForm({
                 placeholder="TT-20260327-4F2A"
                 value={codeValue}
               />
-              <p className="text-[10px] sm:text-xs leading-relaxed text-[--text-muted]">
+              <p className="text-xs leading-relaxed text-[--text-muted]">
                 Use the code shown after checkout, including the TT- prefix.
               </p>
             </div>
           ) : (
-            <div className="space-y-2 sm:space-y-3">
+            <div className="space-y-2">
               <label
-                className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium text-[--text-primary]"
+                className="block font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-[--text-muted]"
                 htmlFor="email"
               >
-                <Mail
-                  size={12}
-                  className="sm:h-3.5 sm:w-3.5 text-[--text-muted]"
-                  aria-hidden="true"
-                />
                 Email Used for Order
               </label>
               <Input
                 id="email"
-                className="h-11 sm:h-12 text-sm sm:text-base"
                 onChange={(event: ChangeEvent<HTMLInputElement>) =>
                   setEmailValue(event.target.value)
                 }
@@ -292,7 +267,7 @@ export function TrackOrderForm({
                 type="email"
                 value={emailValue}
               />
-              <p className="text-[10px] sm:text-xs leading-relaxed text-[--text-muted]">
+              <p className="text-xs leading-relaxed text-[--text-muted]">
                 We&apos;ll show all orders placed with this email so you can
                 choose the right one.
               </p>
@@ -301,7 +276,7 @@ export function TrackOrderForm({
 
           {error ? (
             <p
-              className="rounded-xl sm:rounded-2xl border border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_10%,transparent)] px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-[--color-danger]"
+              className="rounded-[--radius-inner] border border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_10%,transparent)] px-4 py-2.5 text-sm font-medium text-[--color-danger-text]"
               role="alert"
             >
               {error}
@@ -310,8 +285,7 @@ export function TrackOrderForm({
 
           <button
             className={buttonStyles({
-              className:
-                "w-full justify-center rounded-xl sm:rounded-2xl h-11 sm:h-12 text-sm sm:text-base shadow-[0_4px_16px_var(--accent-tint-medium)] hover:shadow-[0_8px_24px_var(--accent-tint-strong)] active:scale-[0.98] transition-all duration-200",
+              className: "w-full justify-center gap-2",
               size: "lg",
             })}
             onClick={submit}
@@ -327,13 +301,13 @@ export function TrackOrderForm({
               <>
                 <Loader2
                   aria-hidden="true"
-                  className="mr-2 h-4 w-4 animate-spin"
+                  className="h-4 w-4 animate-spin"
                 />
-                Checking Status...
+                Checking…
               </>
             ) : (
               <>
-                <Search aria-hidden="true" className="mr-2 h-4 w-4" />
+                <Search aria-hidden="true" size={14} />
                 Track Order
               </>
             )}
@@ -343,16 +317,14 @@ export function TrackOrderForm({
 
       {/* Multiple Orders Selector */}
       {orders.length > 1 ? (
-        <div className="rounded-xl sm:rounded-2xl border border-[--border] bg-[--bg-card] p-3.5 sm:p-5 lg:p-6">
-          <div className="flex items-center gap-2 sm:gap-2.5 mb-3 sm:mb-4">
-            <div className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg bg-[--accent-tint-soft] text-[--accent]">
-              <Package size={14} className="sm:h-4 sm:w-4" aria-hidden="true" />
-            </div>
+        <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] p-5 sm:p-6">
+          <div className="flex items-center gap-2.5 mb-4">
+            <Package size={13} className="text-[--text-muted]" aria-hidden="true" />
             <div>
-              <p className="text-[10px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] text-[--text-muted] font-semibold">
-                Multiple Orders Found
+              <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                Multiple orders found
               </p>
-              <p className="mt-0.5 text-[10px] sm:text-xs text-[--text-secondary]">
+              <p className="mt-0.5 text-xs text-[--text-secondary]">
                 Select the order you want to view
               </p>
             </div>
@@ -365,16 +337,16 @@ export function TrackOrderForm({
 
               return (
                 <button
-                  className={`rounded-2xl sm:rounded-xl border p-3 sm:p-4 text-left transition-all duration-200 active:scale-[0.99] ${
+                  className={`rounded-[--radius-inner] border p-3 sm:p-4 text-left transition-colors duration-150 ${
                     active
-                      ? "border-[--accent] bg-[--accent-tint-soft] shadow-[0_0_12px_var(--accent-tint-soft)]"
-                      : "border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_50%,transparent)] hover:border-[--accent-border]"
+                      ? "border-[--text-primary] bg-[--bg-surface]"
+                      : "border-[--border] bg-[--bg-card] hover:border-[--text-primary]"
                   }`}
                   key={order.id}
                   onClick={() => setSelectedOrderId(order.id)}
                   type="button"
                 >
-                  <div className="flex items-center gap-2.5 sm:gap-3">
+                  <div className="flex items-center gap-3">
                     <ProductLogo
                       className="shrink-0"
                       iconUrl={order.items[0]?.iconUrl ?? order.product.iconUrl}
@@ -383,20 +355,21 @@ export function TrackOrderForm({
                     />
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <p className="font-mono text-xs sm:text-sm text-[--text-primary]">
+                        <p className="font-mono text-xs text-[--text-primary]">
                           {order.orderCode}
                         </p>
                         <span
-                          className="shrink-0 rounded-full px-1.5 py-0.5 text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.1em]"
+                          className="shrink-0 rounded-[--radius-inner] border px-1.5 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-[0.08em]"
                           style={{
                             color: statusColor,
-                            backgroundColor: `color-mix(in srgb, ${statusColor} 12%, transparent)`,
+                            borderColor: `color-mix(in srgb, ${statusColor} 50%, var(--border))`,
+                            backgroundColor: `color-mix(in srgb, ${statusColor} 10%, transparent)`,
                           }}
                         >
                           {statusLabel(order.status)}
                         </span>
                       </div>
-                      <p className="mt-0.5 text-[10px] sm:text-xs text-[--text-secondary] truncate">
+                      <p className="mt-0.5 text-xs text-[--text-secondary] truncate">
                         {order.items.length === 1
                           ? `${order.items[0]?.name} (${formatOrderItemMeta(order.items[0] ?? { accessPlan: "one_year", quantity: 1 })})`
                           : `${order.items[0]?.name} +${order.items.length - 1} more`}{" "}
@@ -404,17 +377,13 @@ export function TrackOrderForm({
                       </p>
                     </div>
                     {active ? (
-                      <div className="shrink-0 flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-full bg-[--accent] text-[--accent-fg]">
-                        <Check
-                          size={10}
-                          className="sm:h-3 sm:w-3"
-                          strokeWidth={3}
-                        />
+                      <div className="shrink-0 flex h-6 w-6 items-center justify-center rounded-[--radius-inner] bg-[--text-primary] text-[--bg-base]">
+                        <Check size={11} strokeWidth={2.5} />
                       </div>
                     ) : (
                       <ArrowRight
                         size={14}
-                        className="shrink-0 text-[--text-muted] sm:h-4 sm:w-4"
+                        className="shrink-0 text-[--text-muted]"
                       />
                     )}
                   </div>
@@ -429,37 +398,27 @@ export function TrackOrderForm({
       {selectedOrder ? (
         <div className="space-y-4 sm:space-y-6">
           {/* Status Header */}
-          <div className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-[--border] bg-[--bg-card] p-4 sm:p-6">
-            <div
-              className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full blur-2xl"
-              style={{
-                backgroundColor: `color-mix(in srgb, ${getStatusColor(selectedOrder.status)} 14%, transparent)`,
-              }}
-              aria-hidden="true"
-            />
-            <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div className="space-y-1">
-                <p className="text-[10px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] text-[--text-muted] font-semibold">
-                  Order Status
+          <div className="relative rounded-[--radius-card] border border-[--border] bg-[--bg-card] p-5 sm:p-6">
+            <div className="relative flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+              <div className="space-y-1.5">
+                <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                  Order status
                 </p>
                 <h2
-                  className="font-display text-2xl tracking-tight sm:text-3xl"
+                  className="font-display text-3xl font-semibold tracking-[-0.02em] sm:text-4xl"
                   style={{ color: getStatusColor(selectedOrder.status) }}
                 >
                   {statusLabel(selectedOrder.status)}
                 </h2>
               </div>
-              <Badge
-                tone="accent"
-                className="w-fit gap-1.5 text-[10px] sm:text-xs shadow-[0_0_8px_var(--accent-tint-medium)]"
-              >
-                <Hash size={10} className="sm:h-3 sm:w-3" aria-hidden="true" />
+              <Badge tone="muted" size="sm" className="w-fit gap-1.5">
+                <Hash size={10} aria-hidden="true" />
                 {selectedOrder.orderCode}
               </Badge>
             </div>
 
             {/* Timeline */}
-            <div className="mt-4 sm:mt-5">
+            <div className="mt-6">
               <OrderStatusTimeline status={selectedOrder.status} />
             </div>
 
@@ -484,27 +443,21 @@ export function TrackOrderForm({
           </div>
 
           {/* Order Items */}
-          <div className="rounded-xl sm:rounded-2xl border border-[--border] bg-[--bg-card] p-3.5 sm:p-5 lg:p-6">
-            <div className="flex items-center gap-2 sm:gap-2.5 mb-3 sm:mb-4">
-              <div className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg bg-[--accent-tint-soft] text-[--accent]">
-                <ShoppingBag
-                  size={14}
-                  className="sm:h-4 sm:w-4"
-                  aria-hidden="true"
-                />
-              </div>
-              <p className="text-[10px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] text-[--text-muted] font-semibold">
-                Order Items
+          <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] overflow-hidden">
+            <div className="flex items-center gap-2.5 border-b border-[--border] bg-[--bg-surface] px-5 py-3">
+              <ShoppingBag size={13} className="text-[--text-muted]" aria-hidden="true" />
+              <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                Order items
               </p>
             </div>
 
-            <div className="space-y-2 sm:space-y-3">
+            <div className="divide-y divide-[--border]">
               {selectedOrder.items.map((item) => (
                 <div
-                  className="flex items-start justify-between gap-3 sm:gap-4 rounded-xl sm:rounded-2xl border border-[color-mix(in_srgb,var(--border)_60%,transparent)] bg-[color-mix(in_srgb,var(--bg-surface)_40%,transparent)] p-3 sm:p-4"
+                  className="flex items-start justify-between gap-4 p-4 sm:p-5"
                   key={`${selectedOrder.id}-${item.id}`}
                 >
-                  <div className="flex items-start gap-2.5 sm:gap-3 min-w-0">
+                  <div className="flex items-start gap-3 min-w-0">
                     <ProductLogo
                       className="shrink-0"
                       iconUrl={item.iconUrl}
@@ -512,16 +465,16 @@ export function TrackOrderForm({
                       size="sm"
                     />
                     <div className="min-w-0">
-                      <span className="block text-xs sm:text-sm font-medium text-[--text-primary] truncate">
+                      <span className="block text-sm font-medium text-[--text-primary] truncate">
                         {item.name}
                       </span>
-                      <span className="block text-[10px] sm:text-xs text-[--text-secondary]">
+                      <span className="block text-xs text-[--text-secondary]">
                         {formatOrderItemMeta(item)}
                       </span>
                       {item.selectionMode === "service" ? (
-                        <span className="mt-1 block text-[10px] sm:text-xs text-[--text-secondary]">
+                        <span className="mt-1 block text-xs text-[--text-muted]">
                           {item.providerError ? (
-                            <span className="text-[--color-danger]">
+                            <span className="text-[--color-danger-text]">
                               Issue: {item.providerError}
                             </span>
                           ) : item.providerOrderId ? (
@@ -539,7 +492,7 @@ export function TrackOrderForm({
                     </div>
                   </div>
                   <div className="shrink-0 text-right">
-                    <span className="rounded-lg bg-[--accent-tint-soft] px-2 py-1 text-xs sm:text-sm font-semibold text-[--accent]">
+                    <span className="font-display text-sm font-semibold tabular-nums text-[--text-primary]">
                       {formatPrimaryPrice(item.unitPrice, item.product?.slug, item.accessPlan)}
                     </span>
                     {item.selectionMode === "service" && item.providerCharge ? (
@@ -554,101 +507,95 @@ export function TrackOrderForm({
             </div>
 
             {/* Totals */}
-            <div className="mt-3 sm:mt-4 rounded-lg sm:rounded-xl border border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_60%,transparent)] p-3 sm:p-4">
-              <div className="flex items-center justify-between gap-4 text-xs sm:text-sm">
+            <div className="border-t border-[--border] bg-[--bg-surface] p-5">
+              <div className="flex items-center justify-between gap-4 text-sm">
                 <span className="text-[--text-secondary]">Subtotal</span>
-                <span className="font-medium text-[--text-primary]">
+                <span className="font-medium tabular-nums text-[--text-primary]">
                   {orderTotals?.formattedSubtotal}
                 </span>
               </div>
-              <div className="mt-1.5 sm:mt-2 flex items-center justify-between gap-4 text-xs sm:text-sm">
+              <div className="mt-2 flex items-center justify-between gap-4 text-sm">
                 <span className="text-[--text-secondary]">Tip</span>
-                <span className="font-medium text-[--text-primary]">
+                <span className="font-medium tabular-nums text-[--text-primary]">
                   {orderTotals?.formattedTip}
                 </span>
               </div>
               {Number(selectedOrder.discountAmount) > 0 && (
-                <div className="mt-1.5 sm:mt-2 flex items-center justify-between gap-4 text-xs sm:text-sm">
-                  <span className="text-[--color-success]">Discount</span>
-                  <span className="font-medium text-[--color-success]">
-                    -{orderTotals?.formattedDiscount}
+                <div className="mt-2 flex items-center justify-between gap-4 text-sm">
+                  <span className="text-[--color-success-text]">Discount</span>
+                  <span className="font-medium tabular-nums text-[--color-success-text]">
+                    −{orderTotals?.formattedDiscount}
                   </span>
                 </div>
               )}
-              <div className="mt-2.5 sm:mt-3 flex items-center justify-between gap-4 border-t border-[--border] pt-2.5 sm:pt-3">
+              <div className="mt-3 flex items-center justify-between gap-4 border-t border-[--border] pt-3">
                 <span className="text-sm font-semibold text-[--text-primary]">
-                  Grand Total
+                  Grand total
                 </span>
-                <span className="rounded-lg bg-[--accent] px-2.5 py-1 sm:px-3 sm:py-1.5 text-sm sm:text-base font-bold text-[--accent-fg] shadow-[0_2px_8px_var(--accent-tint-strong)]">
-                  {orderTotals?.formattedTotal}
-                </span>
-                {showSecondary && (
-                  <p className="mt-1 text-xs text-[--text-muted] text-right">
-                    ≈ {formatSecondaryPrice(selectedOrder.totalPrice)}
-                  </p>
-                )}
+                <div className="text-right">
+                  <span className="font-display text-2xl font-semibold tabular-nums tracking-tight text-[--text-primary]">
+                    {orderTotals?.formattedTotal}
+                  </span>
+                  {showSecondary && (
+                    <p className="mt-0.5 text-[10px] text-[--text-muted] text-right">
+                      ≈ {formatSecondaryPrice(selectedOrder.totalPrice)}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           </div>
 
           {/* Submitted Notes */}
           {selectedOrder.notes ? (
-            <div className="rounded-xl sm:rounded-2xl border border-[--border] bg-[--bg-card] p-3.5 sm:p-5 lg:p-6">
-              <div className="flex items-center gap-2 sm:gap-2.5 mb-3 sm:mb-4">
-                <div className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg bg-[--accent-tint-soft] text-[--accent]">
-                  <MessageSquare
-                    size={14}
-                    className="sm:h-4 sm:w-4"
-                    aria-hidden="true"
-                  />
-                </div>
-                <p className="text-[10px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] text-[--text-muted] font-semibold">
-                  Submitted Details
+            <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] overflow-hidden">
+              <div className="flex items-center gap-2.5 border-b border-[--border] bg-[--bg-surface] px-5 py-3">
+                <MessageSquare size={13} className="text-[--text-muted]" aria-hidden="true" />
+                <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                  Submitted details
                 </p>
               </div>
-              <p className="whitespace-pre-wrap text-xs sm:text-sm leading-relaxed sm:leading-7 text-[--text-primary] rounded-xl bg-[color-mix(in_srgb,var(--bg-surface)_50%,transparent)] p-3 sm:p-4 border border-[color-mix(in_srgb,var(--border)_60%,transparent)]">
+              <p className="whitespace-pre-wrap text-sm leading-relaxed text-[--text-primary] p-5">
                 {selectedOrder.notes}
               </p>
             </div>
           ) : null}
 
           {/* Info Grid */}
-          <div className="grid gap-2 sm:gap-3 grid-cols-1 sm:grid-cols-3">
+          <div className="grid gap-px bg-[--border] border border-[--border] rounded-[--radius-card] overflow-hidden grid-cols-1 sm:grid-cols-3">
             <InfoBlock
-              icon={<Calendar size={14} className="sm:h-4 sm:w-4" />}
-              label="Order Date"
+              icon={<Calendar size={13} />}
+              label="Order date"
               value={formatDate(selectedOrder.createdAt)}
             />
             <InfoBlock
-              icon={<Hash size={14} className="sm:h-4 sm:w-4" />}
+              icon={<Hash size={13} />}
               copyValue={selectedOrder.orderCode}
-              label="Order Code"
+              label="Order code"
               mono
               value={selectedOrder.orderCode}
             />
             <InfoBlock
-              icon={<Receipt size={14} className="sm:h-4 sm:w-4" />}
+              icon={<Receipt size={13} />}
               label="Total"
               value={formatPrimaryPrice(selectedOrder.totalPrice)}
             />
           </div>
 
           {/* Help Footer */}
-          <div className="flex items-start gap-2.5 sm:gap-3 rounded-2xl sm:rounded-xl border border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_50%,transparent)] p-3 sm:p-4">
-            <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-lg bg-[color-mix(in_srgb,var(--color-info)_12%,transparent)] text-[--color-info]">
-              <HelpCircle size={14} className="sm:h-4 sm:w-4" />
-            </div>
-            <p className="text-[10px] sm:text-xs leading-relaxed text-[--text-secondary]">
+          <div className="flex items-start gap-3 rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] p-4">
+            <HelpCircle size={14} className="mt-0.5 shrink-0 text-[--text-muted]" />
+            <p className="text-xs leading-relaxed text-[--text-secondary]">
               Need help?{" "}
               <a
-                className="font-medium text-[--accent] hover:underline"
+                className="font-medium text-[--text-primary] underline-offset-2 hover:underline"
                 href={`mailto:${supportEmail}`}
               >
                 Email {supportEmail}
               </a>{" "}
               or{" "}
               <Link
-                className="font-medium text-[--accent] hover:underline"
+                className="font-medium text-[--text-primary] underline-offset-2 hover:underline"
                 href="/order"
               >
                 place a new order
@@ -685,22 +632,22 @@ function InfoBlock({
   }
 
   return (
-    <div className="rounded-2xl sm:rounded-xl border border-[--border] bg-[--bg-card] p-3 sm:p-4">
-      <div className="flex items-center gap-1.5 sm:gap-2 text-[--text-muted]">
+    <div className="bg-[--bg-card] p-4">
+      <div className="flex items-center gap-2 text-[--text-muted]">
         {icon}
-        <p className="text-[10px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] font-semibold">
+        <p className="font-mono text-[10px] uppercase tracking-[0.12em]">
           {label}
         </p>
       </div>
-      <div className="mt-2 sm:mt-3 flex flex-wrap items-center gap-2 sm:gap-3">
+      <div className="mt-2 flex flex-wrap items-center gap-2">
         <p
-          className={`text-sm sm:text-base font-medium text-[--text-primary] ${mono ? "font-mono" : ""}`}
+          className={`text-sm font-medium text-[--text-primary] ${mono ? "font-mono" : ""}`}
         >
           {value}
         </p>
         {copyValue ? (
           <button
-            className="inline-flex items-center gap-1 sm:gap-1.5 rounded-full border border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_60%,transparent)] px-2 py-1 sm:px-2.5 sm:py-1.5 text-[10px] sm:text-xs text-[--text-secondary] transition-all duration-200 hover:border-[--accent] hover:text-[--accent] active:scale-[0.97]"
+            className="inline-flex items-center gap-1.5 rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.08em] text-[--text-secondary] transition-colors hover:border-[--text-primary] hover:text-[--text-primary]"
             onClick={copyText}
             type="button"
           >
@@ -709,14 +656,14 @@ function InfoBlock({
                 <Check
                   aria-hidden="true"
                   size={10}
-                  className="sm:h-3 sm:w-3 text-[--color-success]"
+                  className="text-[--color-success]"
                   strokeWidth={2.5}
                 />
                 Copied
               </>
             ) : (
               <>
-                <Copy aria-hidden="true" size={10} className="sm:h-3 sm:w-3" />
+                <Copy aria-hidden="true" size={10} />
                 Copy
               </>
             )}

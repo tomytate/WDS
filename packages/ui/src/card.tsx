@@ -8,14 +8,17 @@ type CardProps = HTMLAttributes<HTMLDivElement> & {
   variant?: CardVariant;
 };
 
+/**
+ * Citrus Editorial cards:
+ * Flat surfaces, visible hairline borders. No glassmorphism on body cards.
+ * `interactive` cards reveal a hard offset accent shadow on hover.
+ */
 const variantClasses: Record<CardVariant, string> = {
-  default:
-    "border border-[--border] bg-[color-mix(in_srgb,var(--bg-card)_92%,transparent)] shadow-[--shadow-card] backdrop-blur-sm",
+  default: "border border-[--border] bg-[--bg-card]",
   glass: "glass-panel",
-  elevated:
-    "border border-[--border] bg-[color-mix(in_srgb,var(--bg-card)_96%,transparent)] shadow-[--shadow-lg]",
+  elevated: "border border-[--border] bg-[--bg-card] shadow-[--shadow-md]",
   interactive:
-    "border border-[--border] bg-[color-mix(in_srgb,var(--bg-card)_92%,transparent)] shadow-[--shadow-card] backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-[color-mix(in_srgb,var(--accent)_36%,var(--border))] hover:shadow-[0_0_0_1px_color-mix(in_srgb,var(--accent)_10%,transparent),0_8px_32px_color-mix(in_srgb,var(--accent)_12%,transparent),0_2px_8px_rgba(0,0,0,0.04)]",
+    "border border-[--border] bg-[--bg-card] transition-[border-color,box-shadow,transform] duration-200 ease-out hover:border-[--text-primary] hover:shadow-[4px_4px_0_var(--accent)]",
 };
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
@@ -24,7 +27,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
       <div
         ref={ref}
         className={cn(
-          "overflow-hidden rounded-[--radius-card] transition-[box-shadow,border-color] duration-300",
+          "rounded-[--radius-card] transition-[box-shadow,border-color] duration-200",
           variantClasses[variant],
           className,
         )}
@@ -56,7 +59,7 @@ export function CardTitle({
   return (
     <h3
       className={cn(
-        "font-display text-xl tracking-tight text-[--text-primary]",
+        "font-display text-xl font-semibold tracking-tight text-[--text-primary]",
         className,
       )}
       {...props}

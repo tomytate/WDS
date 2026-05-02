@@ -8,10 +8,10 @@ import type {
 import { cn } from "./cn";
 
 const fieldBase =
-  "w-full rounded-2xl border border-[--border] bg-[--bg-surface] text-sm text-[--text-primary] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)] outline-none transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-[--text-muted] focus:border-[--accent] focus:bg-[color-mix(in_srgb,var(--accent)_3%,var(--bg-surface))] focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--accent)_14%,transparent)]";
+  "w-full rounded-[--radius-inner] border border-[--border] bg-[--bg-card] text-sm text-[--text-primary] outline-none transition-[border-color,box-shadow,background-color] duration-150 placeholder:text-[--text-muted] focus:border-[--text-primary] focus:shadow-[0_0_0_3px_var(--accent-tint-medium)]";
 
 const fieldError =
-  "border-[--color-danger] focus:border-[--color-danger] focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--color-danger)_14%,transparent)]";
+  "border-[--color-danger] focus:border-[--color-danger] focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--color-danger)_18%,transparent)]";
 
 export function Input({
   className,
@@ -28,23 +28,23 @@ export function Input({
     return (
       <div className="relative">
         {leftIcon ? (
-          <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-[--text-muted]">
+          <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[--text-muted]">
             {leftIcon}
           </span>
         ) : null}
         <input
           className={cn(
             fieldBase,
-            "h-12 px-4",
-            !!leftIcon && "pl-11",
-            !!rightIcon && "pr-11",
+            "h-11 px-3.5",
+            !!leftIcon && "pl-10",
+            !!rightIcon && "pr-10",
             error && fieldError,
             className,
           )}
           {...props}
         />
         {rightIcon ? (
-          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-[--text-muted]">
+          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-[--text-muted]">
             {rightIcon}
           </span>
         ) : null}
@@ -54,7 +54,7 @@ export function Input({
 
   return (
     <input
-      className={cn(fieldBase, "h-12 px-4", error && fieldError, className)}
+      className={cn(fieldBase, "h-11 px-3.5", error && fieldError, className)}
       {...props}
     />
   );
@@ -69,7 +69,7 @@ export function Textarea({
     <textarea
       className={cn(
         fieldBase,
-        "min-h-28 px-4 py-3",
+        "min-h-28 px-3.5 py-3",
         error && fieldError,
         className,
       )}
@@ -98,7 +98,7 @@ export function Select({
       }}
       className={cn(
         fieldBase,
-        "appearance-none h-12 min-h-[44px] px-4 pr-9",
+        "appearance-none h-11 min-h-[44px] px-3.5 pr-9",
         error && fieldError,
         className,
       )}
@@ -128,7 +128,7 @@ export function FieldWrapper({
     <div className={cn("space-y-2", className)}>
       {label ? (
         <label
-          className="text-sm font-medium text-[--text-primary]"
+          className="block font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-[--text-muted]"
           htmlFor={htmlFor}
         >
           {label}
@@ -137,14 +137,14 @@ export function FieldWrapper({
       {children}
       {error ? (
         <p
-          className="animate-[field-error-in_0.25s_ease-out] text-xs text-[--color-danger]"
+          className="animate-[field-error-in_0.25s_ease-out] text-xs font-medium text-[--color-danger-text]"
           data-field-error
           role="alert"
         >
           {error}
         </p>
       ) : hint ? (
-        <p className="text-xs leading-6 text-[--text-secondary]">{hint}</p>
+        <p className="text-xs leading-5 text-[--text-secondary]">{hint}</p>
       ) : null}
     </div>
   );

@@ -65,7 +65,7 @@ export function SupportDashboard({
                 <Link
                   className={`flex items-start gap-3 border-b border-[--border] px-4 py-3 transition-colors hover:bg-[--bg-surface] ${
                     selectedChat?.id === chat.id
-                      ? "bg-[--accent-tint-soft]"
+                      ? "bg-[--bg-surface]"
                       : ""
                   }`}
                   href={`/dashboard/support?chatId=${chat.id}`}

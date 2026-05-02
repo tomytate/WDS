@@ -60,8 +60,8 @@ import dynamic from "next/dynamic";
 // Lazy load the multi-step components bridging large UI payloads out of the initial Document object
 const ProductSelectionStepLoader = () => (
   <div className="space-y-4 animate-pulse">
-    <div className="h-[90px] w-full rounded-2xl bg-[--bg-surface] border border-[--border]" />
-    <div className="h-[280px] w-full rounded-2xl bg-[--bg-surface] border border-[--border]" />
+    <div className="h-[90px] w-full rounded-[--radius-card] bg-[--bg-surface] border border-[--border]" />
+    <div className="h-[280px] w-full rounded-[--radius-card] bg-[--bg-surface] border border-[--border]" />
   </div>
 );
 
@@ -72,8 +72,8 @@ const ProductSelectionStep = dynamic(
 
 const CustomerDetailsStepLoader = () => (
   <div className="space-y-6 animate-pulse">
-    <div className="h-[200px] w-full rounded-2xl bg-[--bg-surface] border border-[--border]" />
-    <div className="h-[300px] w-full rounded-2xl bg-[--bg-surface] border border-[--border]" />
+    <div className="h-[200px] w-full rounded-[--radius-card] bg-[--bg-surface] border border-[--border]" />
+    <div className="h-[300px] w-full rounded-[--radius-card] bg-[--bg-surface] border border-[--border]" />
   </div>
 );
 
@@ -85,8 +85,8 @@ const CustomerDetailsStep = dynamic(
 
 const PaymentStepLoader = () => (
   <div className="space-y-6 animate-pulse">
-    <div className="h-[120px] w-full rounded-2xl bg-[--bg-surface] border border-[--border]" />
-    <div className="h-[300px] w-full rounded-2xl bg-[--bg-surface] border border-[--border]" />
+    <div className="h-[120px] w-full rounded-[--radius-card] bg-[--bg-surface] border border-[--border]" />
+    <div className="h-[300px] w-full rounded-[--radius-card] bg-[--bg-surface] border border-[--border]" />
   </div>
 );
 
@@ -97,8 +97,8 @@ const PaymentStep = dynamic(
 
 const ReviewStepLoader = () => (
   <div className="space-y-6 animate-pulse">
-    <div className="h-[300px] w-full rounded-2xl bg-[--bg-surface] border border-[--border]" />
-    <div className="h-[180px] w-full rounded-2xl bg-[--bg-surface] border border-[--border]" />
+    <div className="h-[300px] w-full rounded-[--radius-card] bg-[--bg-surface] border border-[--border]" />
+    <div className="h-[180px] w-full rounded-[--radius-card] bg-[--bg-surface] border border-[--border]" />
   </div>
 );
 
@@ -653,26 +653,29 @@ export function OrderForm({
   return (
     <div className="relative scroll-mt-24" ref={formTopRef}>
       <div className="sticky top-2 sm:top-[72px] z-30 mb-4 sm:mb-6 lg:mb-8">
-        <div className="bg-[color-mix(in_srgb,var(--bg-card)_70%,transparent)] backdrop-blur-2xl rounded-xl sm:rounded-2xl border border-[color-mix(in_srgb,var(--accent)_15%,transparent)] px-3.5 py-3 sm:px-5 sm:py-3.5 shadow-xl">
+        <div className="rounded-[--radius-card] border border-[--border] bg-[color-mix(in_srgb,var(--bg-card)_92%,transparent)] backdrop-blur-xl px-4 py-3 sm:px-5 sm:py-3.5">
           {/* Top row: Step label + Total */}
-          <div className="flex items-center justify-between mb-2.5">
+          <div className="flex items-center justify-between gap-3 mb-3">
             <div>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-[--text-muted]">
-                Step {step + 1} of {checkoutSteps.length}
+              <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                Step {String(step + 1).padStart(2, "0")} / {String(checkoutSteps.length).padStart(2, "0")}
               </span>
-              <p className="font-display text-sm font-bold text-[--text-primary]">
+              <p className="font-display text-sm font-semibold tracking-tight text-[--text-primary]">
                 {checkoutSteps[step]?.label}
               </p>
             </div>
-            <div className="text-right rounded-xl bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] px-3 py-1.5 border border-[color-mix(in_srgb,var(--accent)_10%,transparent)]">
-              <div className="flex shrink-0 flex-col items-end pl-3">
-                <span className="text-sm font-semibold sm:text-base text-[--text-primary]">
-                  {formattedTotal}
-                </span>
-                {showSecondary && (
-                  <p className="text-[9px] font-medium text-[--text-muted] opacity-70">≈ {formatSecondaryPrice(totalPrice)}</p>
-                )}
-              </div>
+            <div className="text-right">
+              <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-[--text-muted]">
+                Total
+              </p>
+              <span className="font-display text-base font-semibold tabular-nums text-[--text-primary]">
+                {formattedTotal}
+              </span>
+              {showSecondary && (
+                <p className="font-mono text-[10px] text-[--text-muted]">
+                  ≈ {formatSecondaryPrice(totalPrice)}
+                </p>
+              )}
             </div>
           </div>
 
@@ -689,14 +692,14 @@ export function OrderForm({
                   onClick={() => {
                     if (index <= step) setStep(index);
                   }}
-                  className="group relative h-1.5 flex-1 rounded-full overflow-hidden bg-[color-mix(in_srgb,var(--border)_40%,transparent)] transition-all cursor-pointer disabled:cursor-default"
+                  className="group relative h-1 flex-1 overflow-hidden bg-[--border] transition-all cursor-pointer disabled:cursor-default"
                   aria-label={`${checkoutStep.label}${complete ? " (completed)" : active ? " (current)" : ""}`}
                 >
                   {complete && (
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#D97706] to-[#F59E0B]" />
+                    <div className="absolute inset-0 bg-[--text-primary]" />
                   )}
                   {active && (
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#D97706] to-[#FBBF24] animate-[subtle-pulse_2s_ease-in-out_infinite]" />
+                    <div className="absolute inset-0 bg-[--accent] animate-[subtle-pulse_2s_ease-in-out_infinite]" />
                   )}
                 </button>
               );
@@ -704,15 +707,15 @@ export function OrderForm({
           </div>
 
           {/* Step labels — desktop only */}
-          <div className="hidden sm:flex mt-1.5">
+          <div className="hidden sm:flex mt-2">
             {checkoutSteps.map((checkoutStep, index) => (
               <span
                 key={checkoutStep.id}
-                className={`flex-1 text-center text-[9px] font-medium transition-colors ${
+                className={`flex-1 text-center font-mono text-[9px] uppercase tracking-[0.08em] transition-colors ${
                   index < step
-                    ? "text-[--color-success]"
+                    ? "text-[--text-primary]"
                     : index === step
-                      ? "text-[--accent]"
+                      ? "text-[--accent-strong] font-semibold"
                       : "text-[--text-muted]"
                 }`}
               >
@@ -724,10 +727,7 @@ export function OrderForm({
         </div>
       </div>
 
-      <Card className="overflow-hidden border-[color-mix(in_srgb,var(--accent)_12%,var(--border))]">
-        {/* Gold accent top bar */}
-        <div className="h-0.5 w-full bg-gradient-to-r from-[#D97706] via-[#F59E0B] to-transparent" />
-
+      <Card className="overflow-hidden">
         <CardContent className="space-y-5 sm:space-y-6 lg:space-y-8 p-4 sm:p-6 lg:p-8">
           {/* Minimal step header */}
           <motion.div
@@ -853,7 +853,7 @@ export function OrderForm({
               })}
             >
               {!canPlaceOrders || !canBrowseBoosting ? (
-                <div className="space-y-3 rounded-2xl border border-[--accent] bg-[color-mix(in_srgb,var(--accent)_8%,transparent)] px-4 py-4 text-sm text-[--text-primary]">
+                <div className="space-y-3 rounded-[--radius-inner] border border-[--text-primary] bg-[--accent] px-4 py-3 text-sm font-medium text-[--accent-fg]">
                   {!canPlaceOrders ? (
                     <p>
                       {storeFlags.maintenanceMessage ??
@@ -967,7 +967,7 @@ export function OrderForm({
 
               {serverError ? (
                 <p
-                  className="rounded-2xl border border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_12%,transparent)] px-4 py-3 text-sm text-[--color-danger]"
+                  className="rounded-[--radius-inner] border border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_10%,transparent)] px-4 py-3 text-sm font-medium text-[--color-danger-text]"
                   role="alert"
                 >
                   {serverError}
@@ -1021,18 +1021,16 @@ export function OrderForm({
       </Card>
 
       <motion.div
-        initial={{ y: 20, opacity: 0 }}
+        initial={{ y: 16, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="safe-bottom fixed bottom-[72px] inset-x-3 sm:sticky sm:inset-x-auto sm:bottom-[24px] lg:bottom-[32px] z-30 mt-4 sm:mt-6 flex sm:w-fit sm:mx-auto items-center justify-between sm:justify-center gap-1.5 sm:gap-2 lg:gap-3 rounded-2xl sm:rounded-full bg-[color-mix(in_srgb,var(--bg-surface)_60%,transparent)] p-1.5 sm:p-2 shadow-[0_8px_32px_color-mix(in_srgb,var(--accent)_12%,transparent),inset_0_1px_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl"
+        transition={{ delay: 0.15 }}
+        className="safe-bottom fixed bottom-[72px] inset-x-3 sm:sticky sm:inset-x-auto sm:bottom-[24px] lg:bottom-[32px] z-30 mt-4 sm:mt-6 flex sm:w-fit sm:mx-auto items-center justify-between sm:justify-center gap-2 rounded-[--radius-card] border border-[--border] bg-[color-mix(in_srgb,var(--bg-card)_92%,transparent)] backdrop-blur-xl p-1.5 shadow-[--shadow-md]"
       >
         {step > 0 ? (
           <button
             className={buttonStyles({
-              className:
-                "group justify-center rounded-full pl-3 pr-4 sm:pl-4 sm:pr-5 border-0 bg-[color-mix(in_srgb,var(--bg-surface)_80%,transparent)] hover:bg-[color-mix(in_srgb,var(--bg-surface)_100%,transparent)] text-sm sm:text-base h-10 sm:h-11",
+              className: "group gap-1.5",
               variant: "ghost",
-              size: "lg",
             })}
             onClick={() =>
               setStep((currentStep) => Math.max(currentStep - 1, 0))
@@ -1041,8 +1039,9 @@ export function OrderForm({
           >
             <ArrowLeft
               aria-hidden="true"
-              className="mr-1 sm:mr-1.5 shrink-0 transition-transform duration-300 group-hover:-translate-x-0.5 h-3.5 w-3.5 sm:h-4 sm:w-4"
-              strokeWidth={2.5}
+              className="shrink-0 transition-transform duration-200 group-hover:-translate-x-0.5"
+              size={14}
+              strokeWidth={2}
             />
             <span className="hidden xs:inline">Back</span>
           </button>
@@ -1051,9 +1050,7 @@ export function OrderForm({
         {step < checkoutSteps.length - 1 ? (
           <button
             className={buttonStyles({
-              className:
-                "group border-none justify-center rounded-full px-4 sm:px-6 lg:px-8 shadow-[0_4px_16px_color-mix(in_srgb,var(--accent)_28%,transparent)] hover:shadow-[0_8px_24px_color-mix(in_srgb,var(--accent)_36%,transparent)] active:scale-[0.98] transition-all duration-200 text-sm sm:text-base h-10 sm:h-11 flex-1 sm:flex-none max-w-[280px] sm:max-w-none",
-              size: "lg",
+              className: "group gap-2 px-5 sm:px-6 flex-1 sm:flex-none max-w-[280px] sm:max-w-none",
             })}
             disabled={step === 0 && selectedProductCount === 0}
             onClick={handleNextStep}
@@ -1075,31 +1072,31 @@ export function OrderForm({
             {step !== 0 || selectedProductCount > 0 ? (
               <ArrowRight
                 aria-hidden="true"
-                className="ml-1.5 sm:ml-2 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 h-3.5 w-3.5 sm:h-4 sm:w-4"
-                strokeWidth={2.5}
+                className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
+                size={14}
+                strokeWidth={2}
               />
             ) : null}
           </button>
         ) : (
           <button
             className={buttonStyles({
-              className:
-                "group border-none justify-center rounded-full px-4 sm:px-6 lg:px-8 shadow-[0_4px_16px_color-mix(in_srgb,var(--accent)_28%,transparent)] hover:shadow-[0_8px_24px_color-mix(in_srgb,var(--accent)_36%,transparent)] active:scale-[0.98] transition-all duration-200 text-sm sm:text-base h-10 sm:h-11 flex-1 sm:flex-none max-w-[280px] sm:max-w-none",
-              size: "lg",
+              className: "group gap-2 px-5 sm:px-6 flex-1 sm:flex-none max-w-[280px] sm:max-w-none",
             })}
             disabled={isPending || !canPlaceOrders}
             type="submit"
             form="order-form-element"
           >
             {!canPlaceOrders
-              ? "Orders Paused"
+              ? "Orders paused"
               : isPending
-                ? "Submitting..."
-                : "Submit Order"}
+                ? "Submitting…"
+                : "Submit order"}
             {!isPending && canPlaceOrders ? (
               <Check
                 aria-hidden="true"
-                className="ml-1.5 sm:ml-2 shrink-0 h-3.5 w-3.5 sm:h-4 sm:w-4"
+                size={14}
+                className="shrink-0"
                 strokeWidth={2.5}
               />
             ) : null}

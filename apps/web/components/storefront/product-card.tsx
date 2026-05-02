@@ -4,7 +4,7 @@ import { ArrowRight, Zap } from "lucide-react";
 import Link from "next/link";
 
 import type { Product } from "@wongdigital/db";
-import { Badge, buttonStyles, Card } from "@wongdigital/ui";
+import { Badge, Card } from "@wongdigital/ui";
 
 import {
   getProductDurationConfigs,
@@ -16,7 +16,6 @@ import { ProductLogo } from "@/components/product-logo";
 import { WishlistButton } from "@/components/storefront/wishlist-button";
 import { categoryLabel } from "@/lib/catalog";
 import { getProductSummary, getProductDuration } from "@/lib/product-copy";
-import { useTilt } from "@/hooks/use-tilt";
 import { useGeoPricing } from "@/hooks/use-geo-pricing";
 
 type ProductCardProps = {
@@ -27,11 +26,10 @@ type ProductCardProps = {
 function getBadges(product: Product) {
   const badges: Array<{
     label: string;
-    emoji: string;
     tone: "accent" | "info" | "success";
   }> = [];
   if (product.slug === "google-ai-pro") {
-    badges.push({ label: "Best Seller", emoji: "⭐", tone: "accent" });
+    badges.push({ label: "Best Seller", tone: "accent" });
   }
   return badges.slice(0, 2);
 }
@@ -42,7 +40,6 @@ export function ProductCard({ product, isHero }: ProductCardProps) {
     ? getServiceStartingPrice(product)
     : product.price;
   const badges = getBadges(product);
-  const { ref, handlers } = useTilt<HTMLDivElement>();
   const { formatPrimaryPrice, formatSecondaryPrice, showSecondary } = useGeoPricing();
   const planDuration = getProductDuration(product.slug);
   const durationConfigs = getProductDurationConfigs(product.slug);
@@ -50,57 +47,49 @@ export function ProductCard({ product, isHero }: ProductCardProps) {
 
   return (
     <Card
-      ref={ref}
       variant="interactive"
-      {...handlers}
-      className={`group relative flex h-full flex-col glow-ring ${
+      className={`group relative flex h-full flex-col glow-ring overflow-hidden ${
         isHero ? "bento-hero" : ""
       }`}
       style={
         {
-          transition:
-            "transform 0.4s cubic-bezier(0.25, 0.4, 0.25, 1), box-shadow 0.3s ease, border-color 0.3s ease",
           viewTransitionName: `product-card-${product.slug}`,
         } as React.CSSProperties
       }
     >
-      {/* Accent top-line — subtle, reveals on hover */}
-      <div className="absolute inset-x-0 top-0 z-20 h-px bg-[color-mix(in_srgb,var(--accent)_50%,transparent)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-      {/* Badges */}
-      {badges.length > 0 && (
-        <div className="absolute left-4 top-4 z-10 flex gap-1.5">
+      {/* Top meta strip */}
+      <div className="flex items-center justify-between border-b border-[--border] px-5 py-2.5">
+        <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+          {categoryLabel(product.category)}
+        </span>
+        <div className="flex items-center gap-2">
           {badges.map((badge) => (
             <span
               key={badge.label}
-              className="inline-flex items-center gap-1 rounded-full border border-[--accent-tint-strong] bg-[--accent-tint-soft] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[--accent]"
+              className="inline-flex items-center gap-1 rounded-[--radius-inner] bg-[--accent] px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-[0.06em] text-[--accent-fg]"
             >
-              {badge.emoji} {badge.label}
+              ★ {badge.label}
             </span>
           ))}
+          <WishlistButton productId={product.id} />
         </div>
-      )}
-
-      {/* Wishlist */}
-      <div className="absolute right-3 top-3 z-10">
-        <WishlistButton productId={product.id} className="shadow-sm" />
       </div>
 
       <div
-        className={`relative z-[1] flex h-full flex-col gap-5 ${isHero ? "p-6 sm:p-8" : "p-5 sm:p-6"}`}
+        className={`relative flex h-full flex-col gap-5 ${
+          isHero ? "p-6 sm:p-8" : "p-5 sm:p-6"
+        }`}
       >
         {/* Header: Logo + Badge */}
-        <div className="flex items-start gap-4">
+        <div className="flex items-start justify-between gap-3">
           <div className="relative">
-            <div className="flex items-center justify-center rounded-2xl border border-[--accent-tint-medium] bg-[--accent-tint-soft] p-2.5 transition-transform duration-500 group-hover:-translate-y-1">
+            <div className="flex items-center justify-center rounded-[--radius-inner] border border-[--border] bg-[--bg-base] p-3 transition-colors duration-300 group-hover:border-[--text-primary]">
               <ProductLogo
                 iconUrl={product.iconUrl}
                 name={product.name}
                 size="md"
               />
             </div>
-            {/* Availability dot — `role="img"` lets aria-label be read as the
-                accessible name of a graphic (WCAG 2.2 / aria-prohibited-attr). */}
             <span
               className="absolute -bottom-0.5 -right-0.5 flex h-3 w-3 items-center justify-center"
               role="img"
@@ -111,12 +100,13 @@ export function ProductCard({ product, isHero }: ProductCardProps) {
             </span>
           </div>
           <Badge
-            className="mt-1 shrink-0 whitespace-nowrap gap-1.5 px-2.5 py-1.5 text-[10px] font-semibold leading-none tracking-[0.12em] uppercase"
-            tone="accent"
+            className="mt-1 shrink-0 whitespace-nowrap"
+            tone={serviceConfig ? "accent" : "muted"}
+            size="sm"
           >
             {serviceConfig ? (
               <>
-                <Zap size={10} aria-hidden="true" />
+                <Zap size={9} aria-hidden="true" />
                 Service
               </>
             ) : (
@@ -126,71 +116,70 @@ export function ProductCard({ product, isHero }: ProductCardProps) {
         </div>
 
         {/* Content */}
-        <div className="space-y-2.5">
-          <p className="text-[10px] uppercase tracking-[0.22em] font-semibold text-[--text-muted]">
-            {categoryLabel(product.category)}
-          </p>
+        <div className="space-y-2">
           <h3
-            className={`font-display leading-tight tracking-tight text-[--text-primary] group-hover:text-[--accent] transition-colors duration-300 ${
-              isHero ? "text-2xl sm:text-3xl" : "text-xl sm:text-2xl"
-            }`}
+            className={`font-display leading-[1.15] tracking-tight text-[--text-primary] ${
+              isHero ? "text-2xl sm:text-3xl" : "text-xl"
+            } font-semibold`}
           >
             {product.name}
           </h3>
           <p
-            className={`text-sm leading-[1.65] text-[--text-secondary] ${isHero ? "line-clamp-4" : "line-clamp-2"}`}
+            className={`text-sm leading-relaxed text-[--text-secondary] ${
+              isHero ? "line-clamp-4" : "line-clamp-2"
+            }`}
           >
             {getProductSummary(product)}
           </p>
         </div>
 
-        {/* Pricing */}
+        {/* Pricing — flat, editorial */}
         <div className="mt-auto space-y-4">
-          <div className="rounded-xl bg-[color-mix(in_srgb,var(--bg-surface)_70%,transparent)] p-3.5 border border-[color-mix(in_srgb,var(--border)_40%,transparent)]">
-            <div className="flex items-baseline justify-between gap-2">
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-[--text-muted]">
-                  Starts at
-                </p>
-                <p
-                  className={`font-display font-bold tracking-tight text-[--accent] mt-0.5 ${isHero ? "text-3xl" : "text-2xl"}`}
-                >
-                  {formatPrimaryPrice(startsAtPrice, product.slug, startsAtPlan)}
-                </p>
-                {/* Secondary reference price */}
-                {showSecondary && (
-                  <p className="mt-0.5 text-[11px] font-medium text-[--text-muted]">
-                    ≈ {formatSecondaryPrice(startsAtPrice, product.slug, startsAtPlan)}
-                  </p>
-                )}
-              </div>
-              <p className="text-[10px] uppercase tracking-[0.16em] font-medium text-[--text-muted]">
-                {serviceConfig ? "Per Order" : "Base Price"}
-              </p>
+          <div className="border-t border-[--border] pt-4">
+            <div className="flex items-baseline justify-between gap-2 mb-2">
+              <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                Starts at
+              </span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-[--text-muted]">
+                {serviceConfig ? "per order" : "base"}
+              </span>
             </div>
-            <p className="mt-2.5 text-xs leading-[1.55] text-[--text-secondary] border-t border-[color-mix(in_srgb,var(--border)_40%,transparent)] pt-2.5">
-              {serviceConfig
-                ? <>{formatPrimaryPrice(serviceConfig.pricePerThousand, product.slug)} per 1K {showSecondary ? `(≈ ${formatSecondaryPrice(serviceConfig.pricePerThousand, product.slug)})` : ""} · quantities: {serviceConfig.quantities
-                    .map((quantity) =>
-                      new Intl.NumberFormat("en-US").format(quantity),
-                    )
-                    .join(", ")}</>
-                : planDuration.description}
+            <div className="flex items-baseline gap-2">
+              <span
+                className={`font-display font-semibold tracking-tight text-[--text-primary] ${
+                  isHero ? "text-4xl" : "text-3xl"
+                }`}
+              >
+                {formatPrimaryPrice(startsAtPrice, product.slug, startsAtPlan)}
+              </span>
+              {showSecondary && (
+                <span className="text-xs font-medium text-[--text-muted]">
+                  ≈ {formatSecondaryPrice(startsAtPrice, product.slug, startsAtPlan)}
+                </span>
+              )}
+            </div>
+            <p className="mt-2 text-xs leading-relaxed text-[--text-secondary]">
+              {serviceConfig ? (
+                <>
+                  {formatPrimaryPrice(serviceConfig.pricePerThousand, product.slug)} per 1K · quantities:{" "}
+                  {serviceConfig.quantities
+                    .map((q) => new Intl.NumberFormat("en-US").format(q))
+                    .join(", ")}
+                </>
+              ) : (
+                planDuration.description
+              )}
             </p>
           </div>
 
           <Link
-            className={buttonStyles({
-              className: `group/btn w-full justify-center gap-2 font-medium rounded-xl ${
-                isHero ? "h-12 sm:h-13 text-base" : "h-11"
-              }`,
-            })}
+            className={`group/btn inline-flex w-full h-11 items-center justify-between gap-2 rounded-[--radius-inner] border border-[--text-primary] bg-[--text-primary] px-4 text-sm font-semibold text-[--bg-base] transition-colors hover:bg-[--accent] hover:text-[--accent-fg] hover:border-[--accent]`}
             href={`/order?product=${product.slug}`}
           >
             Order now
             <ArrowRight
               aria-hidden="true"
-              size={15}
+              size={14}
               className="transition-transform duration-200 group-hover/btn:translate-x-0.5"
             />
           </Link>

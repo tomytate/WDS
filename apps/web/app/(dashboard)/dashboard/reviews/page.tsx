@@ -41,7 +41,7 @@ export default async function DashboardReviewsPage({
         success={resolvedSearchParams.success}
       />
 
-      <div className="rounded-2xl border border-[--border] bg-[--bg-card] overflow-hidden">
+      <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] overflow-hidden">
         {reviews.length === 0 ? (
           <div className="flex flex-col items-center justify-center p-12 text-center text-[--text-muted]">
             <Star size={32} className="mb-4 text-[--border]" />

@@ -14,10 +14,10 @@ export function OrderStatusTimeline({ status }: OrderStatusTimelineProps) {
   if (isCancelled) {
     return (
       <div className="space-y-4">
-        <div className="flex items-center gap-3 rounded-2xl border border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_10%,transparent)] px-4 py-3">
-          <XCircle size={20} className="shrink-0 text-[--color-danger]" />
+        <div className="flex items-start gap-3 rounded-[--radius-inner] border border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_10%,transparent)] px-4 py-3">
+          <XCircle size={16} className="shrink-0 mt-0.5 text-[--color-danger-text]" />
           <div>
-            <p className="text-sm font-semibold text-[--color-danger]">
+            <p className="text-sm font-semibold text-[--color-danger-text]">
               Order Cancelled
             </p>
             <p className="text-xs text-[--text-secondary]">
@@ -37,9 +37,11 @@ export function OrderStatusTimeline({ status }: OrderStatusTimelineProps) {
           const active = currentIndex === index;
           const marker =
             complete && !active ? (
-              <Check size={14} strokeWidth={3} />
+              <Check size={12} strokeWidth={2.5} />
             ) : (
-              String(index + 1)
+              <span className="font-mono text-[11px]">
+                {String(index + 1).padStart(2, "0")}
+              </span>
             );
 
           return (
@@ -48,20 +50,20 @@ export function OrderStatusTimeline({ status }: OrderStatusTimelineProps) {
               key={step}
             >
               <div
-                className={`flex h-9 w-9 items-center justify-center rounded-full border text-xs font-semibold ${
+                className={`flex h-8 w-8 items-center justify-center rounded-[--radius-inner] border text-xs font-semibold transition-colors ${
                   active
-                    ? "border-[--accent] bg-[--accent-tint-medium] text-[--accent]"
+                    ? "border-[--text-primary] bg-[--accent] text-[--accent-fg]"
                     : complete
-                      ? "border-[--accent] bg-[--accent] text-[--accent-fg]"
+                      ? "border-[--text-primary] bg-[--text-primary] text-[--bg-base]"
                       : "border-dashed border-[--border] text-[--text-muted]"
                 }`}
               >
                 {marker}
               </div>
               <span
-                className={`text-sm ${
+                className={`text-sm tracking-tight ${
                   active
-                    ? "text-[--accent]"
+                    ? "text-[--text-primary] font-semibold"
                     : complete
                       ? "text-[--text-primary]"
                       : "text-[--text-muted]"
@@ -70,7 +72,7 @@ export function OrderStatusTimeline({ status }: OrderStatusTimelineProps) {
                 {statusLabel(step)}
               </span>
               {index < orderTimeline.length - 1 ? (
-                <div className="h-px w-5 bg-[--border] sm:w-12" />
+                <div className="h-px w-5 bg-[--border] sm:w-10" />
               ) : null}
             </div>
           );

@@ -2,14 +2,6 @@ import type { ReactNode } from "react"
 
 import { cn } from "./cn"
 
-/**
- * PageHeader — the eyebrow + title + description + action-row combo used at the top of every page.
- *
- * Accessibility (verified, see audit-status.md §1):
- * - Title renders as `<h1>` by default; pass `as="h2"` when nesting inside another section.
- * - Icon is marked decorative (`aria-hidden`) — the eyebrow text carries the label.
- * - Action container is a flex row so button-ordering is the keyboard focus order.
- */
 export type PageHeaderProps = {
   icon?: ReactNode
   eyebrow?: string
@@ -32,36 +24,43 @@ export function PageHeader({
   return (
     <div
       className={cn(
-        "mb-6 flex flex-col gap-4 border-b border-[--border] pb-5 sm:mb-8 sm:gap-5 sm:pb-6 lg:mb-10 lg:flex-row lg:items-end lg:justify-between",
+        "mb-6 flex flex-col gap-4 border-b border-[--border] pb-6 sm:mb-8 lg:mb-10 lg:flex-row lg:items-end lg:justify-between",
         className,
       )}
     >
-      <div className="space-y-2.5">
+      <div className="space-y-3 max-w-2xl">
         {eyebrow ? (
           <div className="flex items-center gap-2.5">
             {icon ? (
               <div
                 aria-hidden="true"
-                className="flex size-[--chip-size-md] items-center justify-center rounded-[--radius-inner] bg-[--accent-tint-soft] text-[--accent] [&>svg]:size-[--chip-icon-md]"
+                className="flex h-7 w-7 items-center justify-center rounded-[--radius-inner] border border-[--border] bg-[--bg-card] text-[--text-primary] [&>svg]:size-[14px]"
               >
                 {icon}
               </div>
             ) : (
-              <span aria-hidden="true" className="h-px w-4 bg-[--accent]" />
+              <span
+                aria-hidden="true"
+                className="h-1.5 w-1.5 rounded-sm bg-[--accent]"
+              />
             )}
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[--accent-strong]">
+            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-[--text-muted]">
               {eyebrow}
             </p>
           </div>
         ) : null}
-        <div className="space-y-1.5">
-          <Heading className="font-display text-2xl font-semibold leading-[1.1] tracking-tight sm:text-3xl lg:text-[34px] lg:leading-[1.05]">
+        <div className="space-y-2">
+          <Heading className="font-display text-3xl font-semibold leading-[1.05] tracking-[-0.025em] sm:text-4xl lg:text-[40px]">
             {title}
           </Heading>
-          <p className="max-w-2xl text-sm leading-relaxed text-[--text-secondary]">{description}</p>
+          <p className="text-[15px] leading-relaxed text-[--text-secondary]">
+            {description}
+          </p>
         </div>
       </div>
-      {actions ? <div className="flex flex-wrap gap-2 sm:gap-3">{actions}</div> : null}
+      {actions ? (
+        <div className="flex flex-wrap gap-2 sm:gap-3">{actions}</div>
+      ) : null}
     </div>
   )
 }

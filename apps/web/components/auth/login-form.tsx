@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState, useTransition } from "react"
 
-import { Card, CardContent, Input, buttonStyles } from "@wongdigital/ui"
+import { Card, CardContent, FieldWrapper, Input, buttonStyles } from "@wongdigital/ui"
 
 import { createClient } from "@/utils/supabase/client"
 
@@ -48,34 +48,29 @@ export function LoginForm({
 
   return (
     <Card className="w-full max-w-lg">
-      <CardContent className="space-y-6 p-5 sm:p-8">
-        <div className="space-y-3">
-          <p className="text-sm uppercase tracking-[0.24em] text-[--accent]">Admin Access</p>
-          <h1 className="font-display text-3xl tracking-tight sm:text-5xl">Dashboard Login</h1>
-          <p className="text-sm leading-7 text-[--text-secondary]">
+      <CardContent className="space-y-6 p-6 sm:p-8">
+        <div>
+          <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[--accent-strong] mb-3">
+            / Admin access
+          </p>
+          <h1 className="font-display text-3xl font-semibold tracking-[-0.02em]">
+            Dashboard sign in.
+          </h1>
+          <p className="mt-3 text-sm leading-relaxed text-[--text-secondary]">
             Sign in with your admin email and password to manage orders, products,
             customers, and store settings.
           </p>
         </div>
 
         {localDashboardBypass ? (
-          <div className="rounded-2xl border border-[--accent] bg-[--accent-tint-soft] px-4 py-3 text-sm text-[--text-primary]">
+          <div className="rounded-[--radius-inner] border border-[--text-primary] bg-[--accent] px-4 py-3 text-sm font-medium text-[--accent-fg]">
             Local development bypass is active because Supabase dashboard auth is not fully configured in this environment yet.
           </div>
         ) : null}
 
         {!localDashboardBypass ? (
-          <form
-            className="space-y-4"
-            onSubmit={handleSubmit}
-          >
-            <div className="space-y-2">
-              <label
-                className="text-sm font-medium text-[--text-primary]"
-                htmlFor="email"
-              >
-                Email Address
-              </label>
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            <FieldWrapper htmlFor="email" label="Email address">
               <Input
                 autoComplete="email"
                 id="email"
@@ -85,15 +80,9 @@ export function LoginForm({
                 type="email"
                 value={email}
               />
-            </div>
+            </FieldWrapper>
 
-            <div className="space-y-2">
-              <label
-                className="text-sm font-medium text-[--text-primary]"
-                htmlFor="password"
-              >
-                Password
-              </label>
+            <FieldWrapper htmlFor="password" label="Password">
               <Input
                 autoComplete="current-password"
                 id="password"
@@ -103,10 +92,10 @@ export function LoginForm({
                 type="password"
                 value={password}
               />
-            </div>
+            </FieldWrapper>
 
             {error ? (
-              <p className="rounded-xl border border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_12%,transparent)] px-4 py-3 text-sm text-[--color-danger]">
+              <p className="rounded-[--radius-inner] border border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_10%,transparent)] px-4 py-2.5 text-sm font-medium text-[--color-danger-text]">
                 {error}
               </p>
             ) : null}
@@ -116,36 +105,36 @@ export function LoginForm({
               disabled={isPending}
               type="submit"
             >
-              {isPending ? "Signing In..." : "Sign In"}
+              {isPending ? "Signing in…" : "Sign in"}
             </button>
           </form>
         ) : (
           <Link
-            className={buttonStyles({ className: "justify-center" })}
+            className={buttonStyles({ className: "w-full justify-center" })}
             href={redirectPath}
           >
             Open Dashboard
           </Link>
         )}
 
-        <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="flex flex-col gap-3 sm:flex-row pt-2 border-t border-[--border]">
           <Link
             className={buttonStyles({
-              className: "justify-center",
-              variant: localDashboardBypass ? "ghost" : "surface",
+              className: "justify-center flex-1",
+              variant: "surface",
             })}
             href="/"
           >
-            Back to Storefront
+            Back to storefront
           </Link>
           <Link
             className={buttonStyles({
-              className: "justify-center",
+              className: "justify-center flex-1",
               variant: "ghost",
             })}
             href="/track"
           >
-            Track an Order
+            Track an order
           </Link>
         </div>
       </CardContent>

@@ -30,14 +30,15 @@ describe("Button", () => {
     it("applies accent (default) variant classes", () => {
       const { getByRole } = render(<Button>Accent</Button>);
       const button = getByRole("button");
-      expect(button.className).toContain("bg-[--accent]");
-      expect(button.className).toContain("text-[--accent-fg]");
+      // Accent (default) is now ink-on-cream — the primary CTA
+      expect(button.className).toContain("bg-[--text-primary]");
+      expect(button.className).toContain("text-[--bg-base]");
     });
 
     it("applies ghost variant classes", () => {
       const { getByRole } = render(<Button variant="ghost">Ghost</Button>);
       const button = getByRole("button");
-      expect(button.className).toContain("border-[--border]");
+      expect(button.className).toContain("border-[--border-strong]");
       expect(button.className).toContain("text-[--text-primary]");
     });
 
@@ -117,7 +118,7 @@ describe("Button", () => {
       const { getByRole } = render(<Button className="my-class">Merge</Button>);
       const button = getByRole("button");
       expect(button.className).toContain("my-class");
-      expect(button.className).toContain("rounded-full");
+      expect(button.className).toContain("rounded-[--radius-inner]");
     });
   });
 });
@@ -125,20 +126,21 @@ describe("Button", () => {
 describe("buttonStyles", () => {
   it("returns a class string with base styles", () => {
     const result = buttonStyles({});
-    expect(result).toContain("rounded-full");
-    expect(result).toContain("font-medium");
+    expect(result).toContain("rounded-[--radius-inner]");
+    expect(result).toContain("font-semibold");
     expect(result).toContain("transition-");
   });
 
   it("applies accent variant by default", () => {
     const result = buttonStyles({});
-    expect(result).toContain("bg-[--accent]");
+    expect(result).toContain("bg-[--text-primary]");
   });
 
   it("applies specified variant", () => {
     const result = buttonStyles({ variant: "ghost" });
-    expect(result).toContain("border-[--border]");
-    expect(result).not.toContain("bg-[--accent]");
+    expect(result).toContain("border-[--border-strong]");
+    // Ghost has transparent base bg; only `hover:bg-[--text-primary]` mentions ink
+    expect(result).toContain("bg-transparent");
   });
 
   it("applies specified size", () => {

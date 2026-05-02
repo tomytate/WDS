@@ -20,25 +20,22 @@ export function SectionHeading({
   ...props
 }: SectionHeadingProps) {
   return (
-    <div className={cn("max-w-3xl space-y-4", className)} {...props}>
+    <div className={cn("max-w-3xl", className)} {...props}>
       {eyebrow ? (
-        <div className="flex items-center gap-3">
-          <span className="accent-bar" aria-hidden="true" />
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[--accent] sm:text-sm">
-            {eyebrow}
-            {typeof counter === "number" ? (
-              <span className="ml-2.5 rounded-full bg-[color-mix(in_srgb,var(--accent)_12%,transparent)] px-2 py-0.5 text-[10px] font-semibold text-[--accent]">
-                {counter}
-              </span>
-            ) : null}
-          </p>
+        <div className="section-rule mb-5">
+          <span>{eyebrow}</span>
+          {typeof counter === "number" ? (
+            <span className="ml-1 inline-flex items-center justify-center rounded-[--radius-inner] border border-[--border] bg-[--bg-card] px-1.5 py-0.5 font-mono text-[10px] text-[--text-primary]">
+              {counter}
+            </span>
+          ) : null}
         </div>
       ) : null}
-      <Component className="font-display text-3xl leading-[1.08] tracking-tight text-[--text-primary] break-words sm:text-4xl lg:text-5xl text-balance">
+      <Component className="font-display text-[clamp(1.875rem,4.5vw,3rem)] font-semibold leading-[1.05] tracking-[-0.025em] text-[--text-primary] text-balance">
         {title}
       </Component>
       {description ? (
-        <p className="text-base leading-relaxed text-[--text-secondary] sm:text-lg sm:leading-8 text-pretty max-w-2xl">
+        <p className="mt-4 text-[15px] leading-relaxed text-[--text-secondary] text-pretty max-w-2xl sm:text-base sm:leading-7">
           {description}
         </p>
       ) : null}

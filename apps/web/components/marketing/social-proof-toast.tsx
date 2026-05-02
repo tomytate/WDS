@@ -59,21 +59,21 @@ export function SocialProofToast({ initialOrders }: { initialOrders: Order[] }) 
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.95 }}
           transition={{ duration: 0.4, type: "spring", bounce: 0.3 }}
-          className="fixed bottom-4 left-4 z-50 sm:bottom-6 sm:left-6 flex max-w-sm items-start gap-4 rounded-2xl border border-[--border] bg-[color-mix(in_srgb,var(--bg-card)_80%,transparent)] p-4 shadow-2xl backdrop-blur-xl"
+          className="fixed bottom-4 left-4 z-50 sm:bottom-6 sm:left-6 flex max-w-sm items-start gap-3 rounded-[--radius-card] border border-[--border] bg-[--bg-card] p-3.5 shadow-[--shadow-lg]"
         >
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--color-success)_15%,transparent)]">
-            <CheckCircle2 size={20} className="text-[--color-success]" />
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[--radius-inner] border border-[color-mix(in_srgb,var(--color-success)_30%,transparent)] bg-[color-mix(in_srgb,var(--color-success)_12%,transparent)]">
+            <CheckCircle2 size={16} className="text-[--color-success]" />
           </div>
 
-          <div className="flex-1 space-y-1">
+          <div className="flex-1 min-w-0 space-y-0.5">
+            <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-[--text-muted]">
+              New order · {currentOrder.timeAgo}m ago
+            </p>
             <p className="text-sm font-medium text-[--text-primary]">
-              {currentOrder.customerName} just got
+              {currentOrder.customerName}
             </p>
-            <p className="text-sm text-[--accent]">
+            <p className="text-xs text-[--text-secondary] truncate">
               {currentOrder.productName}
-            </p>
-            <p className="text-xs text-[--text-muted]">
-              {currentOrder.timeAgo} minute{currentOrder.timeAgo === 1 ? "" : "s"} ago
             </p>
           </div>
 
@@ -82,10 +82,10 @@ export function SocialProofToast({ initialOrders }: { initialOrders: Order[] }) 
               setIsVisible(false)
               setIsDismissed(true)
             }}
-            className="p-1 text-[--text-muted] hover:text-[--text-primary] transition-colors"
+            className="rounded-[--radius-inner] p-1 text-[--text-muted] hover:bg-[--bg-surface] hover:text-[--text-primary] transition-colors"
             aria-label="Close notification"
           >
-            <X size={16} />
+            <X size={14} />
           </button>
         </motion.div>
       )}

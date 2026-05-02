@@ -95,25 +95,25 @@ export default async function DashboardCustomersPage({
             {customers.length > 0 ? (
               customers.map((entry) => (
                 <details
-                  className="group rounded-2xl border border-[--border] bg-[--bg-surface] p-4"
+                  className="group rounded-[--radius-card] border border-[--border] bg-[--bg-surface] p-4"
                   key={entry.customer.id}
                 >
                   <summary className="cursor-pointer list-none">
                     <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(4,0.6fr)] lg:items-center">
                       <div>
                         <div className="flex items-center gap-3">
-                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[--border] bg-[--bg-card] text-[--text-secondary] transition-transform group-open:rotate-90">
+                          <span className="inline-flex h-7 w-7 items-center justify-center rounded-[--radius-inner] border border-[--border] bg-[--bg-card] text-[--text-secondary] transition-transform group-open:rotate-90">
                             <ChevronRight size={16} aria-hidden="true" />
                           </span>
                           <div>
-                            <p className="font-display text-2xl tracking-tight">
+                            <p className="font-display text-base font-semibold tracking-tight">
                               {entry.customer.name}
                             </p>
-                            <p className="mt-1 text-sm text-[--text-secondary]">
+                            <p className="mt-0.5 text-sm text-[--text-secondary]">
                               {entry.customer.email}
                             </p>
                             {entry.customer.phone ? (
-                              <p className="mt-1 text-xs text-[--text-secondary]">
+                              <p className="mt-0.5 font-mono text-xs text-[--text-muted]">
                                 {entry.customer.phone}
                               </p>
                             ) : null}
@@ -139,14 +139,14 @@ export default async function DashboardCustomersPage({
                     </div>
                   </summary>
 
-                  <div className="mt-5 space-y-3">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[--text-muted]">
-                      Order history
+                  <div className="mt-5 space-y-2">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                      / Order history
                     </p>
                     {entry.orders.length > 0 ? (
                       entry.orders.map((order) => (
                         <div
-                          className="rounded-xl border border-[--border] bg-[--bg-card] p-4"
+                          className="rounded-[--radius-inner] border border-[--border] bg-[--bg-card] p-4"
                           key={order.id}
                         >
                           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
@@ -181,7 +181,7 @@ export default async function DashboardCustomersPage({
                 </details>
               ))
             ) : (
-              <div className="rounded-2xl border border-[--border] bg-[--bg-surface] p-6 text-sm text-[--text-secondary]">
+              <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-surface] p-6 text-sm text-[--text-secondary]">
                 No customers match this search.
               </div>
             )}
@@ -246,8 +246,8 @@ function InfoStat({
 }) {
   return (
     <div>
-      <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[--text-muted]">{label}</p>
-      <p className="mt-2 text-sm text-[--text-primary]">{value}</p>
+      <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-[--text-muted]">{label}</p>
+      <p className="mt-1 text-sm font-medium tabular-nums text-[--text-primary]">{value}</p>
     </div>
   )
 }

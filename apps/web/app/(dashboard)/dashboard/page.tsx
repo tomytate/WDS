@@ -12,7 +12,7 @@ import {
 } from "lucide-react"
 
 import { getDashboardOverview, getRevenueOverTime, getOrdersByStatus } from "@wongdigital/db/storefront"
-import { buttonStyles, Card, CardContent, KpiCard, PageHeader } from "@wongdigital/ui"
+import { buttonStyles, Card, KpiCard, PageHeader } from "@wongdigital/ui"
 
 import { RevenueChart } from "@/components/dashboard/revenue-chart"
 import { StatusChart } from "@/components/dashboard/status-chart"
@@ -130,151 +130,179 @@ export default async function DashboardOverviewPage() {
       <div className="mt-4 sm:mt-6 grid gap-4 sm:gap-6 xl:grid-cols-[1.2fr_0.8fr]">
         {/* Recent Orders */}
         <Card>
-          <CardContent className="p-3.5 sm:p-5 lg:p-6">
-            <div className="flex items-center justify-between gap-3 sm:gap-4">
-              <div className="flex items-center gap-2.5">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[--bg-surface] text-[--text-secondary]">
-                  <ClipboardList size={15} aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-[--text-muted] font-semibold">
-                    Recent orders
-                  </p>
-                  <p className="mt-0.5 font-display text-lg font-semibold tracking-tight sm:text-xl text-[--text-primary]">
-                    Latest activity
-                  </p>
-                </div>
-              </div>
-              <Link
-                className={buttonStyles({ size: "sm", variant: "ghost", className: "gap-1.5 text-xs sm:text-sm min-h-[44px] sm:min-h-0" })}
-                href="/dashboard/orders"
-              >
-                View all
-                <ArrowRight size={13} aria-hidden="true" />
-              </Link>
+          <div className="flex items-center justify-between gap-3 border-b border-[--border] px-5 py-4">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                Recent orders
+              </p>
+              <p className="mt-1 font-display text-lg font-semibold tracking-tight text-[--text-primary]">
+                Latest activity
+              </p>
             </div>
+            <Link
+              className={buttonStyles({
+                size: "sm",
+                variant: "ghost",
+                className: "gap-1.5 text-xs",
+              })}
+              href="/dashboard/orders"
+            >
+              View all
+              <ArrowRight size={12} aria-hidden="true" />
+            </Link>
+          </div>
 
-            <div className="mt-4 sm:mt-6 overflow-x-auto">
-              <table className="min-w-full text-left text-xs sm:text-sm">
-                <thead className="text-[--text-secondary]">
-                  <tr>
-                    <th scope="col" className="pb-2.5 sm:pb-3 text-[10px] sm:text-xs uppercase tracking-[0.16em] font-semibold">Order</th>
-                    <th scope="col" className="pb-2.5 sm:pb-3 text-[10px] sm:text-xs uppercase tracking-[0.16em] font-semibold">Customer</th>
-                    <th scope="col" className="pb-2.5 sm:pb-3 text-[10px] sm:text-xs uppercase tracking-[0.16em] font-semibold">Items</th>
-                    <th scope="col" className="pb-2.5 sm:pb-3 text-[10px] sm:text-xs uppercase tracking-[0.16em] font-semibold">Total</th>
-                    <th scope="col" className="pb-2.5 sm:pb-3 text-[10px] sm:text-xs uppercase tracking-[0.16em] font-semibold">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {overview.recentOrders.length > 0 ? (
-                    overview.recentOrders.map((order) => (
-                      <tr
-                        className="border-t border-[--border]"
-                        key={order.id}
-                      >
-                        <td className="py-3 sm:py-4">
-                          <p className="font-mono text-[10px] sm:text-xs text-[--text-primary]">
-                            {order.orderCode}
+          <div className="overflow-x-auto">
+            <table className="min-w-full text-left text-sm">
+              <thead className="bg-[--bg-surface] text-[--text-muted]">
+                <tr>
+                  <th
+                    scope="col"
+                    className="px-5 py-2.5 font-mono text-[10px] uppercase tracking-[0.1em] font-medium"
+                  >
+                    Order
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-5 py-2.5 font-mono text-[10px] uppercase tracking-[0.1em] font-medium"
+                  >
+                    Customer
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-5 py-2.5 font-mono text-[10px] uppercase tracking-[0.1em] font-medium"
+                  >
+                    Items
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-5 py-2.5 font-mono text-[10px] uppercase tracking-[0.1em] font-medium"
+                  >
+                    Total
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-5 py-2.5 font-mono text-[10px] uppercase tracking-[0.1em] font-medium"
+                  >
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {overview.recentOrders.length > 0 ? (
+                  overview.recentOrders.map((order) => (
+                    <tr
+                      className="border-t border-[--border] transition-colors hover:bg-[--bg-surface]"
+                      key={order.id}
+                    >
+                      <td className="px-5 py-3">
+                        <p className="font-mono text-xs text-[--text-primary]">
+                          {order.orderCode}
+                        </p>
+                        <p className="mt-0.5 text-[11px] text-[--text-muted]">
+                          {formatDate(order.createdAt)}
+                        </p>
+                      </td>
+                      <td className="px-5 py-3">
+                        <p className="text-sm text-[--text-primary]">
+                          {order.customerName}
+                        </p>
+                        <p className="mt-0.5 text-[11px] text-[--text-muted]">
+                          {order.customerEmail}
+                        </p>
+                      </td>
+                      <td className="px-5 py-3">
+                        <p className="text-sm text-[--text-primary]">
+                          {order.items[0]
+                            ? formatOrderItemSummary(order.items[0])
+                            : order.product.name}
+                        </p>
+                        {order.items.length > 1 ? (
+                          <p className="mt-0.5 text-[11px] text-[--text-muted]">
+                            +{order.items.length - 1} more
                           </p>
-                          <p className="mt-0.5 sm:mt-1 text-[10px] sm:text-xs text-[--text-muted]">
-                            {formatDate(order.createdAt)}
-                          </p>
-                        </td>
-                        <td className="py-3 sm:py-4">
-                          <p className="text-xs sm:text-sm">{order.customerName}</p>
-                          <p className="mt-0.5 sm:mt-1 text-[10px] sm:text-xs text-[--text-muted]">
-                            {order.customerEmail}
-                          </p>
-                        </td>
-                        <td className="py-3 sm:py-4">
-                          <p className="text-xs sm:text-sm">
-                            {order.items[0]
-                              ? formatOrderItemSummary(order.items[0])
-                              : order.product.name}
-                          </p>
-                          {order.items.length > 1 ? (
-                            <p className="mt-0.5 sm:mt-1 text-[10px] sm:text-xs text-[--text-muted]">
-                              +{order.items.length - 1} more
-                            </p>
-                          ) : null}
-                        </td>
-                        <td className="py-3 sm:py-4 font-medium text-xs sm:text-sm">
-                          {formatPrice(order.totalPrice)}
-                        </td>
-                        <td className="py-3 sm:py-4">
-                          <StatusBadge status={order.status} />
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td
-                        className="py-8 text-xs sm:text-sm text-[--text-muted]"
-                        colSpan={5}
-                      >
-                        No orders yet. First checkout lands here.
+                        ) : null}
+                      </td>
+                      <td className="px-5 py-3 font-medium tabular-nums text-sm text-[--text-primary]">
+                        {formatPrice(order.totalPrice)}
+                      </td>
+                      <td className="px-5 py-3">
+                        <StatusBadge status={order.status} />
                       </td>
                     </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
+                  ))
+                ) : (
+                  <tr>
+                    <td
+                      className="px-5 py-8 text-sm text-[--text-muted]"
+                      colSpan={5}
+                    >
+                      No orders yet. First checkout lands here.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </Card>
 
         {/* Pending — single source of truth for outstanding fulfillment */}
         <Card
           aria-live="polite"
-          className={hasPending ? "border-[--accent-border]" : undefined}
+          className={
+            hasPending
+              ? "border-[--text-primary] shadow-[2px_2px_0_var(--accent)]"
+              : undefined
+          }
         >
-          <CardContent className="flex h-full flex-col gap-4 p-4 sm:p-5 lg:p-6">
-            <div className="flex items-center gap-2.5">
-              <div
-                className={`flex h-8 w-8 items-center justify-center rounded-lg ${
+          <div className="flex h-full flex-col gap-5 p-5 sm:p-6">
+            <div className="flex items-center justify-between">
+              <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                {hasPending ? "Pending fulfillment" : "Fulfillment status"}
+              </p>
+              <span
+                className={`flex h-7 w-7 items-center justify-center rounded-[--radius-inner] ${
                   hasPending
-                    ? "bg-[--accent-tint-soft] text-[--accent]"
-                    : "bg-[--bg-surface] text-[--color-success]"
+                    ? "bg-[--accent] text-[--accent-fg]"
+                    : "border border-[--border] bg-[--bg-surface] text-[--color-success-text]"
                 }`}
               >
                 {hasPending ? (
-                  <AlertCircle size={15} aria-hidden="true" />
+                  <AlertCircle size={14} aria-hidden="true" />
                 ) : (
-                  <CheckCircle2 size={15} aria-hidden="true" />
+                  <CheckCircle2 size={14} aria-hidden="true" />
                 )}
-              </div>
-              <p className="text-[10px] uppercase tracking-[0.18em] text-[--text-muted] font-semibold">
-                {hasPending ? "Pending" : "Fulfillment"}
-              </p>
+              </span>
             </div>
 
             <div>
-              <p className="font-display text-3xl font-semibold tracking-tight text-[--text-primary] sm:text-4xl">
-                {hasPending ? pendingCount : "All caught up"}
+              <p className="font-display text-4xl font-semibold tracking-tight tabular-nums text-[--text-primary] sm:text-5xl">
+                {hasPending ? pendingCount : "0"}
               </p>
-              <p className="mt-1.5 text-sm text-[--text-secondary]">
+              <p className="mt-2 text-sm leading-relaxed text-[--text-secondary]">
                 {hasPending
                   ? `${pendingCount === 1 ? "order" : "orders"} awaiting fulfillment${
                       oldestPending
                         ? ` · oldest ${formatRelativeTime(oldestPending.createdAt)}`
                         : ""
                     }.`
-                  : "No orders waiting on you."}
+                  : "All caught up — no orders waiting on you."}
               </p>
             </div>
 
-            <div className="mt-auto">
-              <Link
-                className={buttonStyles({
-                  variant: hasPending ? "accent" : "surface",
-                  className: "w-full justify-center gap-1.5 text-sm",
-                })}
-                href={hasPending ? "/dashboard/orders?status=pending" : "/dashboard/orders"}
-              >
-                {hasPending ? "Review pending" : "View orders"}
-                <ArrowRight size={13} aria-hidden="true" />
-              </Link>
-            </div>
-          </CardContent>
+            <Link
+              className={buttonStyles({
+                variant: hasPending ? "accent" : "ghost",
+                className: "mt-auto w-full justify-between gap-1.5 text-sm",
+              })}
+              href={
+                hasPending ? "/dashboard/orders?status=pending" : "/dashboard/orders"
+              }
+            >
+              {hasPending ? "Review pending" : "View orders"}
+              <ArrowRight size={14} aria-hidden="true" />
+            </Link>
+          </div>
         </Card>
       </div>
     </div>

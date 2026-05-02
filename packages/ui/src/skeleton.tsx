@@ -9,7 +9,7 @@ export function Skeleton({ className, ...props }: SkeletonProps) {
     <div
       aria-hidden="true"
       className={cn(
-        "rounded-2xl bg-[color-mix(in_srgb,var(--border)_60%,transparent)]",
+        "rounded-[--radius-inner] bg-[color-mix(in_srgb,var(--border)_60%,transparent)]",
         "animate-[skeleton-pulse_1.8s_ease-in-out_infinite]",
         className,
       )}

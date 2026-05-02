@@ -24,8 +24,8 @@ describe("Badge", () => {
   it("applies accent tone classes", () => {
     const { getByText } = render(<Badge tone="accent">Accent</Badge>);
     const badge = getByText("Accent");
-    expect(badge.className).toContain("text-[--accent]");
-    expect(badge.className).toContain("border-[--accent]");
+    expect(badge.className).toContain("bg-[--accent]");
+    expect(badge.className).toContain("text-[--accent-fg]");
   });
 
   it("applies success tone classes", () => {
@@ -37,14 +37,15 @@ describe("Badge", () => {
   it("applies danger tone classes", () => {
     const { getByText } = render(<Badge tone="danger">Error</Badge>);
     const badge = getByText("Error");
-    expect(badge.className).toContain("text-[--color-danger]");
+    expect(badge.className).toContain("text-[--color-danger-text]");
   });
 
-  it("applies base styling classes (rounded-full, uppercase, tracking)", () => {
+  it("applies base styling classes (radius-inner, uppercase, mono tracking)", () => {
     const { getByText } = render(<Badge>Styled</Badge>);
     const badge = getByText("Styled");
-    expect(badge.className).toContain("rounded-full");
+    expect(badge.className).toContain("rounded-[--radius-inner]");
     expect(badge.className).toContain("uppercase");
+    expect(badge.className).toContain("font-mono");
     expect(badge.className).toContain("tracking-");
   });
 

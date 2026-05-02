@@ -12,13 +12,10 @@ type WishlistButtonProps = {
 export function WishlistButton({
   productId,
   className = "",
-  size = 20,
+  size = 14,
 }: WishlistButtonProps) {
   const { toggle, has } = useWishlist();
 
-  // To avoid hydration mismatch, check if window exists.
-  // The hook returns empty array for SSR snapshot but client matches it on first render,
-  // then updates. `isWished` is safely reactive via useSyncExternalStore.
   const isWished = has(productId);
 
   return (
@@ -29,12 +26,16 @@ export function WishlistButton({
         e.stopPropagation();
         toggle(productId);
       }}
-      className={`relative z-10 flex cursor-pointer items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--bg-surface)_60%,transparent)] p-2 backdrop-blur-md transition-all duration-300 hover:scale-110 active:scale-95 ${className}`}
+      className={`relative z-10 flex h-7 w-7 cursor-pointer items-center justify-center rounded-[--radius-inner] border border-[--border] bg-[--bg-base] text-[--text-muted] transition-colors duration-200 hover:border-[--text-primary] hover:text-[--color-danger-text] active:scale-95 ${className}`}
       aria-label={isWished ? "Remove from wishlist" : "Add to wishlist"}
     >
       <Heart
         size={size}
-        className={`transition-colors duration-300 ${isWished ? "fill-[--color-danger] text-[--color-danger]" : "fill-transparent text-[--text-secondary]"}`}
+        className={`transition-colors duration-200 ${
+          isWished
+            ? "fill-[--color-danger] text-[--color-danger]"
+            : "fill-transparent"
+        }`}
         strokeWidth={isWished ? 1.5 : 2}
       />
     </button>

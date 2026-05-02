@@ -11,27 +11,31 @@ type BadgeProps = HTMLAttributes<HTMLSpanElement> & {
   dot?: boolean;
 };
 
+/**
+ * Citrus Editorial badges — sharp, mono-typeset. No uppercase pill blur.
+ */
 const toneClasses: Record<BadgeTone, string> = {
   accent:
-    "border-[--accent] bg-[color-mix(in_srgb,var(--accent)_12%,transparent)] text-[--accent] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]",
+    "border-[--text-primary] bg-[--accent] text-[--accent-fg]",
   muted:
-    "border-[--border] bg-[--bg-card] text-[--text-secondary] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]",
+    "border-[--border] bg-[--bg-surface] text-[--text-secondary]",
   success:
-    "border-[--color-success,#22c55e] bg-[color-mix(in_srgb,var(--color-success,#22c55e)_12%,transparent)] text-[--color-success,#22c55e] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]",
+    "border-[--color-success] bg-[color-mix(in_srgb,var(--color-success)_14%,transparent)] text-[--color-success-text]",
   danger:
-    "border-[color-mix(in_srgb,var(--color-danger)_50%,transparent)] bg-[color-mix(in_srgb,var(--color-danger)_12%,transparent)] text-[--color-danger] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]",
-  info: "border-[color-mix(in_srgb,var(--color-info)_50%,transparent)] bg-[color-mix(in_srgb,var(--color-info)_12%,transparent)] text-[--color-info] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]",
+    "border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_14%,transparent)] text-[--color-danger-text]",
+  info:
+    "border-[--color-info] bg-[color-mix(in_srgb,var(--color-info)_14%,transparent)] text-[--color-info-text]",
 };
 
 const sizeClasses: Record<BadgeSize, string> = {
-  sm: "px-2 py-0.5 text-[10px] tracking-[0.2em]",
-  md: "px-3 py-1 text-xs tracking-[0.24em]",
+  sm: "px-2 py-0.5 text-[10px] tracking-[0.08em]",
+  md: "px-2.5 py-1 text-[11px] tracking-[0.08em]",
 };
 
 const dotColors: Record<BadgeTone, string> = {
-  accent: "bg-[--accent]",
-  muted: "bg-[--text-secondary]",
-  success: "bg-[--color-success,#22c55e]",
+  accent: "bg-[--accent-fg]",
+  muted: "bg-[--text-muted]",
+  success: "bg-[--color-success]",
   danger: "bg-[--color-danger]",
   info: "bg-[--color-info]",
 };
@@ -47,7 +51,7 @@ export function Badge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border font-semibold uppercase",
+        "inline-flex items-center gap-1.5 rounded-[--radius-inner] border font-mono font-semibold uppercase",
         sizeClasses[size],
         toneClasses[tone],
         className,
@@ -58,7 +62,7 @@ export function Badge({
         <span
           aria-hidden="true"
           className={cn(
-            "h-1.5 w-1.5 shrink-0 rounded-full pulse-dot",
+            "h-1.5 w-1.5 shrink-0 rounded-full",
             dotColors[tone],
           )}
         />

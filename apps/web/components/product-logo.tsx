@@ -11,7 +11,7 @@ type ProductLogoProps = {
 
 const logoSizeClasses = {
   sm: "h-16 w-16 rounded-xl text-base",
-  md: "h-20 w-20 rounded-2xl text-lg",
+  md: "h-20 w-20 rounded-[--radius-card] text-lg",
   lg: "h-24 w-24 rounded-[26px] text-xl",
 } as const
 

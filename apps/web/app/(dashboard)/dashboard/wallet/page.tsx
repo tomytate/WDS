@@ -60,7 +60,7 @@ async function WalletDepositsData() {
     return (
       <Card className="border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_40%,transparent)]">
         <CardContent className="flex flex-col items-center justify-center p-12 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[--accent-tint-soft] text-[--accent] mb-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] text-[--text-primary] mb-4">
             <Wallet size={24} />
           </div>
           <h3 className="font-semibold text-[--text-primary]">All caught up</h3>

@@ -15,7 +15,7 @@ import {
   Zap,
   Wallet,
 } from "lucide-react";
-import { Badge, Input } from "@wongdigital/ui";
+import { Badge, Input, buttonStyles } from "@wongdigital/ui";
 
 import { FieldError } from "@/components/storefront/field-error";
 import { handlingHoursLabel } from "@/lib/urgency";
@@ -74,34 +74,36 @@ export function PaymentStep({
     <div className="space-y-4 sm:space-y-6">
       {/* ── Payment Method Selector ── */}
       <div className="space-y-3">
-        <p className="text-xs font-semibold uppercase tracking-widest text-[--text-muted]">Choose Payment Method</p>
+        <p className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-[--text-muted]">
+          Choose payment method
+        </p>
 
         {/* PH users: QRPH + Binance + Alipay */}
         {isPH && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {([
-              { value: "qrph" as const, label: "QRPH / GCash", icon: <QrCode size={18} />, disabled: false },
-              { value: "binance" as const, label: "Binance/Crypto", icon: <Zap size={18} />, disabled: false },
-              { value: "alipay" as const, label: "Alipay", icon: <Globe size={18} />, disabled: false },
+              { value: "qrph" as const, label: "QRPH / GCash", icon: <QrCode size={16} />, disabled: false },
+              { value: "binance" as const, label: "Binance/Crypto", icon: <Zap size={16} />, disabled: false },
+              { value: "alipay" as const, label: "Alipay", icon: <Globe size={16} />, disabled: false },
             ] as const).map((method) => (
               <button
                 key={method.value}
                 type="button"
                 disabled={method.disabled}
-                className={`relative flex flex-col items-center justify-center gap-1.5 rounded-xl border px-2 py-3 text-xs sm:text-sm font-semibold transition-all ${
+                className={`relative flex flex-col items-center justify-center gap-1.5 rounded-[--radius-inner] border px-2 py-3 text-xs sm:text-sm font-semibold transition-colors duration-150 ${
                   method.disabled
-                    ? "border-[color-mix(in_srgb,var(--border)_40%,transparent)] bg-[color-mix(in_srgb,var(--bg-surface)_30%,transparent)] text-[--text-muted] cursor-not-allowed opacity-60"
+                    ? "border-[--border] bg-[--bg-surface] text-[--text-muted] cursor-not-allowed opacity-60"
                     : currentMethod === method.value
-                      ? "border-[--accent] bg-[color-mix(in_srgb,var(--accent)_12%,transparent)] text-[--accent] shadow-[0_0_12px_color-mix(in_srgb,var(--accent)_16%,transparent)]"
-                      : "border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_50%,transparent)] text-[--text-secondary] hover:border-[color-mix(in_srgb,var(--accent)_30%,var(--border))] hover:text-[--text-primary]"
+                      ? "border-[--text-primary] bg-[--text-primary] text-[--bg-base]"
+                      : "border-[--border] bg-[--bg-card] text-[--text-secondary] hover:border-[--text-primary] hover:text-[--text-primary]"
                 }`}
                 onClick={() => {
                   if (!method.disabled) form.setValue("paymentMethod", method.value);
                 }}
               >
                 {method.disabled && (
-                  <span className="absolute -top-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-[--bg-surface] px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-[--text-muted] border border-[--border] shadow-sm z-10">
-                    Coming Soon
+                  <span className="absolute -top-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-[--radius-inner] bg-[--bg-card] px-1.5 py-0.5 font-mono text-[8px] font-bold uppercase tracking-[0.08em] text-[--text-muted] border border-[--border] z-10">
+                    Soon
                   </span>
                 )}
                 {method.icon}
@@ -113,29 +115,29 @@ export function PaymentStep({
 
         {/* Non-PH users: Binance + Alipay */}
         {!isPH && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             <button
               type="button"
-              className={`flex flex-col items-center justify-center gap-1.5 rounded-xl border px-2 py-3 text-xs sm:text-sm font-semibold transition-all ${
+              className={`flex flex-col items-center justify-center gap-1.5 rounded-[--radius-inner] border px-2 py-3 text-xs sm:text-sm font-semibold transition-colors duration-150 ${
                 currentMethod === "binance"
-                  ? "border-[--accent] bg-[color-mix(in_srgb,var(--accent)_12%,transparent)] text-[--accent] shadow-[0_0_12px_color-mix(in_srgb,var(--accent)_16%,transparent)]"
-                  : "border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_50%,transparent)] text-[--text-secondary] hover:border-[color-mix(in_srgb,var(--accent)_30%,var(--border))] hover:text-[--text-primary]"
+                  ? "border-[--text-primary] bg-[--text-primary] text-[--bg-base]"
+                  : "border-[--border] bg-[--bg-card] text-[--text-secondary] hover:border-[--text-primary] hover:text-[--text-primary]"
               }`}
               onClick={() => form.setValue("paymentMethod", "binance")}
             >
-              <Zap size={18} />
+              <Zap size={16} />
               Binance Pay
             </button>
             <button
               type="button"
-              className={`flex flex-col items-center justify-center gap-1.5 rounded-xl border px-2 py-3 text-xs sm:text-sm font-semibold transition-all ${
+              className={`flex flex-col items-center justify-center gap-1.5 rounded-[--radius-inner] border px-2 py-3 text-xs sm:text-sm font-semibold transition-colors duration-150 ${
                 currentMethod === "alipay"
-                  ? "border-[--accent] bg-[color-mix(in_srgb,var(--accent)_12%,transparent)] text-[--accent] shadow-[0_0_12px_color-mix(in_srgb,var(--accent)_16%,transparent)]"
-                  : "border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_50%,transparent)] text-[--text-secondary] hover:border-[color-mix(in_srgb,var(--accent)_30%,var(--border))] hover:text-[--text-primary]"
+                  ? "border-[--text-primary] bg-[--text-primary] text-[--bg-base]"
+                  : "border-[--border] bg-[--bg-card] text-[--text-secondary] hover:border-[--text-primary] hover:text-[--text-primary]"
               }`}
               onClick={() => form.setValue("paymentMethod", "alipay")}
             >
-              <Globe size={18} />
+              <Globe size={16} />
               Alipay
             </button>
           </div>
@@ -144,53 +146,44 @@ export function PaymentStep({
         {hasWalletBalance && (
           <button
             type="button"
-            className={`w-full flex items-center justify-center gap-2 rounded-xl border px-4 py-3 text-xs sm:text-sm font-semibold transition-all ${
+            className={`w-full flex items-center justify-center gap-2 rounded-[--radius-inner] border px-4 py-3 text-sm font-semibold transition-colors duration-150 ${
               isWallet
-                ? "border-[--color-success] bg-[color-mix(in_srgb,var(--color-success)_12%,transparent)] text-[--color-success] shadow-[0_0_12px_color-mix(in_srgb,var(--color-success)_16%,transparent)]"
-                : "border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_50%,transparent)] text-[--text-secondary] hover:border-[color-mix(in_srgb,var(--color-success)_30%,var(--border))] hover:text-[--text-primary]"
+                ? "border-[--color-success] bg-[--color-success] text-white"
+                : "border-[--border] bg-[--bg-card] text-[--text-secondary] hover:border-[--color-success] hover:text-[--color-success-text]"
             }`}
             onClick={() => form.setValue("paymentMethod", "wallet")}
           >
-            <Wallet size={16} />
+            <Wallet size={14} />
             Pay with Wallet ({walletBalance} USDT)
           </button>
         )}
       </div>
 
       {/* ── Active Method Header ── */}
-      <div className="relative overflow-hidden rounded-xl sm:rounded-2xl border-2 border-[--accent] bg-gradient-to-br from-[color-mix(in_srgb,var(--accent)_10%,transparent)] to-[color-mix(in_srgb,var(--accent)_4%,transparent)] p-4 sm:p-5 shadow-[0_0_24px_color-mix(in_srgb,var(--accent)_12%,transparent)]">
-        <div
-          className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[color-mix(in_srgb,var(--accent)_16%,transparent)] blur-2xl"
-          aria-hidden="true"
-        />
-        <div className="relative flex items-start justify-between gap-3 sm:gap-4">
-          <div className="flex items-start gap-3 sm:gap-4">
-            <div className="flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-xl bg-[--accent] text-[--accent-fg] shadow-[0_4px_12px_color-mix(in_srgb,var(--accent)_30%,transparent)]">
+      <div className="relative overflow-hidden rounded-[--radius-card] border border-[--text-primary] bg-[--bg-card] p-5">
+        <div className="relative flex items-start justify-between gap-4">
+          <div className="flex items-start gap-4">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[--radius-inner] bg-[--accent] text-[--accent-fg]">
               {isWallet ? (
-                <Wallet
-                  size={18}
-                  className="sm:h-[22px] sm:w-[22px]"
-                  aria-hidden="true"
-                />
+                <Wallet size={18} aria-hidden="true" />
               ) : (
-                <QrCode
-                  size={18}
-                  className="sm:h-[22px] sm:w-[22px]"
-                  aria-hidden="true"
-                />
+                <QrCode size={18} aria-hidden="true" />
               )}
             </div>
             <div>
-              <p className="font-display text-lg sm:text-2xl lg:text-3xl tracking-tight text-[--text-primary]">
+              <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                Selected method
+              </p>
+              <p className="mt-1 font-display text-xl sm:text-2xl font-semibold tracking-tight text-[--text-primary]">
                 {isWallet
                   ? "Wallet Pay"
                   : currentMethod === "binance"
                     ? "Binance Pay"
                     : currentMethod === "alipay"
                       ? "Alipay QR"
-                      : "QRPH Payment"}
+                      : "QRPH"}
               </p>
-              <p className="mt-1 sm:mt-1.5 text-xs sm:text-sm leading-relaxed text-[--text-secondary]">
+              <p className="mt-1.5 text-sm leading-relaxed text-[--text-secondary]">
                 {isWallet
                   ? "Instant checkout — debited from your wallet"
                   : currentMethod === "binance"
@@ -199,39 +192,26 @@ export function PaymentStep({
               </p>
             </div>
           </div>
-          <Badge
-            tone="accent"
-            className="hidden sm:flex shrink-0 gap-1.5 shadow-[0_0_8px_color-mix(in_srgb,var(--accent)_16%,transparent)]"
-          >
-            <CheckCircle2 size={10} aria-hidden="true" />
-            Selected
+          <Badge tone="accent" size="sm" className="hidden sm:inline-flex shrink-0 gap-1">
+            <CheckCircle2 size={9} aria-hidden="true" />
+            Active
           </Badge>
         </div>
       </div>
 
       {/* ── QR / Binance Instructions (manual payments only) ── */}
       {isManualPayment && (
-      <div className="rounded-xl sm:rounded-2xl border border-[--border] bg-[--bg-card] p-4 sm:p-5 lg:p-6">
-        <div className="flex items-center gap-2 sm:gap-2.5 mb-4 sm:mb-5">
-          <div
-            className="h-px flex-1 bg-gradient-to-r from-transparent to-[--border]"
-            aria-hidden="true"
-          />
-          <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.18em] sm:tracking-[0.2em] text-[--text-muted] font-semibold">
-            Scan &amp; Pay
-          </p>
-          <div
-            className="h-px flex-1 bg-gradient-to-l from-transparent to-[--border]"
-            aria-hidden="true"
-          />
+      <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] p-5 sm:p-6">
+        <div className="section-rule mb-5">
+          <span>Scan &amp; pay</span>
         </div>
 
-        <div className="grid gap-4 sm:gap-5 lg:grid-cols-[minmax(0,280px)_minmax(0,1fr)]">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,280px)_minmax(0,1fr)]">
           {form.watch("paymentMethod") === "alipay" ? (
-            <div className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-[color-mix(in_srgb,var(--border)_60%,transparent)] bg-[color-mix(in_srgb,var(--bg-card)_50%,transparent)] backdrop-blur-xl p-3 sm:p-4 shadow-[0_8px_32px_rgba(0,0,0,0.06)] text-center flex flex-col items-center justify-center">
+            <div className="relative overflow-hidden rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] p-4 text-center flex flex-col items-center justify-center">
               <Image
                 alt="Alipay QR code"
-                className="mx-auto aspect-[1/1] w-full max-w-[200px] sm:max-w-[260px] object-contain drop-shadow-md rounded-lg"
+                className="mx-auto aspect-[1/1] w-full max-w-[260px] object-contain rounded-[--radius-inner]"
                 height={260}
                 sizes="(max-width: 640px) 200px, 260px"
                 src="/payments/alipay-qr.webp"
@@ -239,10 +219,10 @@ export function PaymentStep({
               />
             </div>
           ) : form.watch("paymentMethod") === "qrph" ? (
-            <div className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-[color-mix(in_srgb,var(--border)_60%,transparent)] bg-[color-mix(in_srgb,var(--bg-card)_50%,transparent)] backdrop-blur-xl p-3 sm:p-4 shadow-[0_8px_32px_rgba(0,0,0,0.06)] text-center flex flex-col items-center justify-center">
+            <div className="relative overflow-hidden rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] p-4 text-center flex flex-col items-center justify-center">
               <Image
                 alt="QRPH QR code"
-                className="mx-auto aspect-[1/1] w-full max-w-[200px] sm:max-w-[260px] object-contain drop-shadow-md rounded-lg"
+                className="mx-auto aspect-[1/1] w-full max-w-[260px] object-contain rounded-[--radius-inner]"
                 height={260}
                 sizes="(max-width: 640px) 200px, 260px"
                 src="/payments/gcash-qr.webp"
@@ -250,8 +230,8 @@ export function PaymentStep({
               />
             </div>
           ) : (
-            <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-xl sm:rounded-2xl border border-[color-mix(in_srgb,var(--accent)_20%,transparent)] bg-[color-mix(in_srgb,var(--accent)_5%,transparent)] backdrop-blur-xl p-4 sm:p-6 shadow-[0_8px_32px_rgba(0,0,0,0.06)] text-center">
-              <div className="w-full max-w-[200px] sm:max-w-[220px] rounded-xl overflow-hidden bg-white p-2 shadow-sm mb-4">
+            <div className="relative flex flex-col items-center justify-center rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] p-5 text-center">
+              <div className="w-full max-w-[220px] rounded-[--radius-inner] overflow-hidden bg-white p-2 mb-4">
                 <Image
                   alt="Binance QR code"
                   className="mx-auto aspect-[1/1] w-full object-contain"
@@ -261,17 +241,17 @@ export function PaymentStep({
                   width={220}
                 />
               </div>
-              <p className="text-[10px] sm:text-xs uppercase tracking-[0.16em] text-[--text-muted] font-semibold">
+              <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
                 Binance UID
               </p>
-              <p className="mt-1 font-mono text-xl sm:text-2xl font-bold tracking-wider text-[--text-primary]">
+              <p className="mt-1 font-mono text-xl font-bold tracking-wider text-[--text-primary]">
                 {storeSettings.binancePayId || "—"}
               </p>
             </div>
           )}
 
-          <div className="space-y-3 sm:space-y-4">
-            <p className="text-xs sm:text-sm leading-relaxed text-[--text-primary]">
+          <div className="space-y-3">
+            <p className="text-sm leading-relaxed text-[--text-primary]">
               {form.watch("paymentMethod") === "binance"
                 ? storeSettings.binanceInstructions
                 : form.watch("paymentMethod") === "alipay"
@@ -281,34 +261,29 @@ export function PaymentStep({
 
             {form.watch("paymentMethod") === "qrph" && (
               <a
-                className="group inline-flex h-11 sm:h-12 w-full items-center justify-center gap-2 rounded-full border border-[#0052FF] bg-[#0052FF] text-sm sm:text-base font-semibold tracking-[0.02em] text-white shadow-[0_4px_16px_rgba(0,82,255,0.3)] transition-all duration-300 active:scale-[0.98]"
+                className={buttonStyles({
+                  className: "w-full justify-center gap-2",
+                  size: "lg",
+                })}
                 href="gcash://qrscan"
               >
-                <QrCode
-                  size={16}
-                  className="sm:h-[18px] sm:w-[18px]"
-                  aria-hidden="true"
-                />
+                <QrCode size={14} aria-hidden="true" />
                 Open QR Scanner
               </a>
             )}
-            <div className="grid gap-2 sm:gap-3 grid-cols-2">
-              <div className="rounded-lg sm:rounded-xl border border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_70%,transparent)] p-3 sm:p-4">
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <Phone
-                    size={12}
-                    className="sm:h-3.5 sm:w-3.5 text-[--text-muted]"
-                    aria-hidden="true"
-                  />
-                  <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] text-[--text-muted] font-semibold">
+            <div className="grid gap-px bg-[--border] border border-[--border] rounded-[--radius-inner] overflow-hidden grid-cols-2">
+              <div className="bg-[--bg-card] p-3">
+                <div className="flex items-center gap-2">
+                  <Phone size={11} className="text-[--text-muted]" aria-hidden="true" />
+                  <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-[--text-muted]">
                     {form.watch("paymentMethod") === "binance"
                       ? "Pay ID"
                       : form.watch("paymentMethod") === "alipay"
-                        ? "Alipay Account"
+                        ? "Alipay account"
                         : "Number"}
                   </p>
                 </div>
-                <p className="mt-1.5 sm:mt-2 text-xs sm:text-sm font-medium text-[--text-primary]">
+                <p className="mt-1.5 text-sm font-medium text-[--text-primary]">
                   {form.watch("paymentMethod") === "binance"
                     ? storeSettings.binancePayId
                     : form.watch("paymentMethod") === "alipay"
@@ -316,32 +291,24 @@ export function PaymentStep({
                       : storeSettings.qrphNumber}
                 </p>
               </div>
-              <div className="rounded-lg sm:rounded-xl border border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_70%,transparent)] p-3 sm:p-4">
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <Mail
-                    size={12}
-                    className="sm:h-3.5 sm:w-3.5 text-[--text-muted]"
-                    aria-hidden="true"
-                  />
-                  <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] text-[--text-muted] font-semibold">
+              <div className="bg-[--bg-card] p-3">
+                <div className="flex items-center gap-2">
+                  <Mail size={11} className="text-[--text-muted]" aria-hidden="true" />
+                  <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-[--text-muted]">
                     Support
                   </p>
                 </div>
                 <a
-                  className="mt-1.5 sm:mt-2 block text-xs sm:text-sm font-medium text-[--accent] hover:underline truncate"
+                  className="mt-1.5 block text-sm font-medium text-[--text-primary] underline-offset-2 hover:underline truncate"
                   href={`mailto:${storeSettings.supportEmail}`}
                 >
                   {storeSettings.supportEmail}
                 </a>
               </div>
             </div>
-            <div className="flex items-center gap-1.5 sm:gap-2 rounded-lg bg-[color-mix(in_srgb,var(--color-info)_8%,transparent)] p-2.5 sm:p-3">
-              <Clock
-                size={12}
-                className="sm:h-3.5 sm:w-3.5 shrink-0 text-[--color-info]"
-                aria-hidden="true"
-              />
-              <p className="text-[10px] sm:text-xs text-[--text-secondary]">
+            <div className="flex items-center gap-2 rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] px-3 py-2">
+              <Clock size={11} className="shrink-0 text-[--text-muted]" aria-hidden="true" />
+              <p className="text-xs text-[--text-secondary]">
                 Handling: {handlingHoursLabel}
               </p>
             </div>
@@ -352,13 +319,13 @@ export function PaymentStep({
 
       {/* ── Wallet Instant Pay Banner (wallet only) ── */}
       {isWallet && (
-        <div className="rounded-xl sm:rounded-2xl border-2 border-[--color-success] bg-gradient-to-br from-[color-mix(in_srgb,var(--color-success)_8%,var(--bg-card))] to-[var(--bg-card)] p-5 sm:p-6 space-y-4">
+        <div className="rounded-[--radius-card] border border-[--color-success] bg-[color-mix(in_srgb,var(--color-success)_6%,var(--bg-card))] p-5 sm:p-6 space-y-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[--color-success] text-white shadow-[0_4px_16px_color-mix(in_srgb,var(--color-success)_30%,transparent)]">
-              <Wallet size={22} />
+            <div className="flex h-11 w-11 items-center justify-center rounded-[--radius-inner] bg-[--color-success] text-white">
+              <Wallet size={18} />
             </div>
             <div>
-              <p className="text-sm font-semibold text-[--text-primary]">
+              <p className="font-display text-base font-semibold text-[--text-primary]">
                 1-Click Instant Checkout
               </p>
               <p className="text-xs text-[--text-muted]">
@@ -366,17 +333,17 @@ export function PaymentStep({
               </p>
             </div>
           </div>
-          <div className="flex items-center justify-between rounded-xl bg-[color-mix(in_srgb,var(--color-success)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-success)_20%,transparent)] px-4 py-3">
-            <span className="text-xs uppercase tracking-[0.2em] text-[--text-muted] font-semibold">
-              Available Balance
+          <div className="flex items-center justify-between rounded-[--radius-inner] border border-[color-mix(in_srgb,var(--color-success)_30%,transparent)] bg-[--bg-card] px-4 py-3">
+            <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+              Available balance
             </span>
-            <span className="font-display text-lg font-bold text-[--color-success]">
+            <span className="font-display text-lg font-semibold tabular-nums text-[--color-success-text]">
               USDT {Number(walletBalance ?? 0).toFixed(2)}
             </span>
           </div>
-          <div className="flex items-center gap-2 rounded-lg bg-[color-mix(in_srgb,var(--color-info)_8%,transparent)] p-2.5 sm:p-3">
-            <Zap size={12} className="shrink-0 text-[--color-info]" />
-            <p className="text-[10px] sm:text-xs text-[--text-secondary]">
+          <div className="flex items-center gap-2 rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] px-3 py-2.5">
+            <Zap size={12} className="shrink-0 text-[--text-muted]" />
+            <p className="text-xs text-[--text-secondary]">
               Wallet payments are instant — no manual review required.
             </p>
           </div>
@@ -385,33 +352,22 @@ export function PaymentStep({
 
       {/* ── Receipt Upload (manual payments only) ── */}
       {isManualPayment && (
-      <div className="rounded-xl sm:rounded-2xl border border-[--border] bg-[--bg-card] p-4 sm:p-5 lg:p-6">
-        <div className="flex items-center gap-2 sm:gap-2.5 mb-4 sm:mb-5">
-          <div
-            className="h-px flex-1 bg-gradient-to-r from-transparent to-[--border]"
-            aria-hidden="true"
-          />
-          <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.18em] sm:tracking-[0.2em] text-[--text-muted] font-semibold">
-            Upload Proof
-          </p>
-          <div
-            className="h-px flex-1 bg-gradient-to-l from-transparent to-[--border]"
-            aria-hidden="true"
-          />
+      <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] p-5 sm:p-6">
+        <div className="section-rule mb-5">
+          <span>Upload proof</span>
         </div>
 
-        <div className="grid gap-4 sm:gap-5 sm:grid-cols-2">
-          <div className="space-y-2 sm:space-y-2.5">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="space-y-2">
             <label
-              className="text-xs sm:text-sm font-medium text-[--text-primary]"
+              className="block font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-[--text-muted]"
               htmlFor="paymentReference"
             >
-              Reference Number
+              Reference number
             </label>
             <Input
               id="paymentReference"
               placeholder="Payment reference number"
-              className="h-11 sm:h-12 text-sm sm:text-base"
               {...form.register("paymentReference")}
             />
             <FieldError
@@ -419,78 +375,66 @@ export function PaymentStep({
             />
           </div>
 
-          <div className="space-y-2 sm:space-y-2.5">
+          <div className="space-y-2">
             <label
-              className="text-xs sm:text-sm font-medium text-[--text-primary]"
+              className="block font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-[--text-muted]"
               htmlFor="receiptFile"
             >
-              Upload Receipt
+              Upload receipt
             </label>
             <label
-              className={`group cursor-pointer overflow-hidden rounded-lg sm:rounded-xl border-2 border-dashed transition-all duration-300 active:scale-[0.99] ${
+              className={`group cursor-pointer overflow-hidden rounded-[--radius-inner] border border-dashed transition-colors duration-200 ${
                 previewUrl || receiptFile
                   ? "border-[--color-success] bg-[color-mix(in_srgb,var(--color-success)_6%,transparent)]"
-                  : "border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_60%,transparent)]"
+                  : "border-[--border] bg-[--bg-surface] hover:border-[--text-primary]"
               } ${
                 previewUrl
                   ? "block"
-                  : "flex min-h-[100px] sm:min-h-[120px] flex-col items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-4 sm:py-6"
+                  : "flex min-h-[120px] flex-col items-center justify-center gap-2 px-4 py-6"
               }`}
               htmlFor="receiptFile"
             >
               {previewUrl ? (
-                <div className="relative h-40 sm:h-48 w-full">
+                <div className="relative h-44 w-full">
                   <Image
                     alt="Uploaded receipt preview"
                     className="object-cover"
                     fill
                     src={previewUrl}
                   />
-                  <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 sm:gap-3 bg-gradient-to-t from-[rgba(0,0,0,0.8)] to-transparent px-3 py-3 sm:px-4 sm:py-4">
-                    <div className="flex items-center gap-1.5 sm:gap-2">
-                      <CheckCircle2
-                        size={12}
-                        className="sm:h-3.5 sm:w-3.5 text-[--color-success]"
-                        aria-hidden="true"
-                      />
-                      <span className="truncate text-[10px] sm:text-xs font-medium text-white">
+                  <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 bg-gradient-to-t from-[rgba(0,0,0,0.85)] to-transparent px-4 py-3">
+                    <div className="flex items-center gap-1.5">
+                      <CheckCircle2 size={12} className="text-[--accent]" aria-hidden="true" />
+                      <span className="truncate font-mono text-[10px] uppercase tracking-[0.08em] font-semibold text-white">
                         Uploaded
                       </span>
                     </div>
-                    <span className="rounded-full border border-white/30 bg-white/10 px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-medium text-white backdrop-blur-sm">
+                    <span className="rounded-[--radius-inner] border border-white/30 bg-white/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.08em] font-medium text-white backdrop-blur-sm">
                       Change
                     </span>
                   </div>
                 </div>
               ) : receiptFile ? (
-                <div className="flex flex-col items-center justify-center gap-1.5 sm:gap-2 py-4 sm:py-6">
-                  <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-[color-mix(in_srgb,var(--color-success)_14%,transparent)] text-[--color-success]">
-                    <CheckCircle2
-                      size={16}
-                      className="sm:h-[18px] sm:w-[18px]"
-                      aria-hidden="true"
-                    />
+                <div className="flex flex-col items-center justify-center gap-2 py-4">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-[--radius-inner] border border-[--color-success] bg-[color-mix(in_srgb,var(--color-success)_12%,transparent)] text-[--color-success-text]">
+                    <CheckCircle2 size={16} aria-hidden="true" />
                   </div>
-                  <span className="text-xs sm:text-sm font-medium text-[--color-success] text-center truncate max-w-full px-2">
+                  <span className="text-sm font-medium text-[--color-success-text] text-center truncate max-w-full px-2">
                     {receiptFile.name}
                   </span>
-                  <span className="text-[10px] sm:text-xs text-[--text-muted]">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-[--text-muted]">
                     Tap to change
                   </span>
                 </div>
               ) : (
                 <>
-                  <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-[color-mix(in_srgb,var(--accent)_12%,transparent)] text-[--accent]">
-                    <Upload
-                      size={16}
-                      className="sm:h-[18px] sm:w-[18px]"
-                      aria-hidden="true"
-                    />
+                  <div className="flex h-9 w-9 items-center justify-center rounded-[--radius-inner] border border-[--border] bg-[--bg-card] text-[--text-primary]">
+                    <Upload size={15} aria-hidden="true" />
                   </div>
-                  <span className="text-xs sm:text-sm text-[--text-secondary] text-center">
+                  <span className="text-sm text-[--text-secondary] text-center">
                     Tap to upload receipt
                   </span>
-                  <span className="text-[10px] sm:text-xs text-[--text-muted]">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-[--text-muted]">
                     JPG, PNG, WEBP, PDF
                   </span>
                 </>
@@ -514,55 +458,31 @@ export function PaymentStep({
       </div>
       )}
 
-      {/* Trust indicators - horizontal scroll on mobile */}
-      <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-1 sm:grid sm:grid-cols-3 sm:overflow-visible sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
-        <div className="flex items-center gap-2 sm:gap-3 rounded-lg sm:rounded-xl border border-[--border] bg-[--bg-card] p-2.5 sm:p-3 shrink-0 min-w-[140px] sm:min-w-0">
-          <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-lg bg-[color-mix(in_srgb,var(--color-success)_12%,transparent)] text-[--color-success]">
-            <Shield
-              size={12}
-              className="sm:h-3.5 sm:w-3.5"
-              aria-hidden="true"
-            />
-          </div>
-          <div>
-            <p className="text-[10px] sm:text-xs font-semibold text-[--text-primary]">
-              Secure
-            </p>
-            <p className="text-[9px] sm:text-[10px] text-[--text-muted]">
-              Encrypted
-            </p>
-          </div>
-        </div>
-        <div className="flex items-center gap-2 sm:gap-3 rounded-lg sm:rounded-xl border border-[--border] bg-[--bg-card] p-2.5 sm:p-3 shrink-0 min-w-[140px] sm:min-w-0">
-          <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-lg bg-[color-mix(in_srgb,var(--accent)_12%,transparent)] text-[--accent]">
-            <Zap size={12} className="sm:h-3.5 sm:w-3.5" aria-hidden="true" />
-          </div>
-          <div>
-            <p className="text-[10px] sm:text-xs font-semibold text-[--text-primary]">
-              Fast
-            </p>
-            <p className="text-[9px] sm:text-[10px] text-[--text-muted]">
-              {handlingHoursLabel}
-            </p>
-          </div>
-        </div>
-        <div className="flex items-center gap-2 sm:gap-3 rounded-lg sm:rounded-xl border border-[--border] bg-[--bg-card] p-2.5 sm:p-3 shrink-0 min-w-[140px] sm:min-w-0">
-          <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-lg bg-[color-mix(in_srgb,var(--color-info)_12%,transparent)] text-[--color-info]">
-            <Sparkles
-              size={12}
-              className="sm:h-3.5 sm:w-3.5"
-              aria-hidden="true"
-            />
-          </div>
-          <div>
-            <p className="text-[10px] sm:text-xs font-semibold text-[--text-primary]">
-              Instant Delivery
-            </p>
-            <p className="text-[9px] sm:text-[10px] text-[--text-muted]">
-              Email confirmation
-            </p>
-          </div>
-        </div>
+      {/* Trust indicators */}
+      <div className="grid gap-px bg-[--border] border border-[--border] rounded-[--radius-card] overflow-hidden grid-cols-3">
+        {[
+          { icon: Shield, label: "Secure", sub: "Encrypted" },
+          { icon: Zap, label: "Fast", sub: handlingHoursLabel },
+          { icon: Sparkles, label: "Instant", sub: "Email confirmation" },
+        ].map((item) => {
+          const Icon = item.icon;
+          return (
+            <div
+              key={item.label}
+              className="flex items-center gap-2.5 bg-[--bg-card] p-3"
+            >
+              <Icon size={13} className="shrink-0 text-[--text-muted]" aria-hidden="true" />
+              <div className="min-w-0">
+                <p className="text-xs font-semibold text-[--text-primary]">
+                  {item.label}
+                </p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-[--text-muted] truncate">
+                  {item.sub}
+                </p>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

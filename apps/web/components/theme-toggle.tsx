@@ -34,7 +34,7 @@ export function ThemeToggle() {
   return (
     <button
       aria-label="Toggle theme"
-      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[--border] bg-[--bg-card] text-[--text-primary] transition-colors hover:border-[--accent] hover:text-[--accent]"
+      className="inline-flex h-9 w-9 items-center justify-center rounded-[--radius-inner] border border-[--border] bg-[--bg-card] text-[--text-secondary] transition-colors hover:border-[--text-primary] hover:text-[--text-primary]"
       onClick={toggleTheme}
       type="button"
     >
@@ -42,16 +42,16 @@ export function ThemeToggle() {
         {mounted ? (
           <motion.span
             key={isDark ? "sun" : "moon"}
-            initial={{ rotate: -90, opacity: 0, scale: 0.6 }}
+            initial={{ rotate: -45, opacity: 0, scale: 0.7 }}
             animate={{ rotate: 0, opacity: 1, scale: 1 }}
-            exit={{ rotate: 90, opacity: 0, scale: 0.6 }}
-            transition={{ duration: 0.2 }}
+            exit={{ rotate: 45, opacity: 0, scale: 0.7 }}
+            transition={{ duration: 0.18 }}
             className="flex items-center justify-center"
           >
-            {isDark ? <Sun size={18} /> : <Moon size={18} />}
+            {isDark ? <Sun size={15} /> : <Moon size={15} />}
           </motion.span>
         ) : (
-          <span className="flex h-[18px] w-[18px] items-center justify-center" />
+          <span className="flex h-[15px] w-[15px] items-center justify-center" />
         )}
       </AnimatePresence>
     </button>

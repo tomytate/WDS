@@ -38,14 +38,14 @@ export default async function DashboardProductsPage({
         success={resolvedSearchParams.success}
       />
 
-      <div aria-label="Catalog summary" className="mb-6 flex flex-wrap gap-3">
-        <span className="inline-flex rounded-full border border-[--border] bg-[--bg-surface] px-4 py-2 text-sm text-[--text-secondary]">
+      <div aria-label="Catalog summary" className="mb-6 flex flex-wrap gap-2">
+        <span className="inline-flex rounded-[--radius-inner] border border-[--border] bg-[--bg-card] px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.08em] text-[--text-secondary]">
           {products.length} total
         </span>
-        <span className="inline-flex rounded-full border border-[--color-success] bg-[color-mix(in_srgb,var(--color-success)_12%,transparent)] px-4 py-2 text-sm text-[--color-success]">
+        <span className="inline-flex rounded-[--radius-inner] border border-[--color-success] bg-[color-mix(in_srgb,var(--color-success)_10%,transparent)] px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.08em] font-semibold text-[--color-success-text]">
           {activeCount} active
         </span>
-        <span className="inline-flex rounded-full border border-[--border] bg-[--bg-surface] px-4 py-2 text-sm text-[--text-secondary]">
+        <span className="inline-flex rounded-[--radius-inner] border border-[--border] bg-[--bg-card] px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.08em] text-[--text-secondary]">
           {inactiveCount} inactive
         </span>
       </div>
@@ -54,11 +54,11 @@ export default async function DashboardProductsPage({
         <Card>
           <CardContent className="space-y-5 p-5 sm:p-6">
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[--text-muted]">
-                Add product
+              <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                / Add product
               </p>
-              <h2 className="mt-2 font-display text-3xl tracking-tight">
-                Create a new listing
+              <h2 className="mt-2 font-display text-2xl font-semibold tracking-[-0.02em]">
+                Create a new listing.
               </h2>
             </div>
 
@@ -122,30 +122,30 @@ export default async function DashboardProductsPage({
           <CardContent className="space-y-4 p-5 sm:p-6">
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[--text-muted]">
-                  Catalog
+                <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                  / Catalog
                 </p>
-                <h2 className="mt-2 font-display text-3xl tracking-tight">
-                  Existing products
+                <h2 className="mt-2 font-display text-2xl font-semibold tracking-[-0.02em]">
+                  Existing products.
                 </h2>
               </div>
-              <p className="text-sm text-[--text-secondary]">
+              <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-[--text-muted]">
                 {products.length} item{products.length === 1 ? "" : "s"}
               </p>
             </div>
 
             {products.length > 0 ? (
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {products.map((product) => (
                   <details
-                    className="group rounded-2xl border border-[--border] bg-[--bg-surface] p-4"
+                    className="group rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] p-4 open:border-[--text-primary]"
                     key={product.id}
                   >
                     <summary className="cursor-pointer list-none">
                       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                        <div className="flex items-center gap-4">
-                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[--border] bg-[--bg-card] text-[--text-secondary] transition-transform group-open:rotate-90">
-                            <ChevronRight size={16} aria-hidden="true" />
+                        <div className="flex items-center gap-3">
+                          <span className="inline-flex h-7 w-7 items-center justify-center rounded-[--radius-inner] border border-[--border] bg-[--bg-card] text-[--text-secondary] transition-transform group-open:rotate-90">
+                            <ChevronRight size={13} aria-hidden="true" />
                           </span>
                           <ProductLogo
                             iconUrl={product.iconUrl}
@@ -153,16 +153,16 @@ export default async function DashboardProductsPage({
                             size="sm"
                           />
                           <div>
-                            <p className="font-display text-2xl tracking-tight">{product.name}</p>
-                            <p className="mt-1 text-sm text-[--text-secondary]">
+                            <p className="font-display text-base font-semibold tracking-tight">{product.name}</p>
+                            <p className="mt-0.5 font-mono text-[11px] text-[--text-muted]">
                               {product.category} · {formatPrice(product.price)} · {product.slug}
                             </p>
                           </div>
                         </div>
                         <span
-                          className={`inline-flex rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] ${
+                          className={`inline-flex rounded-[--radius-inner] border px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-[0.08em] ${
                             product.isActive
-                              ? "border-[--color-success] bg-[color-mix(in_srgb,var(--color-success)_12%,transparent)] text-[--color-success]"
+                              ? "border-[--color-success] bg-[color-mix(in_srgb,var(--color-success)_10%,transparent)] text-[--color-success-text]"
                               : "border-[--border] bg-[--bg-card] text-[--text-secondary]"
                           }`}
                         >
@@ -261,7 +261,7 @@ export default async function DashboardProductsPage({
                 ))}
               </div>
             ) : (
-              <div className="rounded-2xl border border-[--border] bg-[--bg-surface] p-6 text-sm text-[--text-secondary]">
+              <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-surface] p-6 text-sm text-[--text-secondary]">
                 No products yet. Create your first listing using the form on the left.
               </div>
             )}

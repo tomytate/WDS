@@ -31,19 +31,19 @@ export function LegalDocumentPage({ document }: LegalDocumentPageProps) {
               as="h1"
             />
 
-            <Card className="mesh-panel">
+            <Card>
               <CardContent className="space-y-4 p-6 sm:p-8">
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="rounded-full border border-[--accent] bg-[--accent-tint-soft] px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-[--accent]">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="rounded-[--radius-inner] border border-[--text-primary] bg-[--text-primary] px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.08em] text-[--bg-base]">
                     Effective {document.effectiveDate}
                   </span>
-                  <span className="rounded-full border border-[--border] bg-[--bg-surface] px-4 py-2 text-xs uppercase tracking-[0.22em] text-[--text-secondary]">
+                  <span className="rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.08em] text-[--text-secondary]">
                     Wong Digital Shop
                   </span>
                 </div>
 
                 {document.notice ? (
-                  <div className="rounded-2xl border border-[--accent] bg-[--accent-tint-soft] p-5">
+                  <div className="rounded-[--radius-inner] border-l-2 border-[--accent] bg-[--bg-surface] px-4 py-3">
                     <p className="text-sm leading-7 text-[--text-primary]">
                       {document.notice}
                     </p>
@@ -66,11 +66,11 @@ export function LegalDocumentPage({ document }: LegalDocumentPageProps) {
                 <Card key={`${document.slug}-${section.title}`}>
                   <CardContent className="space-y-4 p-6 sm:p-8">
                     <div className="flex items-start gap-4">
-                      <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[--accent] bg-[--accent-tint-soft] text-sm font-semibold text-[--accent]">
-                        {index + 1}
+                      <div className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[--radius-inner] border border-[--text-primary] bg-[--bg-base] font-mono text-xs font-semibold text-[--text-primary]">
+                        {String(index + 1).padStart(2, "0")}
                       </div>
                       <div className="space-y-4">
-                        <h2 className="font-display text-3xl leading-tight tracking-tight">
+                        <h2 className="font-display text-2xl sm:text-3xl font-semibold leading-tight tracking-tight">
                           {section.title}
                         </h2>
 
@@ -84,13 +84,13 @@ export function LegalDocumentPage({ document }: LegalDocumentPageProps) {
                         ))}
 
                         {section.bullets ? (
-                          <ul className="space-y-3">
+                          <ul className="space-y-2.5">
                             {section.bullets.map((bullet) => (
                               <li
                                 className="flex items-start gap-3"
                                 key={bullet}
                               >
-                                <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[--accent]" />
+                                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-sm bg-[--accent]" />
                                 <span className="text-sm leading-7 text-[--text-secondary] sm:text-base">
                                   {bullet}
                                 </span>
@@ -108,8 +108,8 @@ export function LegalDocumentPage({ document }: LegalDocumentPageProps) {
             {document.closing ? (
               <Card>
                 <CardContent className="space-y-4 p-6 sm:p-8">
-                  <p className="text-xs uppercase tracking-[0.24em] text-[--text-secondary]">
-                    Final Note
+                  <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                    / Final note
                   </p>
                   {document.closing.map((paragraph) => (
                     <p
@@ -126,19 +126,19 @@ export function LegalDocumentPage({ document }: LegalDocumentPageProps) {
 
           <div className="space-y-5 lg:sticky lg:top-24 lg:self-start">
             <Card>
-              <CardContent className="space-y-4 p-6">
-                <p className="text-xs uppercase tracking-[0.24em] text-[--text-secondary]">
-                  Legal Documents
+              <CardContent className="space-y-3 p-5">
+                <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                  / Legal documents
                 </p>
-                <div className="space-y-3">
+                <div className="space-y-1.5">
                   {legalItems
                     .filter((item) => item.href !== "/legal")
                     .map((item) => (
                       <Link
-                        className={`block rounded-xl border px-4 py-3 text-sm transition-colors ${
+                        className={`block rounded-[--radius-inner] border px-3 py-2.5 text-sm transition-colors ${
                           item.href === `/legal/${document.slug}`
-                            ? "border-[--accent] bg-[--accent-tint-soft] text-[--accent]"
-                            : "border-[--border] bg-[--bg-surface] text-[--text-secondary] hover:text-[--text-primary]"
+                            ? "border-[--text-primary] bg-[--text-primary] text-[--bg-base]"
+                            : "border-[--border] bg-[--bg-surface] text-[--text-secondary] hover:border-[--text-primary] hover:text-[--text-primary]"
                         }`}
                         href={item.href}
                         key={item.href}
@@ -149,7 +149,7 @@ export function LegalDocumentPage({ document }: LegalDocumentPageProps) {
                 </div>
                 <Link
                   className={buttonStyles({
-                    className: "w-full justify-center",
+                    className: "w-full justify-center mt-2",
                     variant: "ghost",
                   })}
                   href="/legal"

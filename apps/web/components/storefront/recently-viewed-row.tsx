@@ -28,17 +28,17 @@ export function RecentlyViewedRow({ products }: RecentlyViewedRowProps) {
   if (recentProducts.length === 0) return null;
 
   return (
-    <section ref={sectionRef} className="reveal container-shell py-6 sm:py-8">
+    <section ref={sectionRef} className="reveal container-shell py-8 border-t border-[--border]">
       <div className="space-y-4">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <Clock size={16} className="text-[--accent]" aria-hidden="true" />
-            <h2 className="text-sm font-semibold uppercase tracking-[0.16em] text-[--text-secondary]">
+            <Clock size={13} className="text-[--text-muted]" aria-hidden="true" />
+            <h2 className="font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-[--text-muted]">
               Recently Viewed
             </h2>
           </div>
-          <span className="text-xs text-[--text-muted]">
-            {recentProducts.length} item{recentProducts.length !== 1 ? "s" : ""}
+          <span className="font-mono text-[11px] text-[--text-muted]">
+            {String(recentProducts.length).padStart(2, "0")} {recentProducts.length !== 1 ? "items" : "item"}
           </span>
         </div>
 
@@ -48,7 +48,7 @@ export function RecentlyViewedRow({ products }: RecentlyViewedRowProps) {
         >
           {recentProducts.map((product) => (
             <Link
-              className="group glass-panel flex min-w-[220px] max-w-[260px] shrink-0 snap-start items-center gap-3 rounded-xl p-3 transition-all duration-300 hover:border-[--accent-border] hover:shadow-[0_0_20px_var(--accent-glow)]"
+              className="group flex min-w-[220px] max-w-[260px] shrink-0 snap-start items-center gap-3 rounded-[--radius-inner] border border-[--border] bg-[--bg-card] p-3 transition-colors duration-200 hover:border-[--text-primary]"
               href={`/order?product=${product.slug}`}
               key={product.id}
             >
@@ -59,21 +59,21 @@ export function RecentlyViewedRow({ products }: RecentlyViewedRowProps) {
                 className="shrink-0"
               />
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium text-[--text-primary] group-hover:text-[--accent] transition-colors duration-200">
+                <p className="truncate text-sm font-medium text-[--text-primary]">
                   {product.name}
                 </p>
-                <p className="text-xs font-semibold text-[--accent]">
+                <p className="font-mono text-xs font-semibold text-[--text-primary] tabular-nums">
                   {formatPrimaryPrice(product.price, product.slug)}
                 </p>
                 {showSecondary && (
-                  <p className="text-[10px] text-[--text-muted]">
+                  <p className="font-mono text-[10px] text-[--text-muted]">
                     ≈ {formatSecondaryPrice(product.price, product.slug)}
                   </p>
                 )}
               </div>
               <ArrowRight
-                size={14}
-                className="shrink-0 text-[--text-muted] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-[--accent]"
+                size={13}
+                className="shrink-0 text-[--text-muted] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-[--text-primary]"
                 aria-hidden="true"
               />
             </Link>

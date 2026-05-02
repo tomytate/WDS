@@ -39,7 +39,7 @@ export function BundleItemsPicker({
   const validItems = items.filter(i => i.productId !== "")
 
   return (
-    <div className="space-y-3 rounded-2xl border border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_60%,transparent)] p-4">
+    <div className="space-y-3 rounded-[--radius-card] border border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_60%,transparent)] p-4">
       <div className="flex items-center justify-between">
         <p className="text-xs font-semibold uppercase tracking-wider text-[--text-secondary]">
           Included Products

@@ -56,26 +56,20 @@ export function CartSummary({
 
   return (
     <div
-      className="relative scroll-mt-28 overflow-hidden rounded-xl sm:rounded-2xl border border-[--accent-border] bg-gradient-to-br from-[color-mix(in_srgb,var(--accent)_4%,var(--bg-card))] to-[var(--bg-card)] p-3.5 sm:p-5 shadow-[0_0_24px_var(--accent-tint-soft)]"
+      className="relative scroll-mt-28 overflow-hidden rounded-[--radius-card] border border-[--border] bg-[--bg-card] p-4 sm:p-5"
       id={summaryId}
       ref={summaryRef}
     >
-      {/* Decorative element */}
-      <div
-        className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-[--accent-tint-soft] blur-2xl"
-        aria-hidden="true"
-      />
-
-      <div className="relative flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="relative flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-[--border] pb-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg sm:rounded-xl bg-[--accent-tint-soft] text-[--accent]">
-            <ShoppingCart size={18} aria-hidden="true" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] text-[--text-primary]">
+            <ShoppingCart size={15} aria-hidden="true" />
           </div>
           <div>
-            <p className="text-[10px] uppercase tracking-[0.24em] text-[--text-muted] font-semibold">
-              Cart Summary
+            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+              Cart summary
             </p>
-            <p className="mt-0.5 font-display text-lg leading-tight tracking-tight sm:text-2xl text-[--text-primary]">
+            <p className="mt-0.5 font-display text-lg font-semibold leading-tight tracking-tight text-[--text-primary]">
               {items.length === 0
                 ? "Empty"
                 : `${items.length} item${items.length === 1 ? "" : "s"}`}
@@ -83,24 +77,21 @@ export function CartSummary({
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <Badge
-            tone="accent"
-            className="gap-1.5 shadow-[0_0_8px_var(--accent-tint-medium)]"
-          >
-            <Sparkles size={10} aria-hidden="true" />
-            Live Total
+          <Badge tone="accent" size="sm" className="gap-1">
+            <Sparkles size={9} aria-hidden="true" />
+            Live
           </Badge>
           {items.length > 0 ? (
             <button
               className={buttonStyles({
                 size: "sm",
                 variant: "ghost",
-                className: `gap-1.5 ${clearPending ? "!text-[--color-danger] !border-[--color-danger]" : ""}`,
+                className: `gap-1.5 ${clearPending ? "!text-[--color-danger-text] !border-[--color-danger]" : ""}`,
               })}
               onClick={onClear}
               type="button"
             >
-              <Trash2 size={14} aria-hidden="true" />
+              <Trash2 size={13} aria-hidden="true" />
               {clearPending ? "Confirm?" : "Clear"}
             </button>
           ) : null}
@@ -108,10 +99,10 @@ export function CartSummary({
       </div>
 
       {items.length === 0 ? (
-        <div className="mt-4 sm:mt-5 rounded-lg sm:rounded-xl border border-dashed border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_50%,transparent)] p-4 sm:p-6 text-center">
+        <div className="mt-4 rounded-[--radius-inner] border border-dashed border-[--border] bg-[--bg-surface] p-6 text-center">
           <div className="flex justify-center mb-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--bg-surface)_80%,transparent)] text-[--text-muted]">
-              <Package size={20} />
+            <div className="flex h-10 w-10 items-center justify-center rounded-[--radius-inner] border border-[--border] bg-[--bg-card] text-[--text-muted]">
+              <Package size={16} />
             </div>
           </div>
           <p className="text-sm font-medium text-[--text-secondary]">
@@ -122,16 +113,16 @@ export function CartSummary({
           </p>
         </div>
       ) : (
-        <div className="relative mt-4 sm:mt-5 space-y-1.5 sm:space-y-2">
+        <div className="relative mt-4 space-y-1.5">
           <AnimatePresence mode="popLayout">
             {items.map((item, index) => (
               <motion.div
-                initial={{ opacity: 0, y: -10 }}
+                initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, x: -20, scale: 0.95 }}
-                transition={{ duration: 0.2, delay: index * 0.05 }}
+                exit={{ opacity: 0, x: -16, scale: 0.96 }}
+                transition={{ duration: 0.18, delay: index * 0.04 }}
                 layout
-                className="group/item flex items-center justify-between gap-4 rounded-xl border border-[color-mix(in_srgb,var(--border)_60%,transparent)] bg-[color-mix(in_srgb,var(--bg-surface)_40%,transparent)] p-3 transition-all duration-200 hover:border-[--accent-border] hover:bg-[--accent-tint-faint]"
+                className="group/item flex items-center justify-between gap-4 rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] p-3 transition-colors duration-150 hover:border-[--text-primary]"
                 key={`${item.productId}-${item.selectionMode}-${item.quantity}-${item.serviceOption ?? "na"}-${item.accessPlan}`}
               >
                 <div className="flex min-w-0 items-center gap-3">
@@ -149,10 +140,14 @@ export function CartSummary({
                     </span>
                   </div>
                 </div>
-                <span className="shrink-0 flex flex-col items-end rounded-lg bg-[--accent-tint-soft] px-2.5 py-1 text-right text-sm text-[--accent]">
-                  <span className="font-semibold leading-[1.1]">{formatPrimaryPrice(item.unitPrice, item.product?.slug, item.accessPlan)}</span>
+                <span className="shrink-0 flex flex-col items-end text-right text-sm text-[--text-primary]">
+                  <span className="font-semibold tabular-nums leading-[1.1]">
+                    {formatPrimaryPrice(item.unitPrice, item.product?.slug, item.accessPlan)}
+                  </span>
                   {showSecondary && (
-                    <span className="text-[9px] font-medium opacity-70 leading-[1.1] mt-0.5">≈ {formatSecondaryPrice(item.unitPrice, item.product?.slug, item.accessPlan)}</span>
+                    <span className="text-[10px] font-medium text-[--text-muted] leading-[1.1] mt-0.5">
+                      ≈ {formatSecondaryPrice(item.unitPrice, item.product?.slug, item.accessPlan)}
+                    </span>
                   )}
                 </span>
               </motion.div>
@@ -161,71 +156,73 @@ export function CartSummary({
         </div>
       )}
 
-      <div className="relative mt-4 sm:mt-5 rounded-lg sm:rounded-xl border border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_60%,transparent)] p-3 sm:p-4">
+      <div className="relative mt-4 rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] p-4">
         <div className="flex items-center justify-between gap-4 text-sm">
           <span className="text-[--text-secondary]">Subtotal</span>
-          <span className="shrink-0 flex flex-col items-end text-right font-medium text-[--text-primary]">
+          <span className="shrink-0 flex flex-col items-end text-right font-medium tabular-nums text-[--text-primary]">
             <span>{formattedSubtotal}</span>
             {showSecondary && (
-              <span className="text-[10px] opacity-60">≈ {formatSecondaryPrice(subtotalPrice)}</span>
+              <span className="text-[10px] text-[--text-muted]">
+                ≈ {formatSecondaryPrice(subtotalPrice)}
+              </span>
             )}
           </span>
         </div>
         <div className="mt-2 flex items-center justify-between gap-4 text-sm">
           <span className="text-[--text-secondary]">Tip</span>
-          <span className="shrink-0 flex flex-col items-end text-right font-medium text-[--text-primary]">
+          <span className="shrink-0 flex flex-col items-end text-right font-medium tabular-nums text-[--text-primary]">
             <span>{formattedTip}</span>
             {showSecondary && (
-              <span className="text-[10px] opacity-60">≈ {formatSecondaryPrice(tipAmount)}</span>
+              <span className="text-[10px] text-[--text-muted]">
+                ≈ {formatSecondaryPrice(tipAmount)}
+              </span>
             )}
           </span>
         </div>
         {Number(discountAmount) > 0 && (
           <div className="mt-2 flex items-center justify-between gap-4 text-sm">
-            <span className="flex items-center gap-1.5 text-[--color-success]">
+            <span className="flex items-center gap-1.5 text-[--color-success-text]">
               Discount{" "}
-              <span className="text-xs uppercase tracking-wide opacity-80 border border-[color-mix(in_srgb,var(--color-success)_30%,transparent)] px-1.5 py-0.5 rounded-full">
+              <span className="font-mono text-[10px] uppercase tracking-[0.08em] border border-[color-mix(in_srgb,var(--color-success)_30%,transparent)] px-1.5 py-0.5 rounded-[--radius-inner]">
                 {appliedPromoCode}
               </span>
             </span>
-            <span className="shrink-0 text-right font-medium text-[--color-success]">
-              - {formattedDiscount}
+            <span className="shrink-0 text-right font-medium tabular-nums text-[--color-success-text]">
+              − {formattedDiscount}
             </span>
           </div>
         )}
         <div className="mt-3 flex items-center justify-between gap-4 border-t border-[--border] pt-3">
-          <span className="font-semibold text-[--text-primary]">
-            Grand Total
-          </span>
-          <span className="shrink-0 flex flex-col items-end rounded-lg bg-[--accent] px-3 py-1.5 text-right text-lg font-bold text-[--accent-fg] shadow-[0_2px_8px_var(--accent-tint-strong)]">
-            <span>{formattedTotal}</span>
+          <span className="font-semibold text-[--text-primary]">Grand total</span>
+          <span className="shrink-0 flex flex-col items-end text-right">
+            <span className="font-display text-2xl font-semibold tabular-nums tracking-tight text-[--text-primary]">
+              {formattedTotal}
+            </span>
             {showSecondary && (
-              <span className="text-[10px] font-medium opacity-80 leading-[1.1] mt-0.5">≈ {formatSecondaryPrice(totalPrice)}</span>
+              <span className="text-[10px] font-medium text-[--text-muted] mt-0.5">
+                ≈ {formatSecondaryPrice(totalPrice)}
+              </span>
             )}
           </span>
         </div>
 
-
-        {/* Promo Code Input */}
         {onApplyPromo && items.length > 0 && (
           <div className="mt-4 pt-4 border-t border-dashed border-[--border]">
             {appliedPromoCode ? (
-              <div className="flex items-center justify-between gap-3 rounded-xl border border-[color-mix(in_srgb,var(--color-success)_20%,transparent)] bg-[color-mix(in_srgb,var(--color-success)_10%,transparent)] p-2 backdrop-blur-sm">
-                <div className="flex items-center gap-2 pl-2">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--color-success)_20%,transparent)] text-[--color-success]">
-                    <Sparkles size={12} aria-hidden="true" />
-                  </div>
-                  <span className="text-xs font-semibold text-[--color-success] uppercase tracking-wider">
+              <div className="flex items-center justify-between gap-3 rounded-[--radius-inner] border border-[color-mix(in_srgb,var(--color-success)_30%,transparent)] bg-[color-mix(in_srgb,var(--color-success)_10%,transparent)] px-3 py-2">
+                <div className="flex items-center gap-2">
+                  <Sparkles size={12} className="text-[--color-success]" aria-hidden="true" />
+                  <span className="font-mono text-xs font-semibold uppercase tracking-[0.08em] text-[--color-success-text]">
                     {appliedPromoCode}
                   </span>
                 </div>
                 <button
                   type="button"
                   onClick={() => onRemovePromo?.()}
-                  className="rounded-lg p-1.5 text-[--text-muted] hover:bg-[color-mix(in_srgb,var(--color-danger)_15%,transparent)] hover:text-[--color-danger] transition-colors"
+                  className="rounded-[--radius-inner] p-1.5 text-[--text-muted] hover:bg-[color-mix(in_srgb,var(--color-danger)_12%,transparent)] hover:text-[--color-danger-text] transition-colors"
                   aria-label="Remove promo code"
                 >
-                  <Trash2 size={14} aria-hidden="true" />
+                  <Trash2 size={13} aria-hidden="true" />
                 </button>
               </div>
             ) : (
@@ -238,8 +235,8 @@ export function CartSummary({
                     id="cart-promo-input"
                     name="promoCode"
                     type="text"
-                    placeholder="Have a promo code?"
-                    className="h-10 w-full min-w-0 flex-1 rounded-xl border border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_60%,transparent)] px-3 text-sm font-medium uppercase text-[--text-primary] placeholder:normal-case placeholder:font-normal placeholder:opacity-70 focus:border-[--accent] focus:outline-none focus:ring-1 focus:ring-[--accent] transition-shadow disabled:opacity-50"
+                    placeholder="Promo code"
+                    className="h-10 w-full min-w-0 flex-1 rounded-[--radius-inner] border border-[--border] bg-[--bg-card] px-3 text-sm font-medium uppercase text-[--text-primary] placeholder:normal-case placeholder:font-normal placeholder:text-[--text-muted] focus:border-[--text-primary] focus:outline-none transition-colors disabled:opacity-50"
                     disabled={isValidatingPromo}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
@@ -257,17 +254,17 @@ export function CartSummary({
                       if (input) onApplyPromo(input.value);
                     }}
                     disabled={isValidatingPromo}
-                    className="flex h-10 items-center justify-center rounded-xl bg-[color-mix(in_srgb,var(--bg-card)_50%,transparent)] px-4 text-sm font-semibold text-[--accent] border border-[--border] hover:bg-[--accent-tint-soft] hover:border-[--accent-tint-strong] transition-all disabled:opacity-50"
+                    className="flex h-10 shrink-0 items-center justify-center rounded-[--radius-inner] border border-[--text-primary] bg-[--text-primary] px-4 text-sm font-semibold text-[--bg-base] hover:bg-[--accent] hover:text-[--accent-fg] hover:border-[--accent] transition-colors disabled:opacity-50"
                   >
                     {isValidatingPromo ? (
-                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-[--accent] border-t-transparent" />
+                      <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-current border-t-transparent" />
                     ) : (
                       "Apply"
                     )}
                   </button>
                 </div>
                 {promoError && (
-                  <p className="mt-2 text-[11px] font-medium text-[--color-danger] animate-slide-in-top">
+                  <p className="mt-2 text-[11px] font-medium text-[--color-danger-text] animate-slide-in-top">
                     {promoError}
                   </p>
                 )}
@@ -277,11 +274,11 @@ export function CartSummary({
         )}
       </div>
 
-      <div className="mt-3 sm:mt-4 flex flex-col gap-2">
-        <div className="flex items-start gap-2 rounded-lg bg-[color-mix(in_srgb,var(--color-info)_8%,transparent)] p-2.5 sm:p-3">
+      <div className="mt-3 flex flex-col gap-2">
+        <div className="flex items-start gap-2 rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] px-3 py-2.5">
           <Info
-            size={14}
-            className="mt-0.5 shrink-0 text-[--color-info]"
+            size={13}
+            className="mt-0.5 shrink-0 text-[--text-muted]"
             aria-hidden="true"
           />
           <p className="text-xs leading-relaxed text-[--text-secondary]">
@@ -291,13 +288,13 @@ export function CartSummary({
           </p>
         </div>
         {Number(discountAmount || "0") > 0 && (
-          <div className="flex items-start gap-2 rounded-lg bg-[color-mix(in_srgb,var(--color-success)_8%,transparent)] p-2.5 sm:p-3">
+          <div className="flex items-start gap-2 rounded-[--radius-inner] border border-[color-mix(in_srgb,var(--color-success)_30%,transparent)] bg-[color-mix(in_srgb,var(--color-success)_8%,transparent)] px-3 py-2.5">
             <Sparkles
-              size={14}
+              size={13}
               className="mt-0.5 shrink-0 text-[--color-success]"
               aria-hidden="true"
             />
-            <p className="text-xs leading-relaxed text-[--text-secondary]">
+            <p className="text-xs leading-relaxed text-[--color-success-text]">
               Your discount has been applied successfully. You can remove it
               anytime before submitting your order.
             </p>

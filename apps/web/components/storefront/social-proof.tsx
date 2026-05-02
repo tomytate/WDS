@@ -7,31 +7,29 @@ import {
   Landmark,
   ChevronLeft,
   ChevronRight,
-  Quote,
 } from "lucide-react";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useIntersectionReveal } from "@/hooks/use-intersection-reveal";
-import { Card } from "@wongdigital/ui";
+import { SectionHeading } from "@wongdigital/ui";
 
-/* ─── Metrics ─── */
 const metrics = [
   {
     id: "orders",
-    label: "Orders Fulfilled",
+    label: "Orders fulfilled",
     value: 210065,
     suffix: "",
     icon: ShieldCheck,
   },
   {
     id: "delivery",
-    label: "Avg Turnaround",
+    label: "Avg turnaround",
     value: 24,
     suffix: "h",
     icon: Clock,
   },
   {
     id: "rating",
-    label: "Satisfaction Rate",
+    label: "Satisfaction",
     value: 4.9,
     suffix: "★",
     decimals: 1,
@@ -39,43 +37,46 @@ const metrics = [
   },
   {
     id: "secure",
-    label: "Payment Security",
+    label: "Payment security",
     value: 100,
     suffix: "%",
     icon: Landmark,
   },
 ];
 
-/* ─── Testimonials ─── */
 const testimonials = [
   {
-    name: "Sarah M. — California, USA",
+    name: "Sarah M.",
+    location: "California, USA",
     text: "Got my Canva Pro activated in under 2 hours. Tried 3 other stores before this — Wong Digital is the only one that actually delivers.",
     rating: 5,
   },
   {
-    name: "Liam O. — London, UK",
+    name: "Liam O.",
+    location: "London, UK",
     text: "ChatGPT Pro working flawlessly for 8 months now. The lifetime plan is an absolute steal. Will be back for Spotify next.",
     rating: 5,
   },
   {
-    name: "Yuki S. — Tokyo, Japan",
+    name: "Yuki S.",
+    location: "Tokyo, Japan",
     text: "Their support replied within minutes when I had a setup question. Spotify Premium has been running perfectly for 6 months straight.",
     rating: 5,
   },
   {
-    name: "Ahmed K. — Dubai, UAE",
+    name: "Ahmed K.",
+    location: "Dubai, UAE",
     text: "Ordered 50K followers for our agency's client page. Real organic growth, not bots. Already placed our third bulk order.",
     rating: 5,
   },
   {
-    name: "Oliver D. — Sydney, Australia",
+    name: "Oliver D.",
+    location: "Sydney, Australia",
     text: "Paid via Binance in seconds, account credentials delivered in 45 minutes. This is how digital commerce should work.",
     rating: 5,
   },
 ];
 
-/* ─── Animated Counter ─── */
 function AnimatedCounter({
   target,
   suffix,
@@ -91,20 +92,17 @@ function AnimatedCounter({
   const ref = useRef<HTMLSpanElement>(null);
   const hasAnimated = useRef(false);
 
-  // Dynamic starting calculation (base value + time-based organic growth)
   const [dynamicTarget, setDynamicTarget] = useState(target);
 
   useEffect(() => {
     if (!isDynamic) return;
     const baseDate = new Date("2024-03-01T00:00:00Z").getTime();
     const now = Date.now();
-    // Roughly 40 orders per day since base line
     const daysSince = Math.max(0, (now - baseDate) / (1000 * 60 * 60 * 24));
     const organicGrowth = Math.floor(daysSince * 40);
 
     setDynamicTarget(target + organicGrowth);
 
-    // Simulate random organic bumps while user is looking
     const interval = setInterval(() => {
       if (Math.random() > 0.7) {
         setDynamicTarget((prev) => prev + 1);
@@ -135,7 +133,6 @@ function AnimatedCounter({
             }
             requestAnimationFrame(tick);
           } else {
-            // Already animated, just sync directly if it bumped
             setCount(dynamicTarget);
           }
         }
@@ -160,7 +157,6 @@ function AnimatedCounter({
   );
 }
 
-/* ─── Main Section ─── */
 export function SocialProof() {
   const sectionRef = useIntersectionReveal<HTMLElement>();
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -169,7 +165,7 @@ export function SocialProof() {
   const startAutoplay = useCallback(() => {
     intervalRef.current = setInterval(() => {
       setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
+    }, 6000);
   }, []);
 
   useEffect(() => {
@@ -200,36 +196,36 @@ export function SocialProof() {
     resumeAutoplay();
   };
 
+  const t = testimonials[activeTestimonial];
+
   return (
     <section
       ref={sectionRef}
-      className="reveal container-shell py-14 sm:py-18 lg:py-24"
+      className="reveal container-shell py-16 sm:py-20 lg:py-28 border-t border-[--border]"
     >
-      {/* Section heading */}
-      <div className="mb-10">
-        <div className="accent-bar mb-4" />
-        <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[--text-primary]">
-          Trusted Worldwide
-        </h2>
-        <p className="mt-2 text-sm text-[--text-secondary] max-w-lg">
-          Real orders, real reviews, fast global delivery.
-        </p>
+      <div className="mb-12">
+        <SectionHeading
+          eyebrow="Trusted Worldwide"
+          title="Real orders. Real reviews. Fast delivery."
+        />
       </div>
 
-      {/* Metrics strip */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 reveal-stagger">
+      {/* Metrics — flat ink-bordered table */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-[--border] border border-[--border] rounded-[--radius-card] overflow-hidden reveal-stagger mb-12">
         {metrics.map((metric) => {
           const Icon = metric.icon;
           return (
-            <Card
-              variant="elevated"
+            <div
               key={metric.label}
-              className="group relative h-full overflow-hidden p-5 text-center transition-all duration-300 hover:shadow-md"
+              className="bg-[--bg-card] p-6 sm:p-8"
             >
-              <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[--accent-tint-soft] text-[--accent] ring-1 ring-[--accent-tint-medium] transition-transform duration-300 group-hover:scale-110">
-                <Icon size={18} aria-hidden="true" />
+              <div className="mb-4 flex items-center justify-between">
+                <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                  {metric.label}
+                </span>
+                <Icon size={14} className="text-[--text-muted]" aria-hidden="true" />
               </div>
-              <p className="font-display text-2xl sm:text-3xl font-bold text-[--text-primary]">
+              <p className="font-display text-3xl sm:text-4xl font-semibold tracking-tight text-[--text-primary]">
                 <AnimatedCounter
                   target={metric.value}
                   suffix={metric.suffix}
@@ -237,105 +233,95 @@ export function SocialProof() {
                   isDynamic={metric.id === "orders"}
                 />
               </p>
-              <p className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[--text-muted]">
-                {metric.label}
-              </p>
-            </Card>
+            </div>
           );
         })}
       </div>
 
-      {/* Testimonial carousel — single card with fade transition */}
+      {/* Testimonial — editorial pull-quote layout */}
       <div
-        className="mt-10"
+        className="border border-[--border] rounded-[--radius-card] bg-[--bg-card]"
         onMouseEnter={pauseAutoplay}
         onMouseLeave={resumeAutoplay}
       >
-        <div className="relative mx-auto max-w-2xl">
-          {/* Card */}
-          <Card
-            variant="glass"
-            className="p-6 sm:p-8 min-h-[160px] flex flex-col justify-center"
-          >
-            {/* Quote icon */}
-            <Quote
-              size={28}
-              className="mb-3 text-[--accent] opacity-50"
-              aria-hidden="true"
-            />
-
-            {(() => {
-              const t = testimonials[activeTestimonial];
-              if (!t) return null;
-              return (
+        <div className="grid lg:grid-cols-12 gap-0">
+          <div className="lg:col-span-3 border-b lg:border-b-0 lg:border-r border-[--border] p-6 sm:p-8 flex flex-col justify-between">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[--text-muted] mb-3">
+                Customer · {String(activeTestimonial + 1).padStart(2, "0")}/{String(testimonials.length).padStart(2, "0")}
+              </p>
+              {t && (
                 <>
-                  {/* Stars */}
-                  <div className="mb-3 flex items-center gap-0.5">
+                  <p className="font-display text-base font-semibold text-[--text-primary]">
+                    {t.name}
+                  </p>
+                  <p className="text-xs text-[--text-muted] mt-0.5">
+                    {t.location}
+                  </p>
+                </>
+              )}
+            </div>
+
+            <div className="mt-6 flex items-center gap-3">
+              <button
+                type="button"
+                onClick={goPrev}
+                aria-label="Previous testimonial"
+                className="flex h-9 w-9 items-center justify-center rounded-[--radius-inner] border border-[--border] text-[--text-muted] transition-colors hover:border-[--text-primary] hover:text-[--text-primary]"
+              >
+                <ChevronLeft size={14} />
+              </button>
+              <button
+                type="button"
+                onClick={goNext}
+                aria-label="Next testimonial"
+                className="flex h-9 w-9 items-center justify-center rounded-[--radius-inner] border border-[--border] text-[--text-muted] transition-colors hover:border-[--text-primary] hover:text-[--text-primary]"
+              >
+                <ChevronRight size={14} />
+              </button>
+            </div>
+          </div>
+
+          <div className="lg:col-span-9 p-6 sm:p-10 flex flex-col justify-between">
+            {t && (
+              <>
+                <blockquote
+                  key={activeTestimonial}
+                  className="animate-fade-in-up-sm font-display text-xl sm:text-2xl lg:text-3xl leading-[1.3] tracking-tight text-[--text-primary] max-w-3xl"
+                >
+                  &ldquo;{t.text}&rdquo;
+                </blockquote>
+                <div className="mt-8 flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-1">
                     {Array.from({ length: t.rating }).map((_, i) => (
                       <Star
                         key={i}
                         size={14}
-                        className="fill-[--accent] text-[--accent]"
+                        className="fill-[--text-primary] text-[--text-primary]"
                       />
                     ))}
                   </div>
-
-                  {/* Text with fade animation */}
-                  <blockquote
-                    key={activeTestimonial}
-                    className="animate-fade-in-up-sm font-medium text-base leading-relaxed text-[--text-primary] sm:text-lg"
-                  >
-                    &ldquo;{t.text}&rdquo;
-                  </blockquote>
-                  <p
-                    key={`name-${activeTestimonial}`}
-                    className="animate-fade-in-up-sm mt-3 text-sm text-[--text-muted]"
-                    style={{ animationDelay: "80ms" }}
-                  >
-                    — {t.name}
-                  </p>
-                </>
-              );
-            })()}
-          </Card>
-
-          {/* Navigation arrows */}
-          <div className="mt-5 flex items-center justify-center gap-3">
-            <button
-              type="button"
-              onClick={goPrev}
-              aria-label="Previous testimonial"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--border)_60%,transparent)] bg-[color-mix(in_srgb,var(--bg-card)_50%,transparent)] text-[--text-muted] transition-all hover:border-[--accent] hover:text-[--accent] hover:shadow-sm"
-            >
-              <ChevronLeft size={16} />
-            </button>
-
-            {/* Dots */}
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                type="button"
-                aria-label={`Go to testimonial ${index + 1}`}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  index === activeTestimonial
-                    ? "w-6 bg-[--accent]"
-                    : "w-2 bg-[--border] hover:bg-[--text-muted]"
-                }`}
-                onClick={() => {
-                  setActiveTestimonial(index);
-                  resumeAutoplay();
-                }}
-              />
-            ))}
-
-            <button
-              type="button"
-              onClick={goNext}
-              aria-label="Next testimonial"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--border)_60%,transparent)] bg-[color-mix(in_srgb,var(--bg-card)_50%,transparent)] text-[--text-muted] transition-all hover:border-[--accent] hover:text-[--accent] hover:shadow-sm"
-            >
-              <ChevronRight size={16} />
-            </button>
+                  <div className="flex items-center gap-1.5">
+                    {testimonials.map((_, index) => (
+                      <button
+                        key={index}
+                        type="button"
+                        aria-label={`Go to testimonial ${index + 1}`}
+                        className={`h-1 rounded-full transition-all duration-300 ${
+                          index === activeTestimonial
+                            ? "w-8 bg-[--text-primary]"
+                            : "w-3 bg-[--border] hover:bg-[--text-muted]"
+                        }`}
+                        onClick={() => {
+                          setActiveTestimonial(index);
+                          resumeAutoplay();
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

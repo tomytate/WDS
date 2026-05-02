@@ -11,16 +11,16 @@ export default function OrdersLoading() {
       {/* Top Bar Skeleton */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex w-full items-center gap-2 sm:w-auto">
-          <div className="h-10 w-full rounded-2xl bg-[--bg-surface] sm:w-[320px] animate-pulse" />
+          <div className="h-10 w-full rounded-[--radius-card] bg-[--bg-surface] sm:w-[320px] animate-pulse" />
         </div>
         <div className="flex items-center gap-2">
-          <div className="h-10 w-24 rounded-2xl bg-[--bg-surface] animate-pulse" />
-          <div className="h-10 w-32 rounded-2xl bg-[--bg-surface] animate-pulse" />
+          <div className="h-10 w-24 rounded-[--radius-card] bg-[--bg-surface] animate-pulse" />
+          <div className="h-10 w-32 rounded-[--radius-card] bg-[--bg-surface] animate-pulse" />
         </div>
       </div>
 
       {/* Table Skeletons */}
-      <div className="overflow-hidden rounded-2xl sm:rounded-[32px] border border-[--border] bg-[--bg-card]">
+      <div className="overflow-hidden rounded-[--radius-card] sm:rounded-[--radius-card] border border-[--border] bg-[--bg-card]">
         <div className="grid grid-cols-[1fr] sm:grid-cols-[1.5fr_1fr_1fr_1fr] border-b border-[--border] bg-[--bg-surface] p-4 sm:p-5">
           {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="h-4 w-20 rounded bg-[--bg-card] animate-pulse" />

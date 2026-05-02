@@ -90,7 +90,7 @@ export default async function DashboardPromosPage({
                 />
               </div>
 
-              <div className="mt-2 space-y-4 rounded-2xl border border-[--border] bg-[--bg-surface] p-4">
+              <div className="mt-2 space-y-4 rounded-[--radius-card] border border-[--border] bg-[--bg-surface] p-4">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[--text-muted] mb-1">
                   Constraints & limits
                 </p>
@@ -171,7 +171,7 @@ export default async function DashboardPromosPage({
 
                   return (
                   <details
-                    className="group rounded-2xl border border-[--border] bg-[--bg-surface] p-4"
+                    className="group rounded-[--radius-card] border border-[--border] bg-[--bg-surface] p-4"
                     key={promo.id}
                   >
                     <summary className="cursor-pointer list-none">
@@ -180,7 +180,7 @@ export default async function DashboardPromosPage({
                           <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[--border] bg-[--bg-card] text-[--text-secondary] transition-transform group-open:rotate-90">
                             <ChevronRight size={16} aria-hidden="true" />
                           </span>
-                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[--accent-tint-soft] text-[--accent]">
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] text-[--text-primary]">
                             <Percent size={18} />
                           </div>
                           <div className="min-w-0">
@@ -219,7 +219,7 @@ export default async function DashboardPromosPage({
 
                     <div className="mt-4 grid gap-4">
                       
-                      <div className="rounded-2xl border border-[--border] bg-[--bg-card] p-4 flex gap-4 text-sm text-[--text-primary]">
+                      <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] p-4 flex gap-4 text-sm text-[--text-primary]">
                          <div>
                             <span className="block text-[10px] font-semibold uppercase tracking-[0.22em] text-[--text-muted]">Total uses</span>
                             <span className="font-medium">{promo.currentUses} {promo.maxUses ? `/ ${promo.maxUses}` : ""}</span>
@@ -266,7 +266,7 @@ export default async function DashboardPromosPage({
                            />
                         </div>
 
-                        <div className="grid gap-4 sm:grid-cols-2 rounded-2xl border border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_60%,transparent)] p-3">
+                        <div className="grid gap-4 sm:grid-cols-2 rounded-[--radius-card] border border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_60%,transparent)] p-3">
                            <div>
                              <label className="mb-1 block text-xs text-[--text-secondary]">Min order amount (USDT)</label>
                              <Input
@@ -355,7 +355,7 @@ export default async function DashboardPromosPage({
                 )})}
               </div>
             ) : (
-              <div className="rounded-2xl border border-[--border] bg-[--bg-surface] p-6 text-sm text-[--text-secondary]">
+              <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-surface] p-6 text-sm text-[--text-secondary]">
                 No promo codes yet. Create your first code using the form on the left.
               </div>
             )}

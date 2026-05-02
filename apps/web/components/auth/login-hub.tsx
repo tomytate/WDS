@@ -4,9 +4,9 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState, useTransition } from "react"
 import { motion, AnimatePresence } from "motion/react"
-import { LogIn, Shield, Mail, Loader2 } from "lucide-react"
+import { LogIn, Shield, Mail, Loader2, ArrowRight } from "lucide-react"
 
-import { Card, CardContent, Input, buttonStyles } from "@wongdigital/ui"
+import { Card, FieldWrapper, Input, buttonStyles } from "@wongdigital/ui"
 
 import { createClient } from "@/utils/supabase/client"
 
@@ -28,62 +28,96 @@ export function LoginHub({
   const [activeTab, setActiveTab] = useState<"customer" | "admin">(initialTab)
 
   return (
-    <Card className="w-full max-w-lg relative overflow-hidden">
-      <CardContent className="space-y-6 p-5 sm:p-8">
+    <div className="grid w-full max-w-5xl grid-cols-1 gap-0 overflow-hidden rounded-[--radius-card] border border-[--border] bg-[--bg-card] lg:grid-cols-[5fr_4fr]">
+      {/* Editorial side panel */}
+      <aside className="ink-block hidden lg:flex flex-col justify-between p-10 xl:p-12">
+        <div>
+          <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-[--accent] mb-6">
+            / Wong Digital
+          </p>
+          <h2 className="font-display text-4xl xl:text-5xl font-semibold leading-[0.95] tracking-[-0.025em] text-[--text-on-ink]">
+            Premium digital tools, delivered{" "}
+            <span className="text-[--accent]">in hours.</span>
+          </h2>
+          <p className="mt-6 max-w-sm text-base leading-relaxed text-[--text-on-ink] opacity-75">
+            Sign in to manage your subscriptions, track orders, and access your
+            wallet balance.
+          </p>
+        </div>
+        <div className="mt-10 grid grid-cols-2 gap-px bg-[color-mix(in_srgb,var(--text-on-ink)_14%,transparent)] border border-[color-mix(in_srgb,var(--text-on-ink)_14%,transparent)] rounded-[--radius-inner] overflow-hidden">
+          <div className="bg-[--bg-ink] p-4">
+            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-on-ink] opacity-60">
+              Orders
+            </p>
+            <p className="mt-1 font-display text-xl font-semibold text-[--text-on-ink] tabular-nums">
+              240K+
+            </p>
+          </div>
+          <div className="bg-[--bg-ink] p-4">
+            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-on-ink] opacity-60">
+              Avg delivery
+            </p>
+            <p className="mt-1 font-display text-xl font-semibold text-[--text-on-ink] tabular-nums">
+              2–6h
+            </p>
+          </div>
+        </div>
+      </aside>
+
+      {/* Form panel */}
+      <div className="p-6 sm:p-10 xl:p-12 flex flex-col justify-center">
         {/* Tab Selector */}
-        <div className="flex rounded-full border border-[--border] bg-[--bg-surface] p-1">
+        <div className="inline-flex rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] p-1 self-start mb-7">
           <button
-            className={`flex-1 flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium transition-all duration-300 ${
+            className={`flex items-center gap-2 rounded-[calc(var(--radius-inner)-2px)] px-4 py-2 text-sm font-medium tracking-tight transition-colors duration-150 ${
               activeTab === "customer"
-                ? "bg-[--accent] text-[--accent-fg] shadow-md shadow-[color-mix(in_srgb,var(--accent)_25%,transparent)]"
+                ? "bg-[--text-primary] text-[--bg-base]"
                 : "text-[--text-secondary] hover:text-[--text-primary]"
             }`}
             onClick={() => setActiveTab("customer")}
             type="button"
           >
-            <LogIn size={14} />
+            <LogIn size={13} />
             Customer
           </button>
           <button
-            className={`flex-1 flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium transition-all duration-300 ${
+            className={`flex items-center gap-2 rounded-[calc(var(--radius-inner)-2px)] px-4 py-2 text-sm font-medium tracking-tight transition-colors duration-150 ${
               activeTab === "admin"
-                ? "bg-[--accent] text-[--accent-fg] shadow-md shadow-[color-mix(in_srgb,var(--accent)_25%,transparent)]"
+                ? "bg-[--text-primary] text-[--bg-base]"
                 : "text-[--text-secondary] hover:text-[--text-primary]"
             }`}
             onClick={() => setActiveTab("admin")}
             type="button"
           >
-            <Shield size={14} />
+            <Shield size={13} />
             Admin
           </button>
         </div>
 
-        {/* Error banner */}
         {errorMessage && (
-          <div className="rounded-xl border border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_12%,transparent)] px-4 py-3 text-sm text-[--color-danger]">
+          <div className="mb-5 rounded-[--radius-inner] border border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_10%,transparent)] px-4 py-3 text-sm font-medium text-[--color-danger-text]">
             {errorMessage}
           </div>
         )}
 
-        {/* Tab Content */}
         <AnimatePresence mode="wait">
           {activeTab === "customer" ? (
             <motion.div
               key="customer"
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: -16 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.2 }}
+              exit={{ opacity: 0, x: 16 }}
+              transition={{ duration: 0.18 }}
             >
               <CustomerAuthForm redirectPath={customerRedirectPath} />
             </motion.div>
           ) : (
             <motion.div
               key="admin"
-              initial={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0, x: 16 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.2 }}
+              exit={{ opacity: 0, x: -16 }}
+              transition={{ duration: 0.18 }}
             >
               <AdminAuthForm
                 localDashboardBypass={localDashboardBypass}
@@ -93,33 +127,28 @@ export function LoginHub({
           )}
         </AnimatePresence>
 
-        {/* Footer Links */}
-        <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="mt-8 pt-6 border-t border-[--border] flex flex-col gap-2 sm:flex-row sm:gap-4 text-sm">
           <Link
-            className={buttonStyles({
-              className: "justify-center",
-              variant: "surface",
-            })}
+            className="inline-flex items-center gap-1.5 text-[--text-secondary] transition-colors hover:text-[--text-primary]"
             href="/"
           >
-            Back to Storefront
+            ← Back to storefront
           </Link>
+          <span className="hidden sm:inline text-[--border]">·</span>
           <Link
-            className={buttonStyles({
-              className: "justify-center",
-              variant: "ghost",
-            })}
+            className="inline-flex items-center gap-1.5 text-[--text-secondary] transition-colors hover:text-[--text-primary]"
             href="/track"
           >
-            Track an Order
+            Track an order
+            <ArrowRight size={13} />
           </Link>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }
 
-/* ─── Customer Auth (Magic Link + Google SSO) ─── */
+/* ─── Customer Auth ─── */
 
 function CustomerAuthForm({ redirectPath }: { redirectPath: string }) {
   const [email, setEmail] = useState("")
@@ -166,26 +195,29 @@ function CustomerAuthForm({ redirectPath }: { redirectPath: string }) {
 
   if (magicLinkSent) {
     return (
-      <div className="space-y-4">
-        <div className="space-y-3">
-          <p className="text-sm uppercase tracking-[0.24em] text-[--accent]">
-            Check Your Email
+      <div className="space-y-5">
+        <div>
+          <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[--accent-strong] mb-3">
+            / Check your email
           </p>
-          <h1 className="font-display text-2xl tracking-tight sm:text-3xl">
-            Magic Link Sent ✨
+          <h1 className="font-display text-3xl font-semibold tracking-[-0.02em]">
+            Magic link sent.
           </h1>
-          <p className="text-sm leading-7 text-[--text-secondary]">
+          <p className="mt-3 text-sm leading-relaxed text-[--text-secondary]">
             We sent a sign-in link to{" "}
-            <strong className="text-[--text-primary]">{email}</strong>. Click
-            the link in your email to access your account.
+            <strong className="text-[--text-primary]">{email}</strong>. Click the
+            link to access your account.
           </p>
         </div>
-        <div className="flex items-center gap-2 rounded-xl border border-[--accent] bg-[color-mix(in_srgb,var(--accent)_8%,transparent)] px-4 py-3 text-sm text-[--text-primary]">
-          <Mail size={16} className="shrink-0 text-[--accent]" />
+        <div className="flex items-center gap-3 rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] px-4 py-3 text-sm text-[--text-secondary]">
+          <Mail size={14} className="shrink-0" />
           <span>Didn&apos;t receive it? Check your spam folder.</span>
         </div>
         <button
-          className={buttonStyles({ className: "w-full justify-center", variant: "ghost" })}
+          className={buttonStyles({
+            className: "w-full justify-center",
+            variant: "ghost",
+          })}
           onClick={() => {
             setMagicLinkSent(false)
             setEmail("")
@@ -200,25 +232,24 @@ function CustomerAuthForm({ redirectPath }: { redirectPath: string }) {
 
   return (
     <div className="space-y-5">
-      <div className="space-y-3">
-        <p className="text-sm uppercase tracking-[0.24em] text-[--accent]">
-          Welcome
+      <div>
+        <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[--accent-strong] mb-3">
+          / Welcome back
         </p>
-        <h1 className="font-display text-2xl tracking-tight sm:text-3xl">
-          Sign In to Your Account
+        <h1 className="font-display text-3xl font-semibold tracking-[-0.02em]">
+          Sign in to your account.
         </h1>
-        <p className="text-sm leading-7 text-[--text-secondary]">
-          Access your orders, wallet balance, and manage your subscriptions.
+        <p className="mt-3 text-sm leading-relaxed text-[--text-secondary]">
+          Access orders, wallet balance, and manage subscriptions.
         </p>
       </div>
 
-      {/* Google SSO */}
       <button
-        className="group flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-[--border] bg-[--bg-surface] text-sm font-medium text-[--text-primary] transition-all duration-300 hover:border-[color-mix(in_srgb,var(--accent)_40%,var(--border))] hover:shadow-md active:scale-[0.98]"
+        className="group flex h-11 w-full items-center justify-center gap-3 rounded-[--radius-inner] border border-[--border] bg-[--bg-card] text-sm font-medium text-[--text-primary] transition-colors hover:border-[--text-primary]"
         onClick={handleGoogleSignIn}
         type="button"
       >
-        <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
+        <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
           <path
             d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
             fill="#4285F4"
@@ -239,22 +270,16 @@ function CustomerAuthForm({ redirectPath }: { redirectPath: string }) {
         Continue with Google
       </button>
 
-      {/* Divider */}
       <div className="flex items-center gap-3">
         <div className="h-px flex-1 bg-[--border]" />
-        <span className="text-xs text-[--text-muted]">or sign in with email</span>
+        <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+          or email
+        </span>
         <div className="h-px flex-1 bg-[--border]" />
       </div>
 
-      {/* Magic Link */}
       <form className="space-y-4" onSubmit={handleMagicLink}>
-        <div className="space-y-2">
-          <label
-            className="text-sm font-medium text-[--text-primary]"
-            htmlFor="customer-email"
-          >
-            Email Address
-          </label>
+        <FieldWrapper htmlFor="customer-email" label="Email address">
           <Input
             autoComplete="email"
             id="customer-email"
@@ -264,28 +289,28 @@ function CustomerAuthForm({ redirectPath }: { redirectPath: string }) {
             type="email"
             value={email}
           />
-        </div>
+        </FieldWrapper>
 
         {error && (
-          <p className="rounded-xl border border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_12%,transparent)] px-4 py-3 text-sm text-[--color-danger]">
+          <p className="rounded-[--radius-inner] border border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_10%,transparent)] px-4 py-2.5 text-sm font-medium text-[--color-danger-text]">
             {error}
           </p>
         )}
 
         <button
-          className={buttonStyles({ className: "w-full justify-center" })}
+          className={buttonStyles({ className: "w-full justify-center gap-2" })}
           disabled={isPending}
           type="submit"
         >
           {isPending ? (
             <>
-              <Loader2 size={16} className="animate-spin" />
+              <Loader2 size={14} className="animate-spin" />
               Sending…
             </>
           ) : (
             <>
-              <Mail size={16} />
-              Send Magic Link
+              <Mail size={14} />
+              Send magic link
             </>
           )}
         </button>
@@ -294,7 +319,7 @@ function CustomerAuthForm({ redirectPath }: { redirectPath: string }) {
   )
 }
 
-/* ─── Admin Auth (Email + Password) ─── */
+/* ─── Admin Auth ─── */
 
 function AdminAuthForm({
   localDashboardBypass,
@@ -334,41 +359,37 @@ function AdminAuthForm({
 
   return (
     <div className="space-y-5">
-      <div className="space-y-3">
-        <p className="text-sm uppercase tracking-[0.24em] text-[--accent]">
-          Admin Access
+      <div>
+        <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[--accent-strong] mb-3">
+          / Admin access
         </p>
-        <h1 className="font-display text-2xl tracking-tight sm:text-3xl">
-          Dashboard Login
+        <h1 className="font-display text-3xl font-semibold tracking-[-0.02em]">
+          Dashboard sign in.
         </h1>
-        <p className="text-sm leading-7 text-[--text-secondary]">
-          Sign in with your admin email and password to manage orders, products,
-          customers, and store settings.
+        <p className="mt-3 text-sm leading-relaxed text-[--text-secondary]">
+          Manage orders, products, customers, and store settings.
         </p>
       </div>
 
       {localDashboardBypass ? (
         <>
-          <div className="rounded-2xl border border-[--accent] bg-[color-mix(in_srgb,var(--accent)_12%,transparent)] px-4 py-3 text-sm text-[--text-primary]">
+          <div className="rounded-[--radius-inner] border border-[--text-primary] bg-[--accent] px-4 py-3 text-sm font-medium text-[--accent-fg]">
             Local development bypass is active because Supabase dashboard auth is
             not fully configured in this environment yet.
           </div>
           <Link
-            className={buttonStyles({ className: "justify-center" })}
+            className={buttonStyles({
+              className: "w-full justify-center gap-2",
+            })}
             href={redirectPath}
           >
             Open Dashboard
+            <ArrowRight size={14} />
           </Link>
         </>
       ) : (
         <form className="space-y-4" onSubmit={handleSubmit}>
-          <div className="space-y-2">
-            <label
-              className="text-sm font-medium text-[--text-primary]"
-              htmlFor="admin-email"
-            >
-              Email Address
-            </label>
+          <FieldWrapper htmlFor="admin-email" label="Email address">
             <Input
               autoComplete="email"
               id="admin-email"
@@ -378,15 +399,9 @@ function AdminAuthForm({
               type="email"
               value={email}
             />
-          </div>
+          </FieldWrapper>
 
-          <div className="space-y-2">
-            <label
-              className="text-sm font-medium text-[--text-primary]"
-              htmlFor="admin-password"
-            >
-              Password
-            </label>
+          <FieldWrapper htmlFor="admin-password" label="Password">
             <Input
               autoComplete="current-password"
               id="admin-password"
@@ -396,26 +411,29 @@ function AdminAuthForm({
               type="password"
               value={password}
             />
-          </div>
+          </FieldWrapper>
 
           {error && (
-            <p className="rounded-xl border border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_12%,transparent)] px-4 py-3 text-sm text-[--color-danger]">
+            <p className="rounded-[--radius-inner] border border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_10%,transparent)] px-4 py-2.5 text-sm font-medium text-[--color-danger-text]">
               {error}
             </p>
           )}
 
           <button
-            className={buttonStyles({ className: "w-full justify-center" })}
+            className={buttonStyles({ className: "w-full justify-center gap-2" })}
             disabled={isPending}
             type="submit"
           >
             {isPending ? (
               <>
-                <Loader2 size={16} className="animate-spin" />
-                Signing In…
+                <Loader2 size={14} className="animate-spin" />
+                Signing in…
               </>
             ) : (
-              "Sign In"
+              <>
+                Sign in
+                <ArrowRight size={14} />
+              </>
             )}
           </button>
         </form>
@@ -423,3 +441,6 @@ function AdminAuthForm({
     </div>
   )
 }
+
+// Card import retained for backwards-compat
+void Card

@@ -164,10 +164,10 @@ function TabsTrigger({ value, children, className, disabled }: TabsTriggerProps)
       onClick={() => ctx.setValue(value)}
       onKeyDown={onKeyDown}
       className={cn(
-        "inline-flex min-h-[44px] items-center gap-2 rounded-t-[--radius-inner] px-4 py-2 text-sm font-medium transition-colors duration-150",
-        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--accent]",
+        "inline-flex min-h-[44px] items-center gap-2 px-4 py-2 text-sm font-medium tracking-tight transition-colors duration-150 -mb-px",
+        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--text-primary]",
         selected
-          ? "border-b-2 border-[--accent] text-[--accent-strong]"
+          ? "border-b-2 border-[--text-primary] text-[--text-primary]"
           : "border-b-2 border-transparent text-[--text-secondary] hover:text-[--text-primary]",
         disabled && "cursor-not-allowed opacity-50",
         className,

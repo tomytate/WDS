@@ -11,26 +11,26 @@ export function ReviewBlock({
   }>;
 }) {
   return (
-    <div className="group rounded-2xl border border-[--border] bg-[--bg-card] p-5 transition-all duration-300 hover:border-[--accent-border] hover:shadow-[0_0_20px_var(--accent-tint-soft)]">
-      <div className="flex items-center gap-3">
-        <div className="flex h-6 w-6 items-center justify-center rounded-md bg-[--accent-tint-soft]">
-          <CheckCircle2
-            size={14}
-            className="text-[--accent]"
-            aria-hidden="true"
-          />
-        </div>
-        <p className="text-xs uppercase tracking-[0.2em] text-[--accent] font-semibold">
+    <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] overflow-hidden transition-colors duration-200 hover:border-[--text-primary]">
+      <div className="flex items-center gap-2.5 border-b border-[--border] bg-[--bg-surface] px-4 py-3">
+        <CheckCircle2
+          size={13}
+          className="text-[--accent-strong]"
+          aria-hidden="true"
+        />
+        <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-secondary] font-medium">
           {label}
         </p>
       </div>
-      <div className="mt-4 space-y-1">
-        {rows.map((row, _index) => (
+      <div className="divide-y divide-[--border]">
+        {rows.map((row) => (
           <div
-            className="flex flex-col gap-1 rounded-xl px-3 py-2.5 transition-colors hover:bg-[color-mix(in_srgb,var(--bg-surface)_70%,transparent)] sm:flex-row sm:items-center sm:justify-between"
+            className="flex flex-col gap-0.5 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
             key={`${label}-${row.label}`}
           >
-            <span className="text-sm text-[--text-muted]">{row.label}</span>
+            <span className="text-xs uppercase tracking-tight text-[--text-muted] sm:text-sm sm:normal-case">
+              {row.label}
+            </span>
             <span
               className={`text-sm font-medium ${
                 row.value === "—" || row.value === "No file uploaded"

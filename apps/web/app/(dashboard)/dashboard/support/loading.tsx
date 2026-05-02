@@ -11,17 +11,17 @@ export default function SupportLoading() {
       {/* Top Bar Skeleton */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex w-full items-center gap-2 sm:w-auto">
-          <div className="h-10 w-full rounded-2xl bg-[--bg-surface] sm:w-[320px] animate-pulse" />
+          <div className="h-10 w-full rounded-[--radius-card] bg-[--bg-surface] sm:w-[320px] animate-pulse" />
         </div>
         <div className="flex items-center gap-2">
-          <div className="h-10 w-24 rounded-2xl bg-[--bg-surface] animate-pulse" />
+          <div className="h-10 w-24 rounded-[--radius-card] bg-[--bg-surface] animate-pulse" />
         </div>
       </div>
 
       {/* Chat List Skeletons */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="flex flex-col gap-3 rounded-2xl border border-[--border] bg-[--bg-card] p-5">
+          <div key={i} className="flex flex-col gap-3 rounded-[--radius-card] border border-[--border] bg-[--bg-card] p-5">
             <div className="flex justify-between items-start">
               <div className="h-6 w-32 rounded bg-[--bg-surface] animate-pulse" />
               <div className="h-5 w-16 rounded-full bg-[--bg-surface] animate-pulse" />

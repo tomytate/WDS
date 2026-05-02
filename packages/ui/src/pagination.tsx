@@ -105,11 +105,11 @@ function PaginationButton({
       {...props}
       className={cn(
         "inline-flex h-10 min-w-[40px] items-center justify-center rounded-[--radius-inner] border px-2 text-sm font-medium transition-colors duration-150",
-        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--accent]",
+        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--text-primary]",
         "disabled:cursor-not-allowed disabled:opacity-40",
         selected
-          ? "border-[--accent] bg-[--accent-tint-soft] text-[--accent-strong]"
-          : "border-[--border] bg-[--bg-card] text-[--text-secondary] hover:text-[--text-primary]",
+          ? "border-[--text-primary] bg-[--text-primary] text-[--bg-base]"
+          : "border-[--border] bg-[--bg-card] text-[--text-secondary] hover:border-[--text-primary] hover:text-[--text-primary]",
         props.className,
       )}
     >

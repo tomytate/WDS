@@ -225,7 +225,7 @@ export function ChatWidget() {
           <motion.button
             animate={{ scale: 1, opacity: 1 }}
             aria-label="Open support chat"
-            className="fixed bottom-24 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full border border-[--accent] bg-[--accent] text-[--accent-fg] shadow-[0_4px_24px_var(--accent-tint-strong)] transition-transform hover:scale-105 active:scale-95 md:bottom-5"
+            className="fixed bottom-24 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-[--radius-inner] border border-[--text-primary] bg-[--text-primary] text-[--bg-base] shadow-[--shadow-md] transition-colors hover:bg-[--accent] hover:text-[--accent-fg] hover:border-[--accent] active:scale-95 md:bottom-5"
             exit={{ scale: 0.8, opacity: 0 }}
             initial={{ scale: 0.8, opacity: 0 }}
             onClick={handleOpen}
@@ -247,16 +247,16 @@ export function ChatWidget() {
         {open ? (
           <motion.div
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            className="fixed bottom-24 right-4 z-50 flex w-[calc(100vw-2rem)] max-w-sm flex-col overflow-hidden rounded-xl border border-[--border] bg-[color-mix(in_srgb,var(--bg-base)_40%,transparent)] backdrop-blur-3xl shadow-[var(--shadow-elevated)] sm:bottom-5 sm:right-5 md:bottom-5"
+            className="fixed bottom-24 right-4 z-50 flex w-[calc(100vw-2rem)] max-w-sm flex-col overflow-hidden rounded-[--radius-card] border border-[--border] bg-[--bg-card] shadow-[--shadow-elevated] sm:bottom-5 sm:right-5 md:bottom-5"
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             style={{ maxHeight: "min(70vh, 540px)" }}
             transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-[color-mix(in_srgb,var(--border)_50%,transparent)] bg-[--accent-tint-soft] px-4 py-3">
+            <div className="flex items-center justify-between border-b border-[--border] bg-[--bg-surface] px-4 py-3">
               <div className="flex items-center gap-2.5">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[--accent] text-[--accent-fg]">
+                <span className="flex h-8 w-8 items-center justify-center rounded-[--radius-inner] bg-[--text-primary] text-[--bg-base]">
                   <MessageCircle size={16} strokeWidth={2} />
                 </span>
                 <div>
@@ -270,7 +270,7 @@ export function ChatWidget() {
               </div>
               <button
                 aria-label="Close chat"
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full text-[--text-muted] transition-colors hover:bg-[--bg-card] hover:text-[--text-primary]"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-[--radius-inner] text-[--text-muted] transition-colors hover:bg-[--bg-card] hover:text-[--text-primary]"
                 onClick={() => setOpen(false)}
                 type="button"
               >
@@ -395,7 +395,7 @@ export function ChatWidget() {
                   />
                   <button
                     aria-label="Send message"
-                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[--accent] text-[--accent-fg] transition-opacity hover:opacity-90 disabled:opacity-40"
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[--radius-inner] bg-[--text-primary] text-[--bg-base] transition-colors hover:bg-[--accent] hover:text-[--accent-fg] disabled:opacity-40"
                     disabled={sending || !message.trim()}
                     type="submit"
                   >

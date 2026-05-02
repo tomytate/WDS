@@ -69,7 +69,7 @@ export function Segmented<T extends string = string>({
       aria-label={ariaLabel}
       onKeyDown={onKeyDown}
       className={cn(
-        "inline-flex rounded-[--radius-chip] border border-[--border] bg-[--bg-surface] p-1 text-sm",
+        "inline-flex rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] p-1 text-sm",
         className,
       )}
     >
@@ -88,10 +88,10 @@ export function Segmented<T extends string = string>({
             disabled={opt.disabled}
             onClick={() => onChange(opt.value)}
             className={cn(
-              "inline-flex min-h-[36px] items-center rounded-[--radius-chip] px-3 py-1.5 font-medium transition-colors duration-150",
-              "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--accent]",
+              "inline-flex min-h-[36px] items-center rounded-[calc(var(--radius-inner)-2px)] px-3 py-1.5 font-medium transition-colors duration-150",
+              "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--text-primary]",
               selected
-                ? "bg-[--bg-base] text-[--text-primary] shadow-[--shadow-xs]"
+                ? "bg-[--text-primary] text-[--bg-base]"
                 : "text-[--text-secondary] hover:text-[--text-primary]",
               opt.disabled && "cursor-not-allowed opacity-50",
             )}

@@ -52,7 +52,7 @@ export function Alert({
       role={role}
       aria-live={live}
       className={cn(
-        "flex gap-3 rounded-[--radius-card] border px-4 py-3 text-sm leading-relaxed",
+        "flex gap-3 rounded-[--radius-inner] border px-4 py-3 text-sm leading-relaxed",
         toneClasses[tone],
         className,
       )}

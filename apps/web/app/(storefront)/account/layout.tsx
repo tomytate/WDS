@@ -18,12 +18,7 @@ export default async function AccountLayout({
     <main>
       <Navbar />
       <section className="relative min-h-[80vh]">
-        {/* Atmospheric mesh gradient */}
-        <div className="mesh-bg absolute inset-0 -z-10" aria-hidden="true" />
-        <div
-          className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-[--accent-tint-soft] blur-[120px]"
-          aria-hidden="true"
-        />
+        <div className="editorial-grid pointer-events-none absolute inset-0 -z-10 opacity-50 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_20%,#000_30%,transparent_90%)]" aria-hidden="true" />
         <div className="container-shell py-6 sm:py-10 lg:py-14">
           {children}
         </div>

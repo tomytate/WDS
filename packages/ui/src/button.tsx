@@ -16,19 +16,27 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 const sizeClasses: Record<ButtonSize, string> = {
   sm: "h-10 px-4 text-sm",
   md: "h-11 px-5 text-sm",
-  lg: "h-12 px-6 text-base",
+  lg: "h-12 px-6 text-[15px]",
 };
 
+/**
+ * Citrus Editorial buttons:
+ * - accent  → ink button with lime hover (the primary CTA, high contrast)
+ * - ghost   → bordered cream/transparent button
+ * - surface → solid card surface, subtle
+ * - icon    → square 40px icon button
+ * - danger  → ink-on-red destructive
+ */
 const variantClasses: Record<ButtonVariant, string> = {
   accent:
-    "border border-[--accent] bg-[--accent] text-[--accent-fg] shadow-[0_8px_24px_color-mix(in_srgb,var(--accent)_20%,transparent),0_2px_8px_color-mix(in_srgb,var(--accent)_12%,transparent)] hover:bg-[--accent-hover] hover:shadow-[0_12px_32px_color-mix(in_srgb,var(--accent)_24%,transparent),0_4px_12px_color-mix(in_srgb,var(--accent)_16%,transparent)] focus-visible:outline-[--accent]",
+    "border border-[--text-primary] bg-[--text-primary] text-[--bg-base] shadow-[--shadow-sm] hover:bg-[--accent] hover:text-[--accent-fg] hover:border-[--accent] focus-visible:outline-[--text-primary]",
   ghost:
-    "border border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_42%,transparent)] text-[--text-primary] hover:border-[--accent] hover:bg-[color-mix(in_srgb,var(--accent)_8%,transparent)] hover:text-[--accent]",
+    "border border-[--border-strong] bg-transparent text-[--text-primary] hover:bg-[--text-primary] hover:text-[--bg-base] hover:border-[--text-primary]",
   surface:
-    "border border-[--border] bg-[--bg-card] text-[--text-primary] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)] hover:bg-[--bg-surface]",
-  icon: "inline-flex h-10 w-10 items-center justify-center rounded-full border border-[--border] bg-[--bg-card] text-[--text-primary] transition-colors hover:border-[--accent] hover:text-[--accent]",
+    "border border-[--border] bg-[--bg-card] text-[--text-primary] hover:bg-[--bg-surface] hover:border-[--text-primary]",
+  icon: "inline-flex h-10 w-10 items-center justify-center rounded-[--radius-inner] border border-[--border] bg-[--bg-card] text-[--text-primary] transition-colors hover:border-[--text-primary] hover:bg-[--accent] hover:text-[--accent-fg]",
   danger:
-    "border border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_14%,transparent)] text-[--color-danger] hover:bg-[--color-danger] hover:text-[--accent-fg] focus-visible:outline-[--color-danger]",
+    "border border-[--color-danger] bg-[--color-danger] text-white hover:bg-[--color-danger-text] hover:border-[--color-danger-text] focus-visible:outline-[--color-danger]",
 };
 
 export function buttonStyles({
@@ -41,7 +49,7 @@ export function buttonStyles({
   variant?: ButtonVariant;
 }) {
   return cn(
-    "inline-flex items-center justify-center rounded-full font-medium tracking-[0.01em] transition-[transform,background-color,border-color,color,box-shadow] duration-200 hover:-translate-y-px focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 active:translate-y-0 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50",
+    "inline-flex items-center justify-center rounded-[--radius-inner] font-semibold tracking-tight transition-[background-color,border-color,color,box-shadow] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50",
     variant !== "icon" && sizeClasses[size],
     variantClasses[variant],
     className,

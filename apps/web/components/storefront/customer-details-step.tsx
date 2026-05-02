@@ -4,10 +4,8 @@ import {
   Mail,
   Phone,
   Link2,
-  Heart,
   MessageSquare,
   Sparkles,
-  CheckCircle2,
 } from "lucide-react";
 import { Input, Textarea } from "@wongdigital/ui";
 
@@ -54,14 +52,9 @@ export function CustomerDetailsStep({
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Contact Information Card */}
-      <div className="rounded-xl sm:rounded-2xl border border-[--border] bg-[--bg-card] p-4 sm:p-5 lg:p-6">
-        <div className="flex items-center gap-2 sm:gap-2.5 mb-4 sm:mb-5">
-          <div className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg bg-[--accent-tint-soft] text-[--accent]">
-            <User size={14} className="sm:h-4 sm:w-4" aria-hidden="true" />
-          </div>
-          <p className="text-[10px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] text-[--text-muted] font-semibold">
-            Contact Information
-          </p>
+      <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] p-5 sm:p-6">
+        <div className="section-rule mb-5">
+          <span>Contact information</span>
         </div>
 
         <div className="grid gap-4 sm:gap-5 sm:grid-cols-2">
@@ -134,19 +127,14 @@ export function CustomerDetailsStep({
       </div>
 
       {hasServiceItems ? (
-        <div className="rounded-xl sm:rounded-2xl border border-[--border] bg-[--bg-card] p-4 sm:p-5 lg:p-6 space-y-4 sm:space-y-5">
-          <div className="flex items-center gap-2 sm:gap-2.5">
-            <div className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg bg-[--accent-tint-soft] text-[--accent]">
-              <Link2 size={14} className="sm:h-4 sm:w-4" aria-hidden="true" />
+        <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] p-5 sm:p-6 space-y-5">
+          <div>
+            <div className="section-rule mb-2">
+              <span>Service targets</span>
             </div>
-            <div>
-              <p className="text-[10px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] text-[--text-muted] font-semibold">
-                Service Targets
-              </p>
-              <p className="mt-0.5 text-[10px] sm:text-xs text-[--text-secondary]">
-                Add target links for each service
-              </p>
-            </div>
+            <p className="text-xs text-[--text-secondary]">
+              Add target links for each service
+            </p>
           </div>
 
           {selectedServiceItems.map((serviceItem) => {
@@ -236,28 +224,19 @@ export function CustomerDetailsStep({
       ) : null}
 
       {/* Tip Section */}
-      <div className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-[--border] bg-[--bg-card] p-4 sm:p-5 lg:p-6">
-        {/* Subtle gradient decoration */}
-        <div
-          className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[color-mix(in_srgb,var(--color-success)_10%,transparent)] blur-2xl"
-          aria-hidden="true"
-        />
-
-        <div className="relative flex items-center gap-2 sm:gap-2.5 mb-4 sm:mb-5">
-          <div className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg bg-[color-mix(in_srgb,var(--color-success)_12%,transparent)] text-[--color-success]">
-            <Heart size={14} className="sm:h-4 sm:w-4" aria-hidden="true" />
-          </div>
+      <div className="relative overflow-hidden rounded-[--radius-card] border border-[--border] bg-[--bg-card] p-5 sm:p-6">
+        <div className="relative flex items-center gap-3 mb-5">
           <div className="flex-1 min-w-0">
-            <p className="text-[10px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] text-[--text-muted] font-semibold">
-              Add a Tip
-            </p>
-            <p className="mt-0.5 text-[10px] sm:text-xs text-[--text-secondary]">
-              Optional - show appreciation
+            <div className="section-rule">
+              <span>Add a tip</span>
+            </div>
+            <p className="mt-1 text-xs text-[--text-secondary]">
+              Optional — show appreciation
             </p>
           </div>
           {Number(tipAmountValue) > 0 && (
-            <span className="flex items-center gap-0.5 sm:gap-1 rounded-full bg-[color-mix(in_srgb,var(--color-success)_12%,transparent)] px-2 py-0.5 sm:px-2.5 sm:py-1 text-[10px] sm:text-xs font-semibold text-[--color-success]">
-              <Sparkles size={8} className="sm:h-2.5 sm:w-2.5" />+{" "}
+            <span className="flex items-center gap-1 rounded-[--radius-inner] border border-[color-mix(in_srgb,var(--color-success)_30%,transparent)] bg-[color-mix(in_srgb,var(--color-success)_10%,transparent)] px-2 py-0.5 font-mono text-[10px] font-semibold text-[--color-success-text]">
+              <Sparkles size={9} />+{" "}
               {isPhp ? `₱${tipAmountValue}` : formatPrimaryPrice(Number(tipAmountValue))}
             </span>
           )}
@@ -273,10 +252,10 @@ export function CustomerDetailsStep({
             return (
               <button
                 aria-pressed={selected && !isCustom}
-                className={`relative rounded-lg sm:rounded-xl border px-2 py-2 sm:px-3 sm:py-3 text-xs sm:text-sm font-medium transition-all duration-300 active:scale-[0.97] ${
+                className={`relative rounded-[--radius-inner] border px-2 py-2.5 sm:px-3 sm:py-3 text-sm font-medium transition-colors duration-150 ${
                   selected && !isCustom
-                    ? "border-[--accent] bg-[--accent-tint-soft] text-[--accent] shadow-[0_0_12px_var(--accent-tint-medium)]"
-                    : "border-[--border] bg-[color-mix(in_srgb,var(--bg-surface)_60%,transparent)] text-[--text-secondary] active:bg-[--accent-tint-soft]"
+                    ? "border-[--text-primary] bg-[--text-primary] text-[--bg-base]"
+                    : "border-[--border] bg-[--bg-card] text-[--text-secondary] hover:border-[--text-primary] hover:text-[--text-primary]"
                 }`}
                 key={tipOption.value}
                 onClick={() => setTipAmount(tipOption.value)}
@@ -284,23 +263,17 @@ export function CustomerDetailsStep({
               >
                 {tipOption.emoji && (
                   <span
-                    className="block text-sm sm:text-base mb-0.5"
+                    className="block text-sm mb-0.5"
                     aria-hidden="true"
                   >
                     {tipOption.emoji}
                   </span>
                 )}
-                <span className="block text-[11px] sm:text-sm">
+                <span className="block text-xs sm:text-sm tabular-nums">
                   {tipOption.value === "0"
-                    ? "No Tip"
+                    ? "No tip"
                     : isPhp ? `₱${tipOption.value}` : formatPrimaryPrice(Number(tipOption.value))}
                 </span>
-                {selected && !isCustom && (
-                  <CheckCircle2
-                    size={10}
-                    className="sm:h-3 sm:w-3 absolute top-1 right-1 sm:top-1.5 sm:right-1.5 text-[--accent]"
-                  />
-                )}
               </button>
             );
           })}

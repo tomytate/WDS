@@ -4,31 +4,32 @@ import { useRef } from "react";
 import { Package, CreditCard, Clock, CheckCircle2 } from "lucide-react";
 import { motion, useScroll, useSpring } from "motion/react";
 import { useIntersectionReveal } from "@/hooks/use-intersection-reveal";
+import { SectionHeading } from "@wongdigital/ui";
 
 const steps = [
   {
-    number: 1,
+    number: "01",
     title: "Pick your products",
     description:
       "Browse 100+ subscriptions and growth packages. Mix and match in one cart.",
     icon: Package,
   },
   {
-    number: 2,
+    number: "02",
     title: "Pay securely",
     description:
       "QRPH or Binance Pay. Scan, send, and upload your receipt.",
     icon: CreditCard,
   },
   {
-    number: 3,
+    number: "03",
     title: "We verify & fulfill",
     description:
       "We confirm your payment and start fulfillment. Most orders are ready within 2–6 hours.",
     icon: Clock,
   },
   {
-    number: 4,
+    number: "04",
     title: "Access delivered",
     description:
       "Credentials arrive via email, or watch your growth service come online.",
@@ -44,7 +45,6 @@ export function HowItWorks() {
     offset: ["start center", "end center"],
   });
 
-  // Smooth out the scroll animation slightly
   const smoothedProgress = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
@@ -54,59 +54,51 @@ export function HowItWorks() {
   return (
     <section
       ref={sectionRef}
-      className="reveal container-shell py-14 sm:py-18 lg:py-24"
+      className="reveal container-shell py-16 sm:py-20 lg:py-28 border-t border-[--border]"
     >
       <div ref={timelineRef}>
-        {/* Heading */}
-        <div className="mb-12 sm:mb-16 text-center">
-          <div className="accent-bar mx-auto mb-4" />
-          <h2 className="font-display text-2xl sm:text-3xl font-semibold tracking-tight text-[--text-primary]">
-            How it works
-          </h2>
-          <p className="mt-2 text-sm text-[--text-secondary] max-w-md mx-auto">
-            From browse to delivery in four steps.
-          </p>
+        <div className="mb-12 sm:mb-16">
+          <SectionHeading
+            eyebrow="How it works"
+            title="From browse to delivery in four steps."
+          />
         </div>
 
-        {/* Desktop: Horizontal timeline */}
+        {/* Desktop horizontal */}
         <div className="hidden sm:block">
           <div className="relative">
-            {/* Connecting line using motion for precise scroll scrubbing */}
             <div
-              className="absolute top-6 left-6 right-6 h-[2px] bg-[--border]"
+              className="absolute top-5 left-0 right-0 h-px bg-[--border]"
               aria-hidden="true"
             />
             <motion.div
-              className="absolute top-6 left-6 right-6 h-[2px] bg-gradient-to-r from-[--accent] to-[--color-info] origin-left"
+              className="absolute top-5 left-0 right-0 h-px bg-[--text-primary] origin-left"
               style={{ scaleX: scrollYProgress }}
               aria-hidden="true"
             />
 
-            {/* Steps */}
-            <div className="relative grid grid-cols-4 gap-4">
+            <div className="relative grid grid-cols-4 gap-6 lg:gap-10">
               {steps.map((step, index) => {
                 const Icon = step.icon;
                 return (
                   <div
                     key={step.number}
-                    className="flex flex-col items-center text-center reveal-stagger"
-                    style={{ animationDelay: `${index * 120}ms` }}
+                    className="relative reveal-stagger"
+                    style={{ animationDelay: `${index * 100}ms` }}
                   >
-                    {/* Step circle */}
-                    <div className="step-number-ring mb-6 relative z-10 bg-[--bg-base]">
+                    {/* Marker */}
+                    <div className="relative z-10 mb-8 flex h-10 w-10 items-center justify-center rounded-[--radius-inner] border border-[--text-primary] bg-[--bg-base] font-mono text-xs font-semibold text-[--text-primary]">
                       {step.number}
                     </div>
 
-                    {/* Icon */}
-                    <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[--accent-tint-soft] text-[--accent]">
-                      <Icon size={20} />
+                    <div className="mb-3 inline-flex items-center gap-2 text-[--text-primary]">
+                      <Icon size={18} strokeWidth={1.75} />
                     </div>
 
-                    {/* Content */}
-                    <h3 className="font-display text-base font-bold text-[--text-primary]">
+                    <h3 className="font-display text-lg font-semibold tracking-tight text-[--text-primary] mb-2">
                       {step.title}
                     </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-[--text-secondary] max-w-[200px]">
+                    <p className="text-sm leading-relaxed text-[--text-secondary] max-w-[240px]">
                       {step.description}
                     </p>
                   </div>
@@ -116,38 +108,36 @@ export function HowItWorks() {
           </div>
         </div>
 
-        {/* Mobile: Vertical timeline */}
+        {/* Mobile vertical */}
         <div className="block sm:hidden relative ml-4">
-          {/* Connecting line using motion for precise scroll scrubbing */}
           <div
-            className="absolute top-6 bottom-[100px] left-[15px] w-[2px] bg-[--border]"
+            className="absolute top-5 bottom-[60px] left-[19px] w-px bg-[--border]"
             aria-hidden="true"
           />
           <motion.div
-            className="absolute top-6 bottom-[100px] left-[15px] w-[2px] bg-gradient-to-b from-[--accent] to-[--color-info] origin-top"
+            className="absolute top-5 bottom-[60px] left-[19px] w-px bg-[--text-primary] origin-top"
             style={{ scaleY: smoothedProgress }}
             aria-hidden="true"
           />
 
-          <div className="space-y-8">
+          <div className="space-y-10">
             {steps.map((step, index) => {
               const Icon = step.icon;
               return (
                 <div
                   key={step.number}
                   className="relative flex gap-5 reveal-stagger"
-                  style={{ animationDelay: `${index * 120}ms` }}
+                  style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  {/* Step circle */}
-                  <div className="step-number-ring z-10 shrink-0 bg-[--bg-base]">
+                  <div className="relative z-10 shrink-0 flex h-10 w-10 items-center justify-center rounded-[--radius-inner] border border-[--text-primary] bg-[--bg-base] font-mono text-xs font-semibold text-[--text-primary]">
                     {step.number}
                   </div>
 
-                  <div className="pt-1 pb-4">
-                    <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-[--accent-tint-soft] text-[--accent]">
-                      <Icon size={16} />
+                  <div className="pt-1 pb-2">
+                    <div className="mb-2 inline-flex items-center gap-2 text-[--text-primary]">
+                      <Icon size={16} strokeWidth={1.75} />
                     </div>
-                    <h3 className="font-display text-base font-bold text-[--text-primary]">
+                    <h3 className="font-display text-base font-semibold tracking-tight text-[--text-primary]">
                       {step.title}
                     </h3>
                     <p className="mt-1.5 text-sm leading-relaxed text-[--text-secondary]">

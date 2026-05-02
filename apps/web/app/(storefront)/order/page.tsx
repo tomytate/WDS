@@ -83,9 +83,7 @@ async function OrderPageContent({ searchParams }: OrderPageProps) {
 
   return (
     <section className="relative min-h-[80vh]">
-      {/* Atmospheric mesh gradient */}
-      <div className="mesh-bg absolute inset-0 -z-10" aria-hidden="true" />
-      <div className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-[color-mix(in_srgb,var(--accent)_6%,transparent)] blur-[120px]" aria-hidden="true" />
+      <div className="editorial-grid pointer-events-none absolute inset-0 -z-10 opacity-50 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_20%,#000_30%,transparent_90%)]" aria-hidden="true" />
 
       <div className="container-shell py-6 sm:py-10 lg:py-14">
       {preselectedProduct ? <RecentlyViewedTracker slug={preselectedProduct.slug} /> : null}
@@ -207,13 +205,13 @@ function OrderPageFallback() {
         {/* Heading skeleton */}
         <div className="max-w-3xl space-y-3">
           <div className="h-3 w-24 rounded-full bg-[--bg-card]" />
-          <div className="h-12 w-3/4 rounded-2xl bg-[--bg-card]" />
+          <div className="h-12 w-3/4 rounded-[--radius-card] bg-[--bg-card]" />
           <div className="h-6 w-2/3 rounded-xl bg-[--bg-card]" />
         </div>
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <div className="space-y-6">
             <div className="shimmer-bg h-56 rounded-[--radius-card] border border-[--border] bg-[--bg-card]" />
-            <div className="h-40 rounded-2xl border border-[--border] bg-[--bg-card]" />
+            <div className="h-40 rounded-[--radius-card] border border-[--border] bg-[--bg-card]" />
           </div>
           <div className="shimmer-bg h-[620px] rounded-[--radius-card] border border-[--border] bg-[--bg-card]" />
         </div>

@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import {
-  User,
   Wallet,
   ShoppingBag,
   Crown,
@@ -10,7 +9,7 @@ import {
   ArrowRight,
 } from "lucide-react"
 
-import { Card, CardContent, Badge, buttonStyles } from "@wongdigital/ui"
+import { Card, CardContent, Badge } from "@wongdigital/ui"
 import { lookupOrdersByEmail } from "@wongdigital/db/storefront"
 
 import { requireCustomer } from "@/lib/customer-auth"
@@ -24,7 +23,7 @@ export const metadata: Metadata = {
 
 export default async function AccountPage() {
   const auth = await requireCustomer()
-  if (!auth) return null // requireCustomer redirects
+  if (!auth) return null
 
   const { customer } = auth
   const orders = await lookupOrdersByEmail(customer.email)
@@ -46,97 +45,76 @@ export default async function AccountPage() {
   }
 
   return (
-    <div className="space-y-6 sm:space-y-8">
+    <div className="space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 border-b border-[--border] pb-6">
         <div>
-          <p className="text-sm uppercase tracking-[0.24em] text-[--accent]">
-            My Account
+          <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[--text-muted] mb-2">
+            / My account
           </p>
-          <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[--text-primary]">
-            Welcome back, {customer.name.split(" ")[0]}
+          <h1 className="font-display text-3xl sm:text-4xl font-semibold leading-[1.05] tracking-[-0.025em] text-[--text-primary]">
+            Welcome back, {customer.name.split(" ")[0]}.
           </h1>
         </div>
-        <div className="flex items-center gap-2">
-          <Badge
-            tone={tierTone[customer.customerTier] ?? "muted"}
-            className="gap-1.5"
-          >
-            <Crown size={12} />
-            {tierLabel[customer.customerTier] ?? "Standard"}
-          </Badge>
-        </div>
+        <Badge tone={tierTone[customer.customerTier] ?? "muted"} size="md" className="gap-1.5">
+          <Crown size={11} />
+          {tierLabel[customer.customerTier] ?? "Standard"}
+        </Badge>
       </div>
 
       {/* Quick Stats */}
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid gap-px bg-[--border] border border-[--border] rounded-[--radius-card] overflow-hidden sm:grid-cols-3">
         {/* Wallet Balance */}
-        <Card className="group relative overflow-hidden border-[--accent-border] bg-gradient-to-br from-[color-mix(in_srgb,var(--accent)_8%,var(--bg-card))] to-[var(--bg-card)]">
-          <div
-            className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[--accent-tint-soft] blur-2xl"
-            aria-hidden="true"
-          />
-          <CardContent className="relative p-5">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[--accent-tint-soft] text-[--accent]">
-                <Wallet size={16} />
-              </div>
-              <p className="text-xs uppercase tracking-[0.2em] text-[--text-muted] font-semibold">
-                Wallet Balance
-              </p>
-            </div>
-            <p className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[--text-primary]">
-              {formatPrice(customer.walletBalance)}
+        <div className="bg-[--bg-card] p-5">
+          <div className="flex items-center justify-between mb-3">
+            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+              Wallet balance
             </p>
-            <Link
-              href="/account/wallet"
-              className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-[--accent] hover:underline"
-            >
-              Top Up
-              <ArrowRight size={12} />
-            </Link>
-          </CardContent>
-        </Card>
+            <Wallet size={13} className="text-[--text-muted]" />
+          </div>
+          <p className="font-display text-3xl font-semibold tabular-nums tracking-tight text-[--text-primary]">
+            {formatPrice(customer.walletBalance)}
+          </p>
+          <Link
+            href="/account/wallet"
+            className="mt-3 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.08em] font-semibold text-[--text-primary] underline-offset-2 hover:underline"
+          >
+            Top up
+            <ArrowRight size={11} />
+          </Link>
+        </div>
 
         {/* Total Orders */}
-        <Card>
-          <CardContent className="p-5">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[color-mix(in_srgb,var(--color-info)_14%,transparent)] text-[--color-info]">
-                <ShoppingBag size={16} />
-              </div>
-              <p className="text-xs uppercase tracking-[0.2em] text-[--text-muted] font-semibold">
-                Total Orders
-              </p>
-            </div>
-            <p className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[--text-primary]">
-              {orders.length}
+        <div className="bg-[--bg-card] p-5">
+          <div className="flex items-center justify-between mb-3">
+            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+              Total orders
             </p>
-            <p className="mt-1 text-xs text-[--text-muted]">
-              Lifetime total: {formatPrice(totalSpent)}
-            </p>
-          </CardContent>
-        </Card>
+            <ShoppingBag size={13} className="text-[--text-muted]" />
+          </div>
+          <p className="font-display text-3xl font-semibold tabular-nums tracking-tight text-[--text-primary]">
+            {orders.length}
+          </p>
+          <p className="mt-2 text-xs text-[--text-muted]">
+            Lifetime: {formatPrice(totalSpent)}
+          </p>
+        </div>
 
         {/* Member Since */}
-        <Card>
-          <CardContent className="p-5">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[color-mix(in_srgb,var(--color-success)_14%,transparent)] text-[--color-success]">
-                <Calendar size={16} />
-              </div>
-              <p className="text-xs uppercase tracking-[0.2em] text-[--text-muted] font-semibold">
-                Member Since
-              </p>
-            </div>
-            <p className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[--text-primary]">
-              {formatDate(customer.createdAt)}
+        <div className="bg-[--bg-card] p-5">
+          <div className="flex items-center justify-between mb-3">
+            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+              Member since
             </p>
-            <p className="mt-1 text-xs text-[--text-muted]">
-              {customer.email}
-            </p>
-          </CardContent>
-        </Card>
+            <Calendar size={13} className="text-[--text-muted]" />
+          </div>
+          <p className="font-display text-2xl font-semibold tracking-tight text-[--text-primary]">
+            {formatDate(customer.createdAt)}
+          </p>
+          <p className="mt-2 text-xs text-[--text-muted] truncate">
+            {customer.email}
+          </p>
+        </div>
       </div>
 
       {/* Quick Links */}
@@ -145,22 +123,19 @@ export default async function AccountPage() {
           <Card variant="interactive" className="h-full">
             <CardContent className="flex items-center justify-between p-5">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[--accent-tint-soft] text-[--accent]">
-                  <Wallet size={20} />
+                <div className="flex h-10 w-10 items-center justify-center rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] text-[--text-primary]">
+                  <Wallet size={16} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-[--text-primary]">
-                    Wallet Hub
+                  <p className="font-display text-base font-semibold text-[--text-primary]">
+                    Wallet hub
                   </p>
                   <p className="text-xs text-[--text-muted]">
                     Top up balance & view transactions
                   </p>
                 </div>
               </div>
-              <ChevronRight
-                size={16}
-                className="text-[--text-muted]"
-              />
+              <ChevronRight size={14} className="text-[--text-muted]" />
             </CardContent>
           </Card>
         </Link>
@@ -168,22 +143,19 @@ export default async function AccountPage() {
           <Card variant="interactive" className="h-full">
             <CardContent className="flex items-center justify-between p-5">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[color-mix(in_srgb,var(--color-info)_12%,transparent)] text-[--color-info]">
-                  <ShoppingBag size={20} />
+                <div className="flex h-10 w-10 items-center justify-center rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] text-[--text-primary]">
+                  <ShoppingBag size={16} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-[--text-primary]">
-                    My Orders
+                  <p className="font-display text-base font-semibold text-[--text-primary]">
+                    My orders
                   </p>
                   <p className="text-xs text-[--text-muted]">
                     Track and manage your purchases
                   </p>
                 </div>
               </div>
-              <ChevronRight
-                size={16}
-                className="text-[--text-muted]"
-              />
+              <ChevronRight size={14} className="text-[--text-muted]" />
             </CardContent>
           </Card>
         </Link>
@@ -192,52 +164,58 @@ export default async function AccountPage() {
       {/* Recent Orders */}
       {recentOrders.length > 0 && (
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="font-display text-lg font-bold tracking-tight text-[--text-primary]">
-              Recent Orders
-            </h2>
+          <div className="flex items-end justify-between border-b border-[--border] pb-3">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                / Recent orders
+              </p>
+              <h2 className="mt-1 font-display text-xl font-semibold tracking-tight text-[--text-primary]">
+                Latest activity
+              </h2>
+            </div>
             <Link
               href="/account/orders"
-              className="text-xs font-medium text-[--accent] hover:underline"
+              className="font-mono text-[11px] uppercase tracking-[0.08em] font-semibold text-[--text-primary] underline-offset-2 hover:underline"
             >
-              View All →
+              View all →
             </Link>
           </div>
-          <div className="space-y-2">
+          <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] overflow-hidden divide-y divide-[--border]">
             {recentOrders.map((order) => (
-              <Card key={order.id}>
-                <CardContent className="flex items-center justify-between p-4">
-                  <div className="flex items-center gap-3 min-w-0">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[--bg-surface] text-[--text-muted]">
-                      <ShoppingBag size={16} />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium text-[--text-primary] truncate">
-                        {order.orderCode}
-                      </p>
-                      <p className="text-xs text-[--text-muted]">
-                        {formatDate(order.createdAt)} ·{" "}
-                        {order.items.length}{" "}
-                        {order.items.length === 1 ? "item" : "items"}
-                      </p>
-                    </div>
+              <div
+                key={order.id}
+                className="flex items-center justify-between p-4 transition-colors hover:bg-[--bg-surface]"
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] text-[--text-muted]">
+                    <ShoppingBag size={14} />
                   </div>
-                  <div className="flex items-center gap-3 shrink-0">
-                    <Badge
-                      tone={
-                        order.status === "completed" || order.status === "delivered"
-                          ? "accent"
-                          : "muted"
-                      }
-                    >
-                      {order.status}
-                    </Badge>
-                    <p className="text-sm font-semibold text-[--text-primary]">
-                      {formatPrice(order.totalPrice)}
+                  <div className="min-w-0">
+                    <p className="font-mono text-xs text-[--text-primary] truncate">
+                      {order.orderCode}
+                    </p>
+                    <p className="text-xs text-[--text-muted]">
+                      {formatDate(order.createdAt)} · {order.items.length}{" "}
+                      {order.items.length === 1 ? "item" : "items"}
                     </p>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+                <div className="flex items-center gap-3 shrink-0">
+                  <Badge
+                    size="sm"
+                    tone={
+                      order.status === "completed" || order.status === "delivered"
+                        ? "success"
+                        : "muted"
+                    }
+                  >
+                    {order.status}
+                  </Badge>
+                  <p className="font-display text-sm font-semibold tabular-nums text-[--text-primary]">
+                    {formatPrice(order.totalPrice)}
+                  </p>
+                </div>
+              </div>
             ))}
           </div>
         </div>

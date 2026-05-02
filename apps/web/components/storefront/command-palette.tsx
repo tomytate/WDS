@@ -146,22 +146,19 @@ export function CommandPalette({ products }: CommandPaletteProps) {
 
   return (
     <div className="fixed inset-0 z-[60] flex items-start justify-center pt-[12vh] sm:pt-[16vh]">
-      {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-[color-mix(in_srgb,var(--bg-base)_70%,transparent)] backdrop-blur-sm"
+        className="absolute inset-0 bg-[color-mix(in_srgb,var(--bg-ink)_50%,transparent)] backdrop-blur-sm"
         onClick={close}
         aria-hidden="true"
       />
 
-      {/* Dialog */}
       <div
         role="dialog"
         aria-label="Command palette"
-        className="relative z-10 w-full max-w-xl mx-4 overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--border)_60%,transparent)] bg-[color-mix(in_srgb,var(--bg-card)_85%,transparent)] shadow-elevated backdrop-blur-2xl animate-scale-in"
+        className="relative z-10 w-full max-w-xl mx-4 overflow-hidden rounded-[--radius-card] border border-[--border] bg-[--bg-card] shadow-[--shadow-elevated] animate-scale-in"
       >
-        {/* Search input */}
-        <div className="flex items-center gap-3 border-b border-[color-mix(in_srgb,var(--border)_40%,transparent)] px-4 py-3">
-          <Search size={18} className="shrink-0 text-[--text-muted]" />
+        <div className="flex items-center gap-3 border-b border-[--border] px-4 py-3">
+          <Search size={16} className="shrink-0 text-[--text-muted]" />
           <input
             ref={inputRef}
             value={query}
@@ -170,18 +167,17 @@ export function CommandPalette({ products }: CommandPaletteProps) {
               setActiveIndex(0);
             }}
             onKeyDown={onKeyDown}
-            placeholder="Search products, pages..."
+            placeholder="Search products, pages…"
             className="flex-1 bg-transparent text-sm text-[--text-primary] placeholder:text-[--text-muted] outline-none"
             type="search"
             autoComplete="off"
             spellCheck={false}
           />
-          <kbd className="hidden sm:inline rounded border border-[--border] bg-[--bg-surface] px-1.5 py-0.5 text-[10px] font-mono text-[--text-muted]">
+          <kbd className="hidden sm:inline rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] px-1.5 py-0.5 font-mono text-[10px] text-[--text-muted]">
             ESC
           </kbd>
         </div>
 
-        {/* Results */}
         <div
           ref={listRef}
           className="max-h-[50vh] overflow-y-auto py-2"
@@ -193,10 +189,9 @@ export function CommandPalette({ products }: CommandPaletteProps) {
             </div>
           ) : (
             <>
-              {/* Products group */}
               {groupedResults.products.length > 0 && (
-                <div className="px-3 pt-2 pb-1">
-                  <p className="px-2 text-[10px] uppercase tracking-[0.2em] font-semibold text-[--text-muted]">
+                <div className="px-4 pt-2 pb-1">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
                     Products
                   </p>
                 </div>
@@ -214,8 +209,8 @@ export function CommandPalette({ products }: CommandPaletteProps) {
                     aria-selected={activeIndex === idx}
                     className={`flex w-full items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors ${
                       activeIndex === idx
-                        ? "bg-[--accent-tint-soft] text-[--accent]"
-                        : "text-[--text-primary] hover:bg-[--accent-tint-soft]"
+                        ? "bg-[--text-primary] text-[--bg-base]"
+                        : "text-[--text-primary] hover:bg-[--bg-surface]"
                     }`}
                     type="button"
                   >
@@ -227,30 +222,26 @@ export function CommandPalette({ products }: CommandPaletteProps) {
                       />
                     ) : (
                       <Package
-                        size={16}
-                        className="shrink-0 text-[--text-muted]"
+                        size={14}
+                        className="shrink-0"
                       />
                     )}
                     <span className="flex-1 font-medium truncate">
                       {item.label}
                     </span>
                     {item.price && (
-                      <span className="text-xs font-mono text-[--text-muted]">
+                      <span className="font-mono text-xs">
                         {item.price}
                       </span>
                     )}
-                    <ArrowRight
-                      size={14}
-                      className="shrink-0 text-[--text-muted]"
-                    />
+                    <ArrowRight size={13} className="shrink-0 opacity-70" />
                   </button>
                 );
               })}
 
-              {/* Pages group */}
               {groupedResults.pages.length > 0 && (
-                <div className="px-3 pt-3 pb-1">
-                  <p className="px-2 text-[10px] uppercase tracking-[0.2em] font-semibold text-[--text-muted]">
+                <div className="px-4 pt-3 pb-1">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
                     Pages
                   </p>
                 </div>
@@ -268,22 +259,16 @@ export function CommandPalette({ products }: CommandPaletteProps) {
                     aria-selected={activeIndex === idx}
                     className={`flex w-full items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors ${
                       activeIndex === idx
-                        ? "bg-[--accent-tint-soft] text-[--accent]"
-                        : "text-[--text-primary] hover:bg-[--accent-tint-soft]"
+                        ? "bg-[--text-primary] text-[--bg-base]"
+                        : "text-[--text-primary] hover:bg-[--bg-surface]"
                     }`}
                     type="button"
                   >
-                    <FileText
-                      size={16}
-                      className="shrink-0 text-[--text-muted]"
-                    />
+                    <FileText size={14} className="shrink-0" />
                     <span className="flex-1 font-medium truncate">
                       {item.label}
                     </span>
-                    <ArrowRight
-                      size={14}
-                      className="shrink-0 text-[--text-muted]"
-                    />
+                    <ArrowRight size={13} className="shrink-0 opacity-70" />
                   </button>
                 );
               })}
@@ -291,8 +276,7 @@ export function CommandPalette({ products }: CommandPaletteProps) {
           )}
         </div>
 
-        {/* Footer */}
-        <div className="flex items-center justify-between border-t border-[color-mix(in_srgb,var(--border)_40%,transparent)] px-4 py-2 text-[10px] text-[--text-muted]">
+        <div className="flex items-center justify-between gap-4 border-t border-[--border] bg-[--bg-surface] px-4 py-2 font-mono text-[10px] uppercase tracking-[0.08em] text-[--text-muted]">
           <span>↑↓ Navigate</span>
           <span>↵ Open</span>
           <span>ESC Close</span>

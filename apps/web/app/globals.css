@@ -2,26 +2,14 @@
 
 @custom-variant dark (&:is(.dark, .dark *));
 /* ═══════════════════════════════════════════════════════════
-   Wong Digital Store — Design System v3 (Total Reimagining)
+   Wong Digital Store — Design System v4 "Citrus Editorial"
+   Cream / ink neutrals · electric lime accent · sharp geometry
    ═══════════════════════════════════════════════════════════ */
-
-/* ─── Animatable Custom Properties ─── */
-@property --mesh-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
 
 .light-only { display: block; }
 .dark-only { display: none; }
 .dark .light-only { display: none; }
 .dark .dark-only { display: block; }
-
-@property --gradient-pos {
-  syntax: "<percentage>";
-  initial-value: 0%;
-  inherits: false;
-}
 
 /* ─── Theme Tokens ─── */
 @theme {
@@ -33,184 +21,176 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-quart: cubic-bezier(0.25, 0.4, 0.25, 1);
   --duration-fast: 150ms;
-  --duration-normal: 300ms;
-  --duration-medium: 300ms;   /* alias of --duration-normal; matches Tailwind `duration-300` */
-  --duration-slow: 500ms;
+  --duration-normal: 240ms;
+  --duration-medium: 240ms;
+  --duration-slow: 480ms;
 }
 
 :root {
-  /* Backgrounds */
-  --bg-base: #F8FAFC;
-  --bg-surface: #F1F5F9;
-  --bg-card: #E2E8F0;
-  --bg-elevated: #CBD5E1;
+  /* Backgrounds — cream / paper editorial scale */
+  --bg-base: #FAFAF5;        /* warm off-white, the "paper" of the page */
+  --bg-surface: #F2F1EA;     /* slightly muted cream */
+  --bg-card: #FFFFFF;        /* pure white card on cream — high contrast */
+  --bg-elevated: #E8E6DB;    /* sand */
+  --bg-ink: #0A0A0A;         /* near-black — used for inverted blocks */
 
-  /* Borders */
-  --border: #CBD5E1;                 /* decorative only (WCAG 1.4.11 exempt) */
-  --border-strong: #64748B;          /* essential UI boundaries, 4.55:1 on bg-base */
+  /* Borders — visible by design (1.5px feel, even at 1px) */
+  --border: #E5E3D8;         /* hairline cream border */
+  --border-strong: #1A1A1A;  /* ink border for editorial accents */
 
-  /* Text — all values verified against WCAG 2.2 AA 4.5:1 body / 3:1 large */
-  --text-primary: #0F172A;           /* 17.06:1 on bg-base */
-  --text-secondary: #475569;         /* 7.24:1 on bg-base */
-  --text-muted: #64748B;             /* 4.55:1 on bg-base, AA-large on bg-card (3.86:1). Use only where <=14px body on bg-base. */
-  --text-muted-strong: #475569;      /* body-AA on EVERY surface: base 7.24:1, surface 6.92:1, card 6.15:1. Use on cards and dense rows. */
-  --text-subtle: #64748B;            /* alias of muted for semantic clarity */
+  /* Text — high contrast on cream */
+  --text-primary: #0A0A0A;       /* near-black */
+  --text-secondary: #404040;     /* graphite */
+  --text-muted: #6B6B6B;         /* stone */
+  --text-muted-strong: #404040;
+  --text-subtle: #6B6B6B;
+  --text-on-ink: #FAFAF5;        /* cream on dark blocks */
 
-  /* Accent — Wong Gold (黃 = gold) */
-  --accent: #D97706;                 /* brand UI color (non-text / large-text use; 3.04:1 on bg-base) */
-  --accent-hover: #B45309;
-  --accent-strong: #B45309;          /* use when accent is body text — 4.80:1 on bg-base */
-  --accent-fg: #FFFFFF;
-  --accent-glow: rgba(217, 119, 6, 0.30);
+  /* Accent — Electric Lime "Citron" */
+  --accent: #BEF264;             /* lime-300 */
+  --accent-hover: #A3E635;       /* lime-400 */
+  --accent-strong: #4D7C0F;      /* lime-700 — accessible body text */
+  --accent-fg: #0A0A0A;          /* ink on lime */
+  --accent-glow: rgba(190, 242, 100, 0.40);
 
-  /* Accent tint scale — prefer these over ad-hoc color-mix percentages. */
-  --accent-tint-faint: color-mix(in srgb, var(--accent) 4%, transparent);
-  --accent-tint-soft: color-mix(in srgb, var(--accent) 10%, transparent);
-  --accent-tint-medium: color-mix(in srgb, var(--accent) 20%, transparent);
-  --accent-tint-strong: color-mix(in srgb, var(--accent) 30%, transparent);
-  --accent-border: color-mix(in srgb, var(--accent) 40%, var(--border));
+  /* Accent tint scale */
+  --accent-tint-faint: color-mix(in srgb, var(--accent) 8%, transparent);
+  --accent-tint-soft: color-mix(in srgb, var(--accent) 18%, transparent);
+  --accent-tint-medium: color-mix(in srgb, var(--accent) 32%, transparent);
+  --accent-tint-strong: color-mix(in srgb, var(--accent) 52%, transparent);
+  --accent-border: color-mix(in srgb, var(--accent) 60%, var(--border));
 
-  /* Semantic — for chips / icons / large-text use */
+  /* Semantic */
   --color-success: #16A34A;
-  --color-danger: #EF4444;
-  --color-info: #0EA5E9;
-  --color-warning: #F59E0B;
+  --color-danger: #DC2626;
+  --color-info: #2563EB;
+  --color-warning: #D97706;
 
-  /* Semantic text — darker variants that pass AA body (4.5:1) on bg-base */
-  --color-success-text: #15803D;     /* 4.79:1 on bg-base */
-  --color-danger-text: #B91C1C;      /* 6.18:1 on bg-base */
-  --color-info-text: #0369A1;        /* 5.67:1 on bg-base */
-  --color-warning-text: #92400E;     /* 6.78:1 on bg-base */
+  --color-success-text: #15803D;
+  --color-danger-text: #B91C1C;
+  --color-info-text: #1D4ED8;
+  --color-warning-text: #92400E;
 
-  /* Elevation */
-  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.06);
-  --shadow-card: 0 2px 8px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.08);
-  --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.06);
-  --shadow-lg: 0 12px 40px rgba(15, 23, 42, 0.10), 0 4px 12px rgba(15, 23, 42, 0.06);
-  --shadow-elevated: 0 24px 80px rgba(15, 23, 42, 0.10), 0 8px 24px rgba(15, 23, 42, 0.06);
+  /* Elevation — minimal, almost flat. Borders carry the weight. */
+  --shadow-xs: 0 1px 0 rgba(10, 10, 10, 0.04);
+  --shadow-sm: 0 1px 2px rgba(10, 10, 10, 0.04);
+  --shadow-card: 0 2px 0 rgba(10, 10, 10, 0.03);
+  --shadow-md: 0 4px 12px rgba(10, 10, 10, 0.06);
+  --shadow-lg: 0 12px 32px rgba(10, 10, 10, 0.08);
+  --shadow-elevated: 0 24px 60px rgba(10, 10, 10, 0.10);
 
-  /* Accent glow shadow tokens — replace ad-hoc shadow-[0_0_Npx_color-mix(...)] */
-  --shadow-glow-soft: 0 0 16px color-mix(in srgb, var(--accent) 12%, transparent);
-  --shadow-glow-medium: 0 0 24px color-mix(in srgb, var(--accent) 20%, transparent);
-  --shadow-glow-strong: 0 0 32px color-mix(in srgb, var(--accent) 28%, transparent);
+  --shadow-glow-soft: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);
+  --shadow-glow-medium: 0 0 0 6px color-mix(in srgb, var(--accent) 28%, transparent);
+  --shadow-glow-strong: 0 0 0 8px color-mix(in srgb, var(--accent) 36%, transparent);
 
-  /* Radii — four rungs: chip (pill), inner (small elements), card (surfaces), section (panels) */
+  /* Radii — sharp editorial */
   --radius-chip: 9999px;
-  --radius-inner: 8px;
-  --radius-card: 16px;
-  --radius-section: 20px;
+  --radius-inner: 4px;
+  --radius-card: 8px;
+  --radius-section: 10px;
 
-  /* Icon-chip sizing — two rungs, used by PageHeader / StatusBadge dot / KpiCard icon */
-  --chip-size-sm: 1.75rem;  /* 28px — dense rows (tables, recent-orders) */
-  --chip-size-md: 2rem;     /* 32px — page headers, KPI tiles */
-  --chip-icon-sm: 0.875rem; /* 14px — matches chip-size-sm */
-  --chip-icon-md: 1rem;     /* 16px — matches chip-size-md */
+  --chip-size-sm: 1.75rem;
+  --chip-size-md: 2rem;
+  --chip-icon-sm: 0.875rem;
+  --chip-icon-md: 1rem;
 
-  /* Typography scale — use these in place of `text-[Npx]` arbitrary values */
-  --text-display-1: clamp(2rem, 5vw, 3.5rem);     /* 32–56px */
-  --text-display-2: clamp(1.75rem, 4vw, 2.75rem); /* 28–44px */
-  --text-h1: clamp(1.5rem, 3vw, 2rem);            /* 24–32px */
-  --text-h2: 1.5rem;                              /* 24px */
-  --text-h3: 1.25rem;                             /* 20px */
-  --text-h4: 1.125rem;                            /* 18px */
-  --text-body: 1rem;                              /* 16px */
-  --text-small: 0.875rem;                         /* 14px — AA large-text threshold for bold */
-  --text-micro: 0.75rem;                          /* 12px — safe minimum for hints, needs 4.5:1 */
+  /* Typography scale — editorial, larger displays */
+  --text-display-1: clamp(2.75rem, 7.5vw, 5.5rem);
+  --text-display-2: clamp(2rem, 5vw, 3.5rem);
+  --text-h1: clamp(1.75rem, 3.5vw, 2.5rem);
+  --text-h2: 1.75rem;
+  --text-h3: 1.375rem;
+  --text-h4: 1.125rem;
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --text-micro: 0.75rem;
 
-  /* shadcn/ui tokens — aliased to the DS tokens above so there is one source of truth */
+  /* shadcn aliases */
   --background: var(--bg-base);
   --foreground: var(--text-primary);
   --card: var(--bg-card);
   --card-foreground: var(--text-primary);
-  --popover: var(--bg-base);
+  --popover: var(--bg-card);
   --popover-foreground: var(--text-primary);
-  --primary: var(--accent);
-  --primary-foreground: var(--accent-fg);
+  --primary: var(--text-primary);
+  --primary-foreground: var(--bg-base);
   --secondary: var(--bg-surface);
   --secondary-foreground: var(--text-primary);
   --muted: var(--bg-surface);
-  --muted-foreground: #64748B;
-  --accent-shadcn: var(--bg-surface);
-  --accent-foreground: var(--text-primary);
+  --muted-foreground: #6B6B6B;
+  --accent-shadcn: var(--accent);
+  --accent-foreground: var(--accent-fg);
   --destructive: var(--color-danger);
   --destructive-foreground: #FFFFFF;
   --border-shadcn: var(--border);
   --input: var(--border);
-  --ring: var(--accent);
-  --radius: 0.75rem;
+  --ring: var(--text-primary);
+  --radius: 0.5rem;
 }
 
 .dark {
   color-scheme: dark;
 
-  --bg-base: #0B1120;
-  --bg-surface: #111827;
-  --bg-card: #1E293B;
-  --bg-elevated: #334155;
+  --bg-base: #0A0A0A;        /* near-black ink */
+  --bg-surface: #141414;
+  --bg-card: #1A1A1A;
+  --bg-elevated: #262626;
+  --bg-ink: #FAFAF5;          /* inverted: cream becomes "ink" block */
 
-  --border: #334155;
-  --border-strong: #64748B;          /* 3.96:1 on bg-base — essential UI boundaries */
+  --border: #2A2A2A;
+  --border-strong: #FAFAF5;
 
-  --text-primary: #F1F5F9;
-  --text-secondary: #94A3B8;         /* 7.34:1 on bg-base, 5.71:1 on bg-card — AA body */
-  --text-muted: #64748B;             /* 3.96:1 on bg-base — AA large / non-body captions */
-  --text-muted-strong: #94A3B8;      /* body-AA on every dark bg: base 7.34:1, surface 6.92:1, card 5.71:1 */
-  --text-subtle: #64748B;
+  --text-primary: #FAFAF5;
+  --text-secondary: #C4C4BA;
+  --text-muted: #8A8A82;
+  --text-muted-strong: #C4C4BA;
+  --text-subtle: #8A8A82;
+  --text-on-ink: #0A0A0A;
 
-  --accent: #60A5FA;
-  --accent-hover: #3B82F6;
-  --accent-strong: #60A5FA;          /* dark accent already passes AA body (7.41:1 on bg-base) */
-  --accent-fg: #0F172A;
-  --accent-glow: rgba(96, 165, 250, 0.3);
+  --accent: #BEF264;
+  --accent-hover: #D9F99D;
+  --accent-strong: #BEF264;
+  --accent-fg: #0A0A0A;
+  --accent-glow: rgba(190, 242, 100, 0.42);
 
-  /* Accent tint scale (dark) */
-  --accent-tint-faint: color-mix(in srgb, var(--accent) 6%, transparent);
-  --accent-tint-soft: color-mix(in srgb, var(--accent) 12%, transparent);
-  --accent-tint-medium: color-mix(in srgb, var(--accent) 22%, transparent);
-  --accent-tint-strong: color-mix(in srgb, var(--accent) 32%, transparent);
-  --accent-border: color-mix(in srgb, var(--accent) 44%, var(--border));
+  --accent-tint-faint: color-mix(in srgb, var(--accent) 10%, transparent);
+  --accent-tint-soft: color-mix(in srgb, var(--accent) 18%, transparent);
+  --accent-tint-medium: color-mix(in srgb, var(--accent) 30%, transparent);
+  --accent-tint-strong: color-mix(in srgb, var(--accent) 50%, transparent);
+  --accent-border: color-mix(in srgb, var(--accent) 55%, var(--border));
 
-  --color-success: #22C55E;
+  --color-success: #4ADE80;
   --color-danger: #F87171;
-  --color-info: #38BDF8;
+  --color-info: #60A5FA;
   --color-warning: #FBBF24;
 
-  /* Dark semantic tokens already pass AA as body text (see contrast script).
-     Alias the -text variants to the base so light→dark swap stays consistent. */
   --color-success-text: var(--color-success);
   --color-danger-text: var(--color-danger);
   --color-info-text: var(--color-info);
   --color-warning-text: var(--color-warning);
 
-  /* Accent glow tokens (dark) */
-  --shadow-glow-soft: 0 0 16px color-mix(in srgb, var(--accent) 18%, transparent);
-  --shadow-glow-medium: 0 0 24px color-mix(in srgb, var(--accent) 28%, transparent);
-  --shadow-glow-strong: 0 0 32px color-mix(in srgb, var(--accent) 36%, transparent);
+  --shadow-xs: 0 1px 0 rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 1px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+  --shadow-elevated: 0 24px 60px rgba(0, 0, 0, 0.7);
 
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  --shadow-elevated: 0 24px 80px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.03);
-
-  /* shadcn/ui tokens (dark) — aliased to DS tokens */
   --background: var(--bg-base);
   --foreground: var(--text-primary);
   --card: var(--bg-card);
   --card-foreground: var(--text-primary);
-  --popover: var(--bg-base);
+  --popover: var(--bg-card);
   --popover-foreground: var(--text-primary);
-  --primary: var(--accent);
-  --primary-foreground: var(--accent-fg);
+  --primary: var(--text-primary);
+  --primary-foreground: var(--bg-base);
   --secondary: var(--bg-card);
   --secondary-foreground: var(--text-primary);
-  --muted: var(--bg-card);
-  --muted-foreground: var(--text-secondary);
-  --accent-shadcn: var(--bg-card);
-  --accent-foreground: var(--text-primary);
-  --destructive: #7F1D1D;
+  --muted: var(--bg-surface);
+  --muted-foreground: var(--text-muted);
+  --accent-shadcn: var(--accent);
+  --accent-foreground: var(--accent-fg);
+  --destructive: var(--color-danger);
   --destructive-foreground: #FFFFFF;
   --border-shadcn: var(--border);
   --input: var(--border);
@@ -236,14 +216,14 @@
   --color-border-shadcn: var(--border-shadcn);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
 }
 
 /* ═══════════════════════════════════════
-   BASE STYLES
+   BASE
    ═══════════════════════════════════════ */
 
 * {
@@ -265,39 +245,23 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-/* Grain texture overlay */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9998;
-  opacity: 0.025;
-  background-image: url("/noise.svg");
-  background-repeat: repeat;
+  font-feature-settings: "ss01", "cv11";
 }
 
 a { color: inherit; text-decoration: none; }
 
-/* Typographic Perfection */
 h1, h2, h3, h4, h5, h6 {
   text-wrap: balance;
+  letter-spacing: -0.02em;
 }
 
-p {
-  text-wrap: pretty;
-}
+p { text-wrap: pretty; }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 4px;
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
   border-radius: inherit;
   transition: outline-offset var(--duration-fast) var(--ease-out-expo);
-}
-:active:focus-visible {
-  outline-offset: 1px;
 }
 
 img { display: block; }
@@ -305,16 +269,16 @@ img { display: block; }
 button, input, select, textarea { font: inherit; }
 
 ::selection {
-  background: color-mix(in srgb, var(--accent) 22%, transparent);
-  color: var(--text-primary);
+  background: var(--accent);
+  color: var(--accent-fg);
 }
 
 /* ─── Scrollbar ─── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--text-muted) 40%, transparent);
+  border-radius: 0;
+  background: color-mix(in srgb, var(--text-muted) 32%, transparent);
 }
 ::-webkit-scrollbar-thumb:hover {
   background: color-mix(in srgb, var(--text-muted) 60%, transparent);
@@ -328,60 +292,87 @@ button, input, select, textarea { font: inherit; }
 .font-body { font-family: var(--font-body); }
 .font-mono { font-family: var(--font-mono); }
 
+/* Mono label utility — recurring editorial pattern */
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
 /* ═══════════════════════════════════════
    LAYOUT
    ═══════════════════════════════════════ */
 
 .container-shell {
   margin-inline: auto;
-  width: min(100% - 1.5rem, 76rem);
+  width: min(100% - 1.5rem, 78rem);
 }
 
 @media (min-width: 640px) {
-  .container-shell { width: min(100% - 2.5rem, 76rem); }
+  .container-shell { width: min(100% - 2.5rem, 78rem); }
 }
 
 @media (min-width: 1024px) {
-  .container-shell { width: min(100% - 4rem, 76rem); }
+  .container-shell { width: min(100% - 4rem, 78rem); }
 }
 
 /* ═══════════════════════════════════════
-   GLASSMORPHISM & SURFACES
+   PANELS / SURFACES
    ═══════════════════════════════════════ */
 
+/* Used by the floating navbar — the only place we keep blur */
 .glass-panel {
-  background: color-mix(in srgb, var(--bg-card) 60%, transparent);
-  backdrop-filter: blur(20px) saturate(1.4);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
-  border: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), var(--shadow-sm);
+  background: color-mix(in srgb, var(--bg-base) 85%, transparent);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border: 1px solid var(--border);
 }
 
 .surface-panel {
-  background: color-mix(in srgb, var(--bg-card) 85%, transparent);
-  backdrop-filter: blur(12px) saturate(1.2);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), var(--shadow-sm);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
 }
 
-/* Mesh gradient background for hero */
-.mesh-bg {
-  background:
-    conic-gradient(from var(--mesh-angle) at 30% 20%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 25%),
-    conic-gradient(from calc(var(--mesh-angle) + 120deg) at 70% 60%, color-mix(in srgb, var(--color-warning) 10%, transparent), transparent 25%),
-    conic-gradient(from calc(var(--mesh-angle) + 240deg) at 50% 80%, color-mix(in srgb, var(--accent) 6%, transparent), transparent 25%),
-    var(--bg-base);
-  animation: mesh-rotate 12s linear infinite;
+/* Editorial grid background — replaces mesh + dot grid */
+.editorial-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--text-primary) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--text-primary) 5%, transparent) 1px, transparent 1px);
+  background-size: 80px 80px;
 }
 
-/* Dot grid pattern */
+.editorial-grid-fine {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--text-primary) 4%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--text-primary) 4%, transparent) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
 .dot-grid {
-  background-image: radial-gradient(circle, color-mix(in srgb, var(--border) 50%, transparent) 1px, transparent 1px);
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--text-primary) 14%, transparent) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
+/* Highlight marker — for hand-drawn underline accents */
+.marker-stroke {
+  background: linear-gradient(180deg, transparent 62%, var(--accent) 62%, var(--accent) 92%, transparent 92%);
+  padding: 0 0.1em;
+}
+
+/* Inverted block — used for the hero footer strip + footer CTA */
+.ink-block {
+  background: var(--bg-ink);
+  color: var(--text-on-ink);
+}
+.ink-block ::selection {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
 /* ═══════════════════════════════════════
-   SCROLL PROGRESS BAR
+   SCROLL PROGRESS — kept, restyled
    ═══════════════════════════════════════ */
 
 .scroll-progress {
@@ -389,8 +380,8 @@ button, input, select, textarea { font: inherit; }
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--accent), var(--color-warning));
+  height: 2px;
+  background: var(--accent);
   transform-origin: left;
   transform: scaleX(0);
   animation: grow-scaleX linear;
@@ -399,16 +390,10 @@ button, input, select, textarea { font: inherit; }
 }
 
 /* ═══════════════════════════════════════
-   KEYFRAME ANIMATIONS
+   ANIMATIONS — pared down, purposeful
    ═══════════════════════════════════════ */
 
-@keyframes mesh-rotate {
-  to { --mesh-angle: 360deg; }
-}
-
-@keyframes grow-scaleX {
-  to { transform: scaleX(1); }
-}
+@keyframes grow-scaleX { to { transform: scaleX(1); } }
 
 @keyframes shimmer {
   0% { background-position: -200% 0; }
@@ -417,42 +402,35 @@ button, input, select, textarea { font: inherit; }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+  50% { transform: translateY(-4px); }
 }
 
 @keyframes pulse-glow {
   0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
-  50% { box-shadow: 0 0 0 8px transparent; }
+  50% { box-shadow: 0 0 0 6px transparent; }
 }
 
 @keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fade-in-up-sm {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes scale-in {
-  from { opacity: 0; transform: scale(0.92); }
+  from { opacity: 0; transform: scale(0.96); }
   to { opacity: 1; transform: scale(1); }
-}
-
-@keyframes gradient-slide {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
 }
 
 @keyframes skeleton-pulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  50% { opacity: 0.5; }
 }
 
-@keyframes skeleton-shimmer {
-  to { background-position: 200% 0; }
-}
+@keyframes skeleton-shimmer { to { background-position: 200% 0; } }
 
 @keyframes subtle-pulse {
   0%, 100% { opacity: 1; }
@@ -471,16 +449,11 @@ button, input, select, textarea { font: inherit; }
 
 @keyframes bounce-down {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(4px); }
-}
-
-@keyframes confetti-fall {
-  0% { transform: translateY(-100%) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  50% { transform: translateY(3px); }
 }
 
 @keyframes step-fade-in {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -490,21 +463,21 @@ button, input, select, textarea { font: inherit; }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes check-stroke {
-  to { stroke-dashoffset: 0; }
+@keyframes check-stroke { to { stroke-dashoffset: 0; } }
+
+@keyframes confetti-fall {
+  0% { transform: translateY(-100%) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
 }
 
-/* ═══════════════════════════════════════
-   ANIMATION UTILITIES
-   ═══════════════════════════════════════ */
-
+/* ─── Animation utilities ─── */
 .animate-float { animation: float 4s ease-in-out infinite; }
-.animate-subtle-pulse { animation: subtle-pulse 2s ease-in-out infinite; }
+.animate-subtle-pulse { animation: subtle-pulse 2.5s ease-in-out infinite; }
 .animate-fade-in-up-sm { animation: fade-in-up-sm 0.5s var(--ease-out-quart) both; }
 .animate-fade-in-up { animation: fade-in-up 0.6s var(--ease-out-quart) both; }
 .animate-scale-in { animation: scale-in 0.4s var(--ease-out-quart) both; }
 .animate-slide-in-top { animation: slide-in-from-top 0.25s ease-out both; }
-.animate-bounce-down { animation: bounce-down 1.5s ease-in-out infinite; }
+.animate-bounce-down { animation: bounce-down 1.6s ease-in-out infinite; }
 .step-content-enter { animation: step-fade-in 0.3s ease-out forwards; }
 
 @media (max-width: 768px) {
@@ -516,34 +489,51 @@ button, input, select, textarea { font: inherit; }
 }
 
 .shimmer-bg {
-  background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--accent) 6%, transparent) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, var(--accent-tint-faint) 50%, transparent 100%);
   background-size: 200% 100%;
-  animation: shimmer 6s ease-in-out infinite;
+  animation: shimmer 8s ease-in-out infinite;
 }
 
 .skeleton {
   background: linear-gradient(90deg, var(--bg-surface) 0%, var(--bg-card) 50%, var(--bg-surface) 100%);
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.5s ease-in-out infinite;
-  border-radius: 8px;
+  border-radius: var(--radius-inner);
 }
 
-/* Accent gradient bar for section headings */
+/* Editorial accent rule — replaces the `accent-bar` gradient */
 .accent-bar {
-  height: 3px;
-  width: 2.5rem;
-  border-radius: 3px;
-  background: linear-gradient(90deg, var(--accent), var(--color-warning), var(--accent));
-  background-size: 200% 100%;
-  animation: gradient-slide 4s ease-in-out infinite;
-  box-shadow: 0 0 8px var(--accent-glow);
+  display: inline-block;
+  height: 8px;
+  width: 8px;
+  border-radius: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 24%, transparent);
 }
 
-.marquee-track { animation: marquee 30s linear infinite; }
+/* Editorial section rule */
+.section-rule {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.section-rule::before {
+  content: "";
+  height: 1px;
+  width: 32px;
+  background: var(--text-primary);
+}
+
+.marquee-track { animation: marquee 36s linear infinite; }
 .marquee-track:hover { animation-play-state: paused; }
 
 /* ═══════════════════════════════════════
-   PRODUCT ICON GRID (Brand Tiles)
+   PRODUCT ICON GRID
    ═══════════════════════════════════════ */
 
 .product-icon-grid {
@@ -552,91 +542,81 @@ button, input, select, textarea { font: inherit; }
   grid-template-columns: repeat(4, 1fr);
 }
 @media (min-width: 640px) {
-  .product-icon-grid {
-    grid-template-columns: repeat(5, 1fr);
-    gap: 0.625rem;
-  }
+  .product-icon-grid { grid-template-columns: repeat(5, 1fr); gap: 0.625rem; }
 }
 @media (min-width: 1024px) {
-  .product-icon-grid {
-    grid-template-columns: repeat(6, 1fr);
-    gap: 0.75rem;
-  }
+  .product-icon-grid { grid-template-columns: repeat(6, 1fr); gap: 0.75rem; }
 }
 
-.brand-panel-enter {
-  animation: brand-panel-slide 0.3s ease-out forwards;
-}
+.brand-panel-enter { animation: brand-panel-slide 0.3s ease-out forwards; }
 @keyframes brand-panel-slide {
   from { opacity: 0; transform: translateY(-8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 @media (max-width: 768px) {
-  .brand-panel-enter {
-    animation: none;
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .brand-panel-enter { animation: none; opacity: 1; transform: translateY(0); }
 }
 
-.pulse-dot { animation: pulse-glow 2s ease-in-out infinite; }
+.pulse-dot { animation: pulse-glow 2.5s ease-in-out infinite; }
 
 /* ═══════════════════════════════════════
-   INTERACTIVE CARDS & BUTTONS
+   INTERACTIVE CARDS
    ═══════════════════════════════════════ */
 
-/* Glow ring for cards */
+/* Card hover: corner accent + border color shift, no lift */
 .glow-ring {
-  transition: box-shadow var(--duration-normal) ease, border-color var(--duration-normal) ease, transform var(--duration-normal) var(--ease-out-quart);
+  position: relative;
+  transition: border-color var(--duration-normal) ease, box-shadow var(--duration-normal) ease;
 }
 .glow-ring:hover {
-  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 10%, transparent), 0 0 32px color-mix(in srgb, var(--accent) 12%, transparent);
+  border-color: var(--text-primary);
+  box-shadow: 4px 4px 0 var(--accent);
 }
 
-/* Step number ring */
+/* Step number ring — flat editorial, not glowing */
 .step-number-ring {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  border: 2px solid color-mix(in srgb, var(--accent) 40%, var(--border));
-  background: color-mix(in srgb, var(--accent) 8%, var(--bg-card));
-  color: var(--accent);
-  font-family: var(--font-display);
-  font-size: 1.125rem;
-  font-weight: 700;
-  box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 14%, transparent);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0;
+  border: 1.5px solid var(--text-primary);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
   transition: all var(--duration-normal) ease;
 }
 .step-number-ring:hover {
-  box-shadow: 0 0 32px color-mix(in srgb, var(--accent) 24%, transparent);
-  transform: scale(1.08);
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-color: var(--accent);
 }
 
 /* ═══════════════════════════════════════
-   BENTO GRID
+   BENTO GRID — adjusted gaps + radii
    ═══════════════════════════════════════ */
 
 .bento-grid {
   display: grid;
-  gap: 1rem;
+  gap: 0.75rem;
   grid-template-columns: 1fr;
 }
 
 @media (min-width: 640px) {
   .bento-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
+    gap: 1rem;
   }
 }
 
 @media (min-width: 1024px) {
   .bento-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 1.25rem;
   }
   .bento-hero { grid-column: span 2; grid-row: span 2; }
 }
@@ -656,30 +636,23 @@ button, input, select, textarea { font: inherit; }
 
 .reveal {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(16px);
   transition: opacity 0.6s var(--ease-out-quart), transform 0.6s var(--ease-out-quart);
 }
-.reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
+.reveal.revealed { opacity: 1; transform: translateY(0); }
 
 @media (max-width: 768px) {
-  .reveal {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-  }
+  .reveal { opacity: 1 !important; transform: translateY(0) !important; }
 }
 
-/* Staggered children */
 .reveal-stagger > :nth-child(1) { transition-delay: 0ms; }
-.reveal-stagger > :nth-child(2) { transition-delay: 80ms; }
-.reveal-stagger > :nth-child(3) { transition-delay: 160ms; }
-.reveal-stagger > :nth-child(4) { transition-delay: 240ms; }
-.reveal-stagger > :nth-child(5) { transition-delay: 320ms; }
-.reveal-stagger > :nth-child(6) { transition-delay: 400ms; }
-.reveal-stagger > :nth-child(7) { transition-delay: 480ms; }
-.reveal-stagger > :nth-child(8) { transition-delay: 560ms; }
+.reveal-stagger > :nth-child(2) { transition-delay: 60ms; }
+.reveal-stagger > :nth-child(3) { transition-delay: 120ms; }
+.reveal-stagger > :nth-child(4) { transition-delay: 180ms; }
+.reveal-stagger > :nth-child(5) { transition-delay: 240ms; }
+.reveal-stagger > :nth-child(6) { transition-delay: 300ms; }
+.reveal-stagger > :nth-child(7) { transition-delay: 360ms; }
+.reveal-stagger > :nth-child(8) { transition-delay: 420ms; }
 
 /* ═══════════════════════════════════════
    SECTION DIVIDER
@@ -687,7 +660,7 @@ button, input, select, textarea { font: inherit; }
 
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--border) 60%, transparent) 20%, var(--border) 50%, color-mix(in srgb, var(--border) 60%, transparent) 80%, transparent);
+  background: var(--border);
 }
 
 /* ═══════════════════════════════════════
@@ -723,7 +696,7 @@ button, input, select, textarea { font: inherit; }
     scroll-behavior: auto !important;
   }
   .shimmer-bg, .marquee-track, .animate-float, .animate-subtle-pulse,
-  .animate-bounce-down, .mesh-bg, .pulse-dot { animation: none !important; }
+  .animate-bounce-down, .pulse-dot { animation: none !important; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .scroll-progress { display: none; }
 }
@@ -745,8 +718,6 @@ section:not(:first-child) {
   contain-intrinsic-size: auto 500px;
 }
 
-/* GPU acceleration for animated elements */
-.shimmer-bg, .marquee-track, .glow-ring, .mesh-bg {
+.shimmer-bg, .marquee-track, .glow-ring {
   will-change: transform;
-  transform: translateZ(0);
 }

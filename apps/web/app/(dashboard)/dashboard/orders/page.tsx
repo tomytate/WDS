@@ -171,21 +171,21 @@ export default async function DashboardOrdersPage({ searchParams }: OrdersPagePr
       </div>
 
       <OrderSelectionProvider>
-        <div className="overflow-x-auto overscroll-x-contain rounded-2xl border border-[--border] bg-[--bg-surface]">
+        <div className="overflow-x-auto overscroll-x-contain rounded-[--radius-card] border border-[--border] bg-[--bg-card]">
           <table className="min-w-[800px] whitespace-nowrap text-left text-sm">
-            <thead className="text-[--text-secondary]">
+            <thead className="bg-[--bg-surface] text-[--text-muted]">
               <tr>
-                <th scope="col" className="px-4 py-4 w-6">
+                <th scope="col" className="px-4 py-3 w-6">
                   <span className="sr-only">Select</span>
                   <OrderSelectAll allIds={ordersPage.orders.map(o => o.id)} />
                 </th>
-                <th scope="col" className="px-4 py-4 font-medium">Order</th>
-                <th scope="col" className="px-4 py-4 font-medium">Customer</th>
-                <th scope="col" className="px-4 py-4 font-medium">Items</th>
-                <th scope="col" className="px-4 py-4 font-medium">Payment</th>
-                <th scope="col" className="px-4 py-4 font-medium">Status</th>
-                <th scope="col" className="px-4 py-4 font-medium">Date</th>
-                <th scope="col" className="px-4 py-4 font-medium">
+                <th scope="col" className="px-4 py-3 font-mono text-[10px] uppercase tracking-[0.1em] font-medium">Order</th>
+                <th scope="col" className="px-4 py-3 font-mono text-[10px] uppercase tracking-[0.1em] font-medium">Customer</th>
+                <th scope="col" className="px-4 py-3 font-mono text-[10px] uppercase tracking-[0.1em] font-medium">Items</th>
+                <th scope="col" className="px-4 py-3 font-mono text-[10px] uppercase tracking-[0.1em] font-medium">Payment</th>
+                <th scope="col" className="px-4 py-3 font-mono text-[10px] uppercase tracking-[0.1em] font-medium">Status</th>
+                <th scope="col" className="px-4 py-3 font-mono text-[10px] uppercase tracking-[0.1em] font-medium">Date</th>
+                <th scope="col" className="px-4 py-3 font-mono text-[10px] uppercase tracking-[0.1em] font-medium">
                   <span className="sr-only">Actions</span>
                 </th>
               </tr>
@@ -194,7 +194,7 @@ export default async function DashboardOrdersPage({ searchParams }: OrdersPagePr
               {ordersPage.orders.length > 0 ? (
                 ordersPage.orders.map((order) => (
                   <tr
-                    className="border-t border-[--border]"
+                    className="border-t border-[--border] transition-colors hover:bg-[--bg-surface]"
                     key={order.id}
                   >
                     <td className="px-4 py-4 align-top w-6">
@@ -202,7 +202,7 @@ export default async function DashboardOrdersPage({ searchParams }: OrdersPagePr
                     </td>
                     <td className="px-4 py-4 align-top">
                       <Link
-                        className="font-mono text-xs text-[--accent] hover:underline"
+                        className="font-mono text-xs font-semibold text-[--text-primary] underline-offset-2 hover:underline"
                         href={`/dashboard/orders/${order.id}`}
                       >
                         {order.orderCode}

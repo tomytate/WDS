@@ -150,7 +150,7 @@ export default async function DashboardBundlesPage({
 
                   return (
                   <details
-                    className="group rounded-2xl border border-[--border] bg-[--bg-surface] p-4"
+                    className="group rounded-[--radius-card] border border-[--border] bg-[--bg-surface] p-4"
                     key={bundle.id}
                   >
                     <summary className="cursor-pointer list-none">
@@ -159,7 +159,7 @@ export default async function DashboardBundlesPage({
                           <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[--border] bg-[--bg-card] text-[--text-secondary] transition-transform group-open:rotate-90">
                             <ChevronRight size={16} aria-hidden="true" />
                           </span>
-                          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[--accent-tint-soft] text-[--accent] ring-1 ring-[--accent-tint-strong]">
+                          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[--radius-inner] border border-[--border] bg-[--bg-surface] text-[--text-primary]">
                             {bundle.iconUrl ? (
                               <Image src={bundle.iconUrl} alt={bundle.name} width={24} height={24} className="h-6 w-6 object-contain" />
                             ) : (
@@ -298,7 +298,7 @@ export default async function DashboardBundlesPage({
                 )})}
               </div>
             ) : (
-              <div className="rounded-2xl border border-[--border] bg-[--bg-surface] p-6 text-sm text-[--text-secondary]">
+              <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-surface] p-6 text-sm text-[--text-secondary]">
                 No bundles yet. Create your first pack using the form on the left.
               </div>
             )}

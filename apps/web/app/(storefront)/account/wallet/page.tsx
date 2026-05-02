@@ -10,11 +10,11 @@ import {
   Clock,
 } from "lucide-react"
 
-import { Card, CardContent, Badge } from "@wongdigital/ui"
+import { Badge, EmptyState } from "@wongdigital/ui"
 import { listWalletTransactions, getStoreSettings } from "@wongdigital/db/storefront"
 
 import { requireCustomer } from "@/lib/customer-auth"
-import { formatPrice, formatDate } from "@/lib/format"
+import { formatDate } from "@/lib/format"
 import { WalletTopUpForm } from "./top-up-form"
 
 export const metadata: Metadata = {
@@ -30,7 +30,7 @@ export default async function WalletPage() {
   const { customer } = auth
   const [transactions, storeSettings] = await Promise.all([
     listWalletTransactions(customer.id),
-    getStoreSettings()
+    getStoreSettings(),
   ])
 
   const txTypeIcon: Record<string, typeof ArrowDownRight> = {
@@ -44,90 +44,81 @@ export default async function WalletPage() {
     deposit: "Deposit",
     purchase: "Purchase",
     refund: "Refund",
-    affiliate_credit: "Affiliate Credit",
+    affiliate_credit: "Affiliate credit",
   }
 
-  const statusTone: Record<string, "muted" | "accent"> = {
+  const statusTone: Record<string, "muted" | "success" | "danger"> = {
     pending: "muted",
-    completed: "accent",
-    failed: "muted",
+    completed: "success",
+    failed: "danger",
     cancelled: "muted",
   }
 
   return (
-    <div className="space-y-6 sm:space-y-8">
+    <div className="space-y-8">
       {/* Header */}
-      <div>
-        <nav className="mb-3 flex items-center gap-1.5 text-xs text-[--text-muted]">
+      <div className="border-b border-[--border] pb-6">
+        <nav className="mb-3 flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.08em] text-[--text-muted]">
           <Link
             href="/account"
-            className="hover:text-[--accent] transition-colors"
+            className="hover:text-[--text-primary] transition-colors"
           >
             Account
           </Link>
-          <ChevronRight size={12} />
-          <span className="text-[--text-primary] font-medium">Wallet</span>
+          <ChevronRight size={11} />
+          <span className="text-[--text-primary] font-semibold">Wallet</span>
         </nav>
-        <h1 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[--text-primary]">
-          Wallet Hub
+        <h1 className="font-display text-3xl sm:text-4xl font-semibold leading-[1.05] tracking-[-0.025em] text-[--text-primary]">
+          Wallet hub.
         </h1>
       </div>
 
-      {/* Balance Card */}
-      <Card className="relative overflow-hidden border-[color-mix(in_srgb,var(--accent)_25%,var(--border))] bg-gradient-to-br from-[color-mix(in_srgb,var(--accent)_10%,var(--bg-card))] to-[var(--bg-card)]">
-        <div
-          className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[color-mix(in_srgb,var(--accent)_14%,transparent)] blur-3xl"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute -left-12 -bottom-12 h-32 w-32 rounded-full bg-[color-mix(in_srgb,var(--accent)_8%,transparent)] blur-2xl"
-          aria-hidden="true"
-        />
-        <CardContent className="relative p-6 sm:p-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[--accent] text-[--accent-fg] shadow-[0_4px_16px_color-mix(in_srgb,var(--accent)_30%,transparent)]">
-              <Wallet size={22} />
-            </div>
+      {/* Balance Card — full-bleed ink block */}
+      <div className="ink-block rounded-[--radius-card] border border-[--border]">
+        <div className="p-6 sm:p-8">
+          <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs uppercase tracking-[0.22em] text-[--text-muted] font-semibold">
-                Available Balance
+              <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-[--accent] mb-3">
+                / Available balance
               </p>
-              <p className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[--text-primary]">
+              <p className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[0.95] tracking-[-0.03em] text-[--text-on-ink] tabular-nums">
                 USDT {Number(customer.walletBalance).toFixed(2)}
               </p>
             </div>
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[--radius-inner] bg-[--accent] text-[--accent-fg]">
+              <Wallet size={20} />
+            </div>
           </div>
-          <p className="text-xs text-[--text-muted]">
+          <p className="mt-6 max-w-xl text-sm leading-relaxed text-[--text-on-ink] opacity-75">
             Use your wallet balance for instant 1-click purchases across the store.
           </p>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Top-Up Section */}
       <WalletTopUpForm customerId={customer.id} storeSettings={storeSettings} />
 
       {/* Transaction History */}
       <div className="space-y-4">
-        <h2 className="font-display text-lg font-bold tracking-tight text-[--text-primary]">
-          Transaction History
-        </h2>
+        <div className="flex items-end justify-between border-b border-[--border] pb-3">
+          <div>
+            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+              / Transaction history
+            </p>
+            <h2 className="mt-1 font-display text-xl font-semibold tracking-tight text-[--text-primary]">
+              All movements
+            </h2>
+          </div>
+        </div>
 
         {transactions.length === 0 ? (
-          <Card>
-            <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] text-[--accent] mb-3">
-                <Clock size={24} />
-              </div>
-              <p className="text-sm font-medium text-[--text-primary]">
-                No transactions yet
-              </p>
-              <p className="mt-1 text-xs text-[--text-muted]">
-                Your deposits and purchases will appear here.
-              </p>
-            </CardContent>
-          </Card>
+          <EmptyState
+            icon={<Clock size={20} />}
+            title="No transactions yet"
+            description="Your deposits and purchases will appear here."
+          />
         ) : (
-          <div className="space-y-2">
+          <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] overflow-hidden divide-y divide-[--border]">
             {transactions.map((tx) => {
               const Icon = txTypeIcon[tx.transactionType] ?? ArrowDownRight
               const isCredit =
@@ -136,45 +127,44 @@ export default async function WalletPage() {
                 tx.transactionType === "affiliate_credit"
 
               return (
-                <Card key={tx.id}>
-                  <CardContent className="flex items-center justify-between p-4">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${
-                          isCredit
-                            ? "bg-[color-mix(in_srgb,var(--color-success)_12%,transparent)] text-[--color-success]"
-                            : "bg-[color-mix(in_srgb,var(--accent)_12%,transparent)] text-[--accent]"
-                        }`}
-                      >
-                        <Icon size={16} />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <p className="text-sm font-medium text-[--text-primary]">
-                            {txTypeLabel[tx.transactionType] ?? tx.transactionType}
-                          </p>
-                          <Badge tone={statusTone[tx.status] ?? "muted"}>
-                            {tx.status}
-                          </Badge>
-                        </div>
-                        <p className="mt-0.5 text-xs text-[--text-muted]">
-                          {formatDate(tx.createdAt)}
-                          {tx.referenceId ? ` · Ref: ${tx.referenceId}` : ""}
-                        </p>
-                      </div>
-                    </div>
-                    <p
-                      className={`text-sm font-semibold ${
+                <div
+                  key={tx.id}
+                  className="flex items-center justify-between p-4 transition-colors hover:bg-[--bg-surface]"
+                >
+                  <div className="flex items-center gap-3">
+                    <div
+                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-[--radius-inner] border ${
                         isCredit
-                          ? "text-[--color-success]"
-                          : "text-[--text-primary]"
+                          ? "border-[--color-success] bg-[color-mix(in_srgb,var(--color-success)_10%,transparent)] text-[--color-success-text]"
+                          : "border-[--border] bg-[--bg-surface] text-[--text-primary]"
                       }`}
                     >
-                      {isCredit ? "+" : "−"}
-                      USDT {Number(tx.amount).toFixed(2)}
-                    </p>
-                  </CardContent>
-                </Card>
+                      <Icon size={14} />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm font-medium text-[--text-primary]">
+                          {txTypeLabel[tx.transactionType] ?? tx.transactionType}
+                        </p>
+                        <Badge size="sm" tone={statusTone[tx.status] ?? "muted"}>
+                          {tx.status}
+                        </Badge>
+                      </div>
+                      <p className="mt-0.5 text-xs text-[--text-muted]">
+                        {formatDate(tx.createdAt)}
+                        {tx.referenceId ? ` · Ref: ${tx.referenceId}` : ""}
+                      </p>
+                    </div>
+                  </div>
+                  <p
+                    className={`font-display text-sm font-semibold tabular-nums ${
+                      isCredit ? "text-[--color-success-text]" : "text-[--text-primary]"
+                    }`}
+                  >
+                    {isCredit ? "+" : "−"}
+                    USDT {Number(tx.amount).toFixed(2)}
+                  </p>
+                </div>
               )
             })}
           </div>

@@ -30,15 +30,15 @@ export function PromoBannerBar({ banner }: PromoBannerBarProps) {
 
   const isAccent = banner.variant === "accent"
   const bgClass = isAccent
-    ? "bg-[--accent] text-[--accent-fg]"
-    : "bg-gradient-to-r from-[color-mix(in_srgb,var(--accent)_12%,var(--bg-card))] to-[color-mix(in_srgb,var(--accent)_6%,var(--bg-card))] text-[--text-primary] border-b border-[--accent-border]"
+    ? "ink-block border-b border-[--border]"
+    : "bg-[--bg-surface] text-[--text-primary] border-b border-[--border]"
 
   const content = (
-    <div className="flex items-center gap-2 text-sm font-medium">
-      <Megaphone size={14} className="shrink-0" aria-hidden="true" />
+    <div className="flex items-center gap-2.5 text-[13px] font-medium tracking-tight">
+      <Megaphone size={13} className="shrink-0 text-[--accent]" aria-hidden="true" />
       <span>{banner.text}</span>
       {banner.link ? (
-        <ArrowRight size={14} className="shrink-0 opacity-70" aria-hidden="true" />
+        <ArrowRight size={13} className="shrink-0 opacity-70" aria-hidden="true" />
       ) : null}
     </div>
   )
@@ -47,7 +47,10 @@ export function PromoBannerBar({ banner }: PromoBannerBarProps) {
     <div className={`relative z-50 px-4 py-2.5 ${bgClass}`}>
       <div className="container-shell flex items-center justify-between gap-4">
         {banner.link ? (
-          <Link href={banner.link} className="flex-1 hover:opacity-80 transition-opacity">
+          <Link
+            href={banner.link}
+            className="flex-1 hover:opacity-80 transition-opacity"
+          >
             {content}
           </Link>
         ) : (
@@ -55,15 +58,11 @@ export function PromoBannerBar({ banner }: PromoBannerBarProps) {
         )}
         <button
           onClick={dismiss}
-          className={`shrink-0 rounded-full p-1 transition-all hover:scale-110 ${
-            isAccent
-              ? "hover:bg-[color-mix(in_srgb,var(--accent-fg)_20%,transparent)]"
-              : "hover:bg-[--accent-tint-soft]"
-          }`}
+          className="shrink-0 rounded-[--radius-inner] p-1 transition-colors hover:bg-[color-mix(in_srgb,currentColor_10%,transparent)]"
           aria-label="Dismiss banner"
           type="button"
         >
-          <X size={16} />
+          <X size={14} />
         </button>
       </div>
     </div>

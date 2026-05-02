@@ -53,19 +53,20 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   }
 
   return (
-    <main className="relative container-shell flex min-h-screen items-center justify-center py-10">
-      {/* Background mesh */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-1/4 -top-1/4 h-[70%] w-[70%] rounded-full bg-[--accent-tint-soft] blur-[120px]" />
-        <div className="absolute -bottom-1/4 -right-1/4 h-[60%] w-[60%] rounded-full bg-[--accent-tint-soft] blur-[100px]" />
-      </div>
-      <LoginHub
-        localDashboardBypass={localDashboardBypass}
-        dashboardRedirectPath={dashboardRedirectPath}
-        customerRedirectPath={redirectPath}
-        initialTab={initialTab}
-        errorMessage={errorMessage}
+    <main className="relative min-h-screen overflow-hidden">
+      <div
+        className="editorial-grid pointer-events-none absolute inset-0 opacity-50 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_30%,#000_30%,transparent_90%)]"
+        aria-hidden="true"
       />
+      <div className="container-shell relative flex min-h-screen items-center justify-center py-10">
+        <LoginHub
+          localDashboardBypass={localDashboardBypass}
+          dashboardRedirectPath={dashboardRedirectPath}
+          customerRedirectPath={redirectPath}
+          initialTab={initialTab}
+          errorMessage={errorMessage}
+        />
+      </div>
     </main>
   )
 }

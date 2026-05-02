@@ -416,9 +416,9 @@ export function ProductSelectionStep({
 
           return (
             <button
-              className={`glow-ring rounded-xl sm:rounded-2xl border p-3.5 sm:p-5 text-left transition-all duration-200 ${
+              className={`glow-ring rounded-[--radius-card] border p-3.5 sm:p-5 text-left transition-all duration-200 ${
                 active
-                  ? "border-[--accent] bg-[--accent-tint-soft] shadow-[0_0_16px_var(--accent-tint-soft)]"
+                  ? "border-[--text-primary] bg-[--bg-surface]"
                   : "border-[--border] bg-[--bg-card] hover:bg-[--bg-surface] active:scale-[0.99]"
               }`}
               key={option.value}
@@ -456,9 +456,9 @@ export function ProductSelectionStep({
       {browseMode === "boosting" ? (
         <>
           {/* Growth Packages Section */}
-          <div className="space-y-4 rounded-xl sm:rounded-2xl border border-[--accent-border] bg-gradient-to-br from-[color-mix(in_srgb,var(--accent)_6%,var(--bg-card))] to-[var(--bg-card)] p-4 sm:p-6">
+          <div className="space-y-4 rounded-[--radius-card] border border-[--text-primary] bg-[--bg-card] p-4 sm:p-6">
             <div className="flex items-start gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[--accent-tint-medium] text-[--accent]">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[--radius-inner] bg-[--accent] text-[--accent-fg]">
                 <Sparkles size={20} />
               </div>
               <div>
@@ -722,7 +722,7 @@ export function ProductSelectionStep({
                             if (match) toggleProduct(match);
                           }}
                           type="button"
-                          className={`flex text-left w-full items-center justify-between gap-3 rounded-xl border px-3 py-2.5 text-xs transition-colors hover:border-[--accent-border] ${inCart ? "border-[--accent] bg-[--accent-tint-soft] shadow-[0_0_8px_var(--accent-tint-soft)]" : "border-[color-mix(in_srgb,var(--border)_70%,transparent)] bg-[color-mix(in_srgb,var(--bg-surface)_50%,transparent)]"}`}
+                          className={`flex text-left w-full items-center justify-between gap-3 rounded-xl border px-3 py-2.5 text-xs transition-colors hover:border-[--accent-border] ${inCart ? "border-[--text-primary] bg-[--bg-surface]" : "border-[color-mix(in_srgb,var(--border)_70%,transparent)] bg-[color-mix(in_srgb,var(--bg-surface)_50%,transparent)]"}`}
                         >
                           <div className="min-w-0 flex-1">
                             <p className="font-medium text-[--text-primary]">
@@ -753,7 +753,7 @@ export function ProductSelectionStep({
                               In Cart
                             </span>
                           ) : (
-                            <span className="shrink-0 flex flex-col items-end rounded-lg bg-[--accent-tint-soft] px-2.5 py-1 text-right text-[--accent]">
+                            <span className="shrink-0 flex flex-col items-end text-right font-display text-sm font-semibold tabular-nums text-[--text-primary]">
                               <span className="font-bold leading-[1.1]">{formatPrimaryPrice(pkg.price, pkg.slug)}</span>
                               {showSecondary && (
                                 <span className="text-[9px] font-semibold opacity-75 leading-[1.1] mt-0.5">
@@ -771,9 +771,9 @@ export function ProductSelectionStep({
             </div>
           </div>
 
-          <div className="space-y-4 rounded-xl sm:rounded-2xl border border-[--accent-border] bg-gradient-to-br from-[var(--bg-card)] to-[color-mix(in_srgb,var(--accent)_4%,var(--bg-surface))] p-4 sm:p-6">
+          <div className="space-y-4 rounded-[--radius-card] border border-[--text-primary] bg-[--bg-card] p-4 sm:p-6">
             <div className="flex items-start gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[--accent-tint-medium] text-[--accent]">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[--radius-inner] bg-[--accent] text-[--accent-fg]">
                 <MessageCircle size={20} />
               </div>
               <div>
@@ -826,9 +826,9 @@ export function ProductSelectionStep({
                         <button
                           type="button"
                           onClick={() => { setExpandedBrandId(isExpanded ? null : brand.id); setFocusedProductSlug(null); }}
-                          className={`group relative flex aspect-square flex-col items-center justify-center gap-2 rounded-2xl border transition-all duration-200 ${
+                          className={`group relative flex aspect-square flex-col items-center justify-center gap-2 rounded-[--radius-card] border transition-all duration-200 ${
                             isExpanded
-                              ? "border-[--accent] bg-[--accent-tint-soft] shadow-[0_0_16px_var(--accent-tint-soft)]"
+                              ? "border-[--text-primary] bg-[--bg-surface]"
                               : inCartCount > 0
                               ? "border-[--accent-border] bg-[--bg-surface] hover:border-[--accent]"
                               : "border-[--border] bg-[--bg-card] hover:border-[color-mix(in_srgb,var(--text-primary)_20%,var(--border))] hover:bg-[--bg-surface]"
@@ -853,7 +853,7 @@ export function ProductSelectionStep({
 
                 {expandedBrandId && categoryBrands.some(b => b.id === expandedBrandId) && (
                   <div className="col-span-full brand-panel-enter mt-1">
-                    <div className="rounded-2xl border border-[--border] bg-[--bg-card] shadow-sm overflow-hidden relative">
+                    <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] overflow-hidden relative">
                       <button
                         onClick={() => setExpandedBrandId(null)}
                         className="absolute right-3 top-3 p-1.5 rounded-lg text-[--text-secondary] hover:text-[--text-primary] hover:bg-[--bg-surface] transition-colors z-10"
@@ -885,7 +885,7 @@ export function ProductSelectionStep({
                                   return (
                                     <div
                                       key={product.id}
-                                      className={`flex flex-col overflow-hidden rounded-xl border transition-all duration-200 cursor-pointer ${isSelected ? "border-[--accent] bg-[--accent-tint-faint]" : focusedProductSlug === product.slug ? "border-[--accent-border] bg-[--accent-tint-faint]" : "border-[--border] bg-[--bg-surface] hover:border-[color-mix(in_srgb,var(--text-primary)_20%,var(--border))]"}`}
+                                      className={`flex flex-col overflow-hidden rounded-[--radius-inner] border transition-colors duration-150 cursor-pointer ${isSelected ? "border-[--text-primary] bg-[--bg-card]" : focusedProductSlug === product.slug ? "border-[--text-primary] bg-[--bg-card]" : "border-[--border] bg-[--bg-surface] hover:border-[--text-primary]"}`}
                                       onClick={() => setFocusedProductSlug(focusedProductSlug === product.slug ? null : product.slug)}
                                     >
                                       <div className="p-4 flex-1 flex flex-col">
@@ -999,7 +999,7 @@ export function ProductSelectionStep({
 
             return (
               <div
-                className={`glow-ring rounded-xl sm:rounded-2xl border p-3.5 sm:p-5 text-left transition-all duration-200 ${selected ? "border-[--accent] bg-[--accent-tint-faint] shadow-[0_0_16px_var(--accent-tint-soft)]" : "border-[--border] bg-[--bg-card] hover:border-[color-mix(in_srgb,var(--text-primary)_20%,var(--border))] hover:bg-[--bg-surface]"}`}
+                className={`glow-ring rounded-[--radius-card] border p-3.5 sm:p-5 text-left transition-all duration-200 ${selected ? "border-[--text-primary] bg-[--bg-surface]" : "border-[--border] bg-[--bg-card] hover:border-[--text-primary] hover:bg-[--bg-surface]"}`}
                 key={product.id}
               >
                 <div className="flex flex-col sm:flex-row sm:items-start gap-4">

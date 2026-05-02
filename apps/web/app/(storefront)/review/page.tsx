@@ -25,54 +25,60 @@ export default async function ReviewPage({
   if (!orders || orders.length === 0) {
     return (
       <div className="container-shell max-w-lg py-12">
-        <div className="flex flex-col items-center justify-center p-8 text-center rounded-2xl border border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_10%,transparent)]">
-          <AlertCircle size={32} className="text-[--color-danger] mb-4" />
-          <h1 className="font-display text-2xl tracking-tight text-[--text-primary] mb-2">Order Not Found</h1>
-          <p className="text-[--text-secondary]">
-            We couldn't find an order matching that code.
+        <div className="flex flex-col items-center justify-center p-8 text-center rounded-[--radius-card] border border-[--color-danger] bg-[color-mix(in_srgb,var(--color-danger)_10%,transparent)]">
+          <AlertCircle size={28} className="text-[--color-danger] mb-4" />
+          <h1 className="font-display text-2xl font-semibold tracking-tight text-[--color-danger-text] mb-2">
+            Order not found.
+          </h1>
+          <p className="text-sm text-[--text-secondary]">
+            We couldn&apos;t find an order matching that code.
           </p>
         </div>
       </div>
     )
   }
 
-  // lookupOrdersByCode handles mapping internally safely
   const order = orders[0]
   if (!order) return notFound()
 
   if (order.status !== "delivered" && order.status !== "completed") {
     return (
       <div className="container-shell max-w-lg py-12">
-        <div className="flex flex-col items-center justify-center p-8 text-center rounded-2xl border border-[--accent] bg-[--accent-tint-soft]">
-          <MessageSquare size={32} className="text-[--accent] mb-4" />
-          <h1 className="font-display text-2xl tracking-tight text-[--text-primary] mb-2">Order In Progress</h1>
-          <p className="text-[--text-secondary]">
-            We're still working on this order! Reviews can be submitted once it's delivered.
+        <div className="flex flex-col items-center justify-center p-8 text-center rounded-[--radius-card] border border-[--text-primary] bg-[--bg-card]">
+          <MessageSquare size={28} className="text-[--accent-strong] mb-4" />
+          <h1 className="font-display text-2xl font-semibold tracking-tight text-[--text-primary] mb-2">
+            Order in progress.
+          </h1>
+          <p className="text-sm text-[--text-secondary]">
+            We&apos;re still working on this order! Reviews can be submitted once it&apos;s delivered.
           </p>
         </div>
       </div>
     )
   }
 
-  // NOTE: In a real system, we'd also check if a review already exists for this order.
-  // For simplicity, we just allow submission and we could overwrite or just insert duplicates.
-
   return (
     <div className="container-shell max-w-lg py-12 sm:py-20 lg:py-24">
-      <div className="space-y-8 animate-fade-in-up-lg">
-        <div className="text-center space-y-3">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[--accent-tint-soft] text-[--accent] shadow-[0_4px_24px_var(--accent-tint-medium)]">
-            <MessageSquare size={24} strokeWidth={2.5} />
+      <div className="space-y-8">
+        <div className="text-center space-y-4">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-[--radius-inner] border border-[--text-primary] bg-[--bg-card] text-[--text-primary]">
+            <MessageSquare size={20} strokeWidth={1.75} />
           </div>
-          <h1 className="font-display text-3xl sm:text-4xl tracking-tight text-[--text-primary]">
-            Rate Your Experience
+          <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[--text-muted]">
+            / Customer review
+          </p>
+          <h1 className="font-display text-3xl sm:text-4xl font-semibold leading-[1.05] tracking-[-0.025em] text-[--text-primary]">
+            Rate your experience.
           </h1>
           <p className="text-sm sm:text-base text-[--text-secondary] max-w-sm mx-auto">
-            Order <span className="font-mono text-[--text-primary] font-medium">{order.orderCode}</span>
+            Order{" "}
+            <span className="font-mono text-[--text-primary] font-medium">
+              {order.orderCode}
+            </span>
           </p>
         </div>
 
-        <div className="rounded-2xl sm:rounded-[32px] border border-[color-mix(in_srgb,var(--border)_80%,transparent)] bg-[--bg-card] p-6 sm:p-8 shadow-xl shadow-[--accent-tint-faint] filter backdrop-blur-3xl">
+        <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] p-6 sm:p-8">
           <ReviewForm
             orderId={order.id}
             customerName={order.customerName}

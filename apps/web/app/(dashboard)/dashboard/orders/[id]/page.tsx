@@ -66,12 +66,16 @@ export default async function OrderDetailPage({
 
       <div className="grid gap-5 lg:grid-cols-3">
         {/* Order Summary */}
-        <div className="rounded-xl border border-[--border] bg-[--bg-surface] p-5 lg:col-span-2">
-          <h2 className="mb-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-[--text-muted]">Items</h2>
-          <div className="space-y-3">
+        <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] overflow-hidden lg:col-span-2">
+          <div className="border-b border-[--border] bg-[--bg-surface] px-5 py-3">
+            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+              / Items
+            </p>
+          </div>
+          <div className="divide-y divide-[--border]">
             {order.items.map((item) => (
               <div
-                className="flex items-start justify-between gap-3 rounded-lg border border-[--border] bg-[--bg-card] p-4"
+                className="flex items-start justify-between gap-3 p-4 sm:p-5"
                 key={item.id}
               >
                 <div className="min-w-0 flex-1">
@@ -81,7 +85,7 @@ export default async function OrderDetailPage({
                   </p>
                   {item.targetUrl ? (
                     <a
-                      className="mt-1 inline-flex items-center gap-1 text-xs text-[--accent] hover:underline"
+                      className="mt-1 inline-flex items-center gap-1 font-mono text-xs text-[--text-primary] underline-offset-2 hover:underline"
                       href={item.targetUrl}
                       rel="noreferrer"
                       target="_blank"
@@ -91,7 +95,7 @@ export default async function OrderDetailPage({
                     </a>
                   ) : null}
                 </div>
-                <p className="shrink-0 text-sm font-semibold text-[--text-primary]">
+                <p className="shrink-0 font-display text-sm font-semibold tabular-nums text-[--text-primary]">
                   {formatPrice(item.unitPrice)}
                 </p>
               </div>
@@ -99,84 +103,86 @@ export default async function OrderDetailPage({
           </div>
 
           {/* Pricing Summary */}
-          <div className="mt-5 space-y-2 border-t border-[--border] pt-4">
+          <div className="border-t border-[--border] bg-[--bg-surface] p-5 space-y-2">
             <div className="flex justify-between text-sm">
               <span className="text-[--text-secondary]">Subtotal</span>
-              <span className="text-[--text-primary]">{formatPrice(order.subtotalPrice)}</span>
+              <span className="tabular-nums text-[--text-primary]">{formatPrice(order.subtotalPrice)}</span>
             </div>
             {Number(order.tipAmount) > 0 ? (
               <div className="flex justify-between text-sm">
                 <span className="text-[--text-secondary]">Tip</span>
-                <span className="text-[--text-primary]">{formatPrice(order.tipAmount)}</span>
+                <span className="tabular-nums text-[--text-primary]">{formatPrice(order.tipAmount)}</span>
               </div>
             ) : null}
-            <div className="flex justify-between text-sm font-semibold">
-              <span className="text-[--text-primary]">Total</span>
-              <span className="text-[--accent]">{formatPrice(order.totalPrice)}</span>
+            <div className="flex justify-between items-baseline pt-2 border-t border-[--border]">
+              <span className="font-semibold text-[--text-primary]">Total</span>
+              <span className="font-display text-2xl font-semibold tabular-nums tracking-tight text-[--text-primary]">
+                {formatPrice(order.totalPrice)}
+              </span>
             </div>
           </div>
         </div>
 
         {/* Sidebar */}
-        <div className="space-y-5">
+        <div className="space-y-4">
           {/* Status Actions */}
-          <div className="rounded-xl border border-[--border] bg-[--bg-surface] p-5">
-            <h2 className="mb-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-[--text-muted]">Update status</h2>
-            {nextStatuses.length > 0 ? (
-              <div className="space-y-2">
-                {nextStatuses.map((nextStatus) => (
-                  <form
-                    action={updateOrderStatusAction}
-                    key={nextStatus}
-                  >
+          <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] overflow-hidden">
+            <div className="border-b border-[--border] bg-[--bg-surface] px-5 py-3">
+              <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                / Update status
+              </p>
+            </div>
+            <div className="p-5">
+              {nextStatuses.length > 0 ? (
+                <div className="space-y-2">
+                  {nextStatuses.map((nextStatus) => (
+                    <form action={updateOrderStatusAction} key={nextStatus}>
+                      <input name="orderId" type="hidden" value={order.id} />
+                      <input name="status" type="hidden" value={nextStatus} />
+                      <input name="returnTo" type="hidden" value={returnTo} />
+                      <Button className="w-full" type="submit">
+                        Mark as {statusLabel(nextStatus)}
+                      </Button>
+                    </form>
+                  ))}
+                  {order.status !== "cancelled" && order.status !== "completed" ? (
+                    <form action={updateOrderStatusAction}>
+                      <input name="orderId" type="hidden" value={order.id} />
+                      <input name="status" type="hidden" value="cancelled" />
+                      <input name="returnTo" type="hidden" value={returnTo} />
+                      <Button className="w-full" type="submit" variant="ghost">
+                        Cancel order
+                      </Button>
+                    </form>
+                  ) : null}
+
+                  <form action={deleteOrderAction}>
                     <input name="orderId" type="hidden" value={order.id} />
-                    <input name="status" type="hidden" value={nextStatus} />
-                    <input name="returnTo" type="hidden" value={returnTo} />
                     <Button
                       className="w-full"
                       type="submit"
+                      variant="danger"
                     >
-                      Mark as {statusLabel(nextStatus)}
+                      Delete order
                     </Button>
                   </form>
-                ))}
-                {order.status !== "cancelled" && order.status !== "completed" ? (
-                  <form action={updateOrderStatusAction}>
-                    <input name="orderId" type="hidden" value={order.id} />
-                    <input name="status" type="hidden" value="cancelled" />
-                    <input name="returnTo" type="hidden" value={returnTo} />
-                    <Button
-                      className="w-full text-[--color-danger] hover:bg-[color-mix(in_srgb,var(--color-danger)_8%,transparent)]"
-                      type="submit"
-                      variant="surface"
-                    >
-                      Cancel order
-                    </Button>
-                  </form>
-                ) : null}
-                
-                <form action={deleteOrderAction}>
-                  <input name="orderId" type="hidden" value={order.id} />
-                  <Button
-                    className="w-full text-[--color-danger] border-[color-mix(in_srgb,var(--color-danger)_30%,transparent)] hover:bg-[color-mix(in_srgb,var(--color-danger)_10%,transparent)]"
-                    type="submit"
-                    variant="surface"
-                  >
-                    Delete order
-                  </Button>
-                </form>
-              </div>
-            ) : (
-              <p className="text-sm text-[--text-muted]">
-                {order.status === "completed" ? "This order is complete." : "This order is cancelled."}
-              </p>
-            )}
+                </div>
+              ) : (
+                <p className="text-sm text-[--text-muted]">
+                  {order.status === "completed" ? "This order is complete." : "This order is cancelled."}
+                </p>
+              )}
+            </div>
           </div>
 
           {/* Customer Info */}
-          <div className="rounded-xl border border-[--border] bg-[--bg-surface] p-5">
-            <h2 className="mb-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[--text-muted]">Customer</h2>
-            <div className="space-y-2 text-sm">
+          <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] overflow-hidden">
+            <div className="border-b border-[--border] bg-[--bg-surface] px-5 py-3">
+              <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                / Customer
+              </p>
+            </div>
+            <div className="p-5 space-y-1.5 text-sm">
               <p className="font-medium text-[--text-primary]">{order.customerName}</p>
               <p className="text-[--text-secondary]">{order.customerEmail}</p>
               {order.customerPhone ? (
@@ -186,18 +192,25 @@ export default async function OrderDetailPage({
           </div>
 
           {/* Payment Info */}
-          <div className="rounded-xl border border-[--border] bg-[--bg-surface] p-5">
-            <h2 className="mb-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[--text-muted]">Payment</h2>
-            <div className="space-y-2 text-sm">
+          <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] overflow-hidden">
+            <div className="border-b border-[--border] bg-[--bg-surface] px-5 py-3">
+              <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                / Payment
+              </p>
+            </div>
+            <div className="p-5 space-y-2 text-sm">
               <p className="text-[--text-secondary]">
                 Method · <span className="font-medium text-[--text-primary]">QRPH</span>
               </p>
               <p className="text-[--text-secondary]">
-                Reference · <span className="font-mono text-[--text-primary]">{order.paymentReference ?? "—"}</span>
+                Reference ·{" "}
+                <span className="font-mono text-[--text-primary]">
+                  {order.paymentReference ?? "—"}
+                </span>
               </p>
               {order.receiptPath ? (
                 <a
-                  className="inline-flex items-center gap-1.5 text-[--accent] hover:underline"
+                  className="inline-flex items-center gap-1.5 font-medium text-[--text-primary] underline-offset-2 hover:underline"
                   href={getReceiptHref(order.receiptPath)}
                   rel="noreferrer"
                   target="_blank"
@@ -213,9 +226,15 @@ export default async function OrderDetailPage({
 
           {/* Notes */}
           {order.notes ? (
-            <div className="rounded-xl border border-[--border] bg-[--bg-surface] p-5">
-              <h2 className="mb-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[--text-muted]">Notes</h2>
-              <p className="whitespace-pre-wrap text-sm text-[--text-secondary]">{order.notes}</p>
+            <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-card] overflow-hidden">
+              <div className="border-b border-[--border] bg-[--bg-surface] px-5 py-3">
+                <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[--text-muted]">
+                  / Notes
+                </p>
+              </div>
+              <p className="whitespace-pre-wrap p-5 text-sm text-[--text-secondary]">
+                {order.notes}
+              </p>
             </div>
           ) : null}
         </div>

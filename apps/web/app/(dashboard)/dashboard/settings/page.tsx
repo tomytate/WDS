@@ -99,7 +99,7 @@ export default async function DashboardSettingsPage({
               </h2>
             </div>
 
-            <div className="rounded-2xl border border-[--border] bg-[--bg-surface] p-5">
+            <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-surface] p-5">
               <p className="font-display text-2xl tracking-tight">{settings.storeName}</p>
               <p className="mt-3 text-sm text-[--text-secondary]">Support: {settings.supportEmail}</p>
               <p className="mt-2 text-sm text-[--text-secondary]">QRPH: {settings.qrphNumber}</p>
@@ -116,7 +116,7 @@ export default async function DashboardSettingsPage({
               )}
             </div>
 
-            <div className="rounded-2xl border border-[--border] bg-[--bg-surface] p-5">
+            <div className="rounded-[--radius-card] border border-[--border] bg-[--bg-surface] p-5">
               <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[--text-muted]">
                 Handling window
               </p>
